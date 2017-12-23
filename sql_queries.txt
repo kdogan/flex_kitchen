@@ -1,0 +1,26 @@
+
+
+
+CREATE TABLE `person` ( `id` INT UNSIGNED NOT NULL , 
+`firstname` VARCHAR(30) NOT NULL , 
+`lastname` VARCHAR(30) NOT NULL , 
+`email` VARCHAR(50) NOT NULL , 
+`tel_no` INT UNSIGNED NOT NULL , 
+`dept` FLOAT NOT NULL , 
+PRIMARY KEY (`id`)) 
+ENGINE = InnoDB;
+
+
+CREATE TABLE `category` ( 
+`id` INT NOT NULL , 
+`name` VARCHAR(30) NOT NULL , 
+PRIMARY KEY (`id`)) 
+ENGINE = InnoDB;
+
+CREATE TABLE `person_article_matrix` ( 
+`id` INT NOT NULL , 
+`person_id` INT NOT NULL , 
+`article_id` INT NOT NULL , 
+`count` INT NOT NULL , 
+PRIMARY KEY (`id`)) 
+ENGINE = InnoDB;
