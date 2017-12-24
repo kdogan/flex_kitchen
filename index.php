@@ -23,16 +23,11 @@ echo'
   
 <div class="content">
   <menu>
-  <li class="user_div" id="user_div_id_1">
-    <img class="user_img"src="https://codepo8.github.io/canvas-images-and-pixels/img/horse.png" href="#" onclick="clickUser(\'user_div_id_1\')"></img>
-    <p>Max Pferdmann</p>
-  </li>
-  
-  <?php echo \'Wohingegen das hier geparst wird.\'; ?>
+  ';
+  $functions->getUserLIs();
+  echo '
   </menu>
-</div>
-<footer>Copyright &copy; flexlog.de</footer>
-</div>
-</body>
-</html>';
+</div>';
+$functions->getFooter();
+
 ?>

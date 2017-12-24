@@ -5,10 +5,11 @@
  * @author Kamuran Dogan
  */
 class functions {
-    $servername = "localhost";
-    $username = "flex_kitchen";
-    $password = "root";
-    $dbname = "flex_kitchen";
+    
+    private function getDBConnection(){
+        $conn = mysqli_connect("localhost", "flex_kitchen", "root", "flex_kitchen");
+        return $conn;
+    }
     
     //Yapıcı sınıfımız tanımlandı
     public function __construct(){
@@ -20,32 +21,45 @@ class functions {
     */
     public function getUserLIs(){
 
-        $persons = getAllPerson();
-        
-        $result = '<li class="user_div" id="'.$id.'">
-            <img class="user_img"src="'.$image_path.'" href="#" onclick="clickUser(\'user_div_id_1\')"></img>
-            <p>Max Pferdmann</p>
-        </li>';
+        $persons = $this -> getAllFromTable("person");
+        $result = "<h2>No User found... :'(</h2>";
+        if($persons->num_rows >0){
+            $result = "";
+            while($row = $persons->fetch_assoc()){
+                $result = $result.'<li class="user_div" id="'.$row["id"].'">
+                <img class="user_img"src="'.$row["img_path"].'" href="#" onclick="clickUser(\'user_div_id_'.$row["id"].'\')"></img>
+                <p>'.$row["firstname"]." ".$row["lastname"].'</p>
+                </li>';
+            }
+        }
+        echo $result;
+    }
+    public function getArticleLIs(){
 
+        $persons = $this -> getAllFromTable("article");
+        $result = "<h2>No Article found... :'(</h2>";
+        if($persons->num_rows >0){
+            $result = "";
+            while($row = $persons->fetch_assoc()){
+                $result = $result.'<li class="article_div" id="'.$row["id"].'">
+                <img class="article_img" src="'.$row["img_path"].'" href="#" onclick="clickArticle(\'user_div_id_'.$row["id"].'\')"></img>
+                <p>'.$row["name"].'</p>
+                <p><strong>'.$row["price"].' €</strong></p>
+                </li>';
+            }
+        }
         echo $result;
     }
 
-    private function getAllPerson(){
-        $link = mysql_connect($servername, $username, $password);
-        if (!$link) {
+    private function getAllFromTable($tableName){
+        $conn = $this->getDBConnection();
+        if (!$conn) {
             die('Verbindung schlug fehl: ' . mysql_error());
         }
-        $sql = "SELECT * FROM person";
+        $sql = "SELECT * FROM ".$tableName;
         $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-        echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
-    }
-} else {
-    echo "0 results";
-}
-$conn->close();
+        $conn->close();
+        return $result;
 
     }
 
@@ -58,6 +72,13 @@ $conn->close();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
 <script type="text/javascript" src="function.js"></script>
 <link rel="stylesheet" href="style.css">';  
+    }
+
+    public function getFooter(){
+        echo '<footer>Copyright &copy; flexlog.de</footer>
+            </div>
+            </body>
+            </html>';
     }
 }
 ?>

@@ -20,5 +20,5 @@ $(function() {
 
 function clickUser(user){
 
-  window.location.href = "articles.html";
+  window.location.href = "articles.php";
 }
