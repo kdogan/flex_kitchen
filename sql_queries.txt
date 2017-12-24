@@ -24,3 +24,6 @@ CREATE TABLE `person_article_matrix` (
 `count` INT NOT NULL , 
 PRIMARY KEY (`id`)) 
 ENGINE = InnoDB;
+
+
+CREATE USER 'flex_kitchen'@'localhost' IDENTIFIED BY 'root'
