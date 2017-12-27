@@ -6,15 +6,14 @@
  */
 class functions {
     
-    private function getDBConnection(){
-        $conn = mysqli_connect("localhost", "flex_kitchen", "root", "flex_kitchen");
-        return $conn;
-    }
-    
     //Yapıcı sınıfımız tanımlandı
     public function __construct(){
     }
     
+    public function getDBConnection(){
+        $conn = mysqli_connect("localhost", "flex_kitchen", "root", "flex_kitchen");
+        return $conn;
+    }
     /*
      * Url adresi verilen sayfanın içeriğini döndürür
      * $url => varchar
@@ -26,9 +25,11 @@ class functions {
         if($persons->num_rows >0){
             $result = "";
             while($row = $persons->fetch_assoc()){
-                $result = $result.'<li class="user_div" id="'.$row["id"].'">
-                <img class="user_img"src="'.$row["img_path"].'" href="#" onclick="clickUser(\'user_div_id_'.$row["id"].'\')"></img>
-                <p>'.$row["firstname"]." ".$row["lastname"].'</p>
+                $user = $row["firstname"].' '.$row["lastname"];
+                $id = $row["id"];
+                $result = $result.'<li class="user_div" id="'.$id.'">
+                <img class="user_img"src="'.$row["img_path"].'" href="#" onclick="clickUser(\''.$user.'\',\''.$id.'\')"></img>
+                <p>'.$user.'</p>
                 </li>';
             }
         }
@@ -50,8 +51,21 @@ class functions {
         }
         echo $result;
     }
+    public function getActiveUserIcon(){
+        echo 
+            '<div style="width:60px;float:left">
+                <img class="user_img" id="loggedUserImg" style="background-color: black" src="https://codepo8.github.io/canvas-images-and-pixels/img/horse.png" href="#"></img>
+            </div>
+            <div style="float:left">
+            <script type="text/javascript">
+           getUserNameForId(getCookie("userid"));
+        </script><p id="foo"></p>
+                
+            </div>';
+    }
 
     private function getAllFromTable($tableName){
+
         $conn = $this->getDBConnection();
         if (!$conn) {
             die('Verbindung schlug fehl: ' . mysql_error());

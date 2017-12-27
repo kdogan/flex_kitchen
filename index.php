@@ -22,8 +22,7 @@ echo'
 </header>
   
 <div class="content">
-  <menu>
-  ';
+  <menu>';
   $functions->getUserLIs();
   echo '
   </menu>
