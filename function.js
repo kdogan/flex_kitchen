@@ -19,17 +19,21 @@ $(function() {
 });
 
 function clickUser(user, id){
-
+  // remove previous cockie
+  setCookie("userid",'',-1);
+  // set new cookie
   setCookie("userid",id,1);
-  //require password from user if loggin is activatet!!!
+
+  //TODO : require password from user if loggin is activatet!!!
   window.location.href = "articles.php";
 }
 
-function setCookie(cname,cvalue,exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires=" + d.toGMTString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+function setCookie(cookieName,cookieValue,nDays) {
+ var today = new Date();
+ var expire = new Date();
+ if (nDays==null) nDays=1;
+ expire.setTime(today.getTime() + 3600000*24*nDays);
+ document.cookie = cookieName+"="+escape(cookieValue)+ ";expires="+expire.toGMTString();
 }
 
 function getCookie(cname) {
@@ -47,17 +51,26 @@ function getCookie(cname) {
     }
     return "";
 }
+function logout(name) {
+  setCookie("userid", "",0);
+  window.location.href = "index.php";
+}
 
-function getUserNameForId(id) {
+function setLoggedUser(id) {
     $.ajax({
             url: 'php_scripts/dbutility.php?id='+id, //call storeemdata.php to store form data
             success: function(html) {
                       var obj = JSON.parse(html);
-                      var ajaxDisplay = document.getElementById('foo');
-                      ajaxDisplay.innerHTML = obj.firstname + " "+obj.lastname;
 
-                      //set logged user image src
-                      document.getElementById("loggedUserImg").src=obj.img_path;
+                      if(obj.firstname !="" || obj.lastname !=""){
+                        // set logged user name
+                        document.getElementById('loggedUserName').innerHTML = obj.firstname + " "+obj.lastname;
+                      }
+                      
+                      if(obj.img_path !=""){
+                        //set logged user image src
+                        document.getElementById('loggedUserImg').src=obj.img_path;
+                      }
                     }
           });
 }

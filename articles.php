@@ -6,12 +6,14 @@ $functions->getSiteHead();
 echo '
 </head>
 <body>
-
+  <script type="text/javascript">
+      setLoggedUser(getCookie("userid"));
+  </script>
 <div class="flex-container">
 <header>';
 $functions->getActiveUserIcon();
   echo '<div style="float:right">
-    <img style="width:50px; float:right;" src="logout.ico" href="#"></img>
+    <img style="width:50px; float:right;" src="logout.ico" href="#" onclick="logout(\'userid\')"></img>
   </div>
   <div style="float:right">
     <form class="search_form"><input type="text" id="search" onkeyup="myFunction()" placeholder="Search for article.." title="Type in a name"></form>

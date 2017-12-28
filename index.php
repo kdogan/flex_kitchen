@@ -6,9 +6,18 @@ $functions = new functions();
 $functions->getSiteHead();
 echo'
 <head>
+<script>
+function checkCookie() {
 
+    var idInCookie = getCookie("userid");
+    var expiresInCookie = getCookie("expires");
+    if (idInCookie !="" && expiresInCookie >= 0) {
+        window.location.href = "articles.php";
+    }
+}
+</script>
 </head>
-<body>
+<body onLoad="checkCookie();">
 
 <div class="flex-container">
 <header>

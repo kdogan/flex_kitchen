@@ -54,13 +54,10 @@ class functions {
     public function getActiveUserIcon(){
         echo 
             '<div style="width:60px;float:left">
-                <img class="user_img" id="loggedUserImg" style="background-color: black" src="https://codepo8.github.io/canvas-images-and-pixels/img/horse.png" href="#"></img>
-            </div>
-            <div style="float:left">
-            <script type="text/javascript">
-           getUserNameForId(getCookie("userid"));
-        </script><p id="foo"></p>
-                
+                    <img class="user_img" id="loggedUserImg" style="background-color: black" src="https://codepo8.github.io/canvas-images-and-pixels/img/horse.png" href="#"></img>
+                </div>
+                <div style="float:left"> 
+                    <p id="loggedUserName"></p> 
             </div>';
     }
 
