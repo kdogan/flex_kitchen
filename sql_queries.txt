@@ -22,6 +22,7 @@ CREATE TABLE `person_article_matrix` (
 `person_id` INT NOT NULL , 
 `article_id` INT NOT NULL , 
 `count` INT NOT NULL , 
+`buy_date` DATETIME NOT NULL,
 PRIMARY KEY (`id`)) 
 ENGINE = InnoDB;
 

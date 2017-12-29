@@ -28,7 +28,7 @@ class functions {
                 $user = $row["firstname"].' '.$row["lastname"];
                 $id = $row["id"];
                 $result = $result.'<li class="user_div" id="'.$id.'">
-                <img class="user_img"src="'.$row["img_path"].'" href="#" onclick="clickUser(\''.$user.'\',\''.$id.'\')"></img>
+                <div class="user_img" style="background-image: url(\''.$row["img_path"].'\');" href="#" onclick="clickUser(\''.$user.'\',\''.$id.'\')"></div>
                 <p>'.$user.'</p>
                 </li>';
             }
@@ -43,7 +43,7 @@ class functions {
             $result = "";
             while($row = $persons->fetch_assoc()){
                 $result = $result.'<li class="article_div" id="'.$row["id"].'">
-                <img class="article_img" src="'.$row["img_path"].'" href="#" onclick="clickArticle(\'user_div_id_'.$row["id"].'\')"></img>
+                <img class="article_img" src="'.$row["img_path"].'" href="#" onclick="clickArticle(\''.$row["id"].'\')"></img>
                 <p>'.$row["name"].'</p>
                 <p><strong>'.$row["price"].' €</strong></p>
                 </li>';
@@ -53,8 +53,8 @@ class functions {
     }
     public function getActiveUserIcon(){
         echo 
-            '<div style="width:60px;float:left">
-                    <img class="user_img" id="loggedUserImg" style="background-color: black" src="https://codepo8.github.io/canvas-images-and-pixels/img/horse.png" href="#"></img>
+            '<div id="loggedUserImg" style="width:60px;height:60px;float:left; background-image:url(\'https://codepo8.github.io/canvas-images-and-pixels/img/horse.png\');background-repeat:no-repeat;
+  background-size: cover">
                 </div>
                 <div style="float:left"> 
                     <p id="loggedUserName"></p> 

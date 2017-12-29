@@ -1,13 +1,10 @@
 <?php
+include("dbConnector.php");
 
-// Create connection
-function getDBConnection(){
-        $conn = mysqli_connect("localhost", "flex_kitchen", "root", "flex_kitchen");
-        return $conn;
-}
 
-#$id = mysqli_real_escape_string($conn, $_GET['id']);
-$id = $_REQUEST["id"];
+$id = $_GET["id"];
+
+if(isset($id)){
 $sql = 'SELECT * FROM person WHERE id ='.$id;
 $conn =getDBConnection();
 $result = $conn->query($sql);
@@ -24,5 +21,5 @@ if ($result->num_rows > 0) {
     echo "-1";
 }
 $conn->close();     
-
+}
 ?>
