@@ -45,7 +45,7 @@ class functions {
                 $result = $result.'<li class="article_div" id="'.$row["id"].'">
                 <img class="article_img" src="'.$row["img_path"].'" href="#" onclick="clickArticle(\''.$row["id"].'\')"></img>
                 <p>'.$row["name"].'</p>
-                <p><strong>'.$row["price"].' €</strong></p>
+                <span><strong>'.$row["price"].' €</strong></span>
                 </li>';
             }
         }
@@ -65,7 +65,9 @@ class functions {
          <tr>
             <td style="float:left"> Kontozustand </td>
             <td style="float:left">:</td>
-            <td style="float:left; font-weight: bold" id="accountBalance"> 0 €</td>
+            <td style="float:left; font-weight: bold" > 
+                <div style="background-color: white;border-radius:50% ;padding:3px; color:black" id="accountBalance">0 €</div>
+            </td>
          </tr>
          <tr>
             <td style="float:left"> letzte Kauf </td>

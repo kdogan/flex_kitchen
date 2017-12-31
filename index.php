@@ -21,9 +21,11 @@ function checkCookie() {
 
 <div class="flex-container">
 <header>
-<div style="width: 50px; height: 50px; float: left"> FLEX KITCHEN
+<div class="header_first_column">
+  <div style="width: 50px; height: 50px; float: left"> FLEX KITCHEN</div>
 </div>
-<div>
+<div class="header_second_column" style="color:#11111"> .</div>
+<div class="header_third_column">
   <form class="search_form">
     <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
   </form>

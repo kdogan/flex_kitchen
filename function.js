@@ -99,7 +99,7 @@ function setLoggedUser(id) {
 
                       document.getElementById('accountBalance').innerHTML = obj.account_balance+' €';
                       if(obj.account_balance < 0){
-                        document.getElementById('accountBalance').style.color = "red";
+                        document.getElementById('accountBalance').style.backgroundColor = "red";
                       }
                     }
           });
