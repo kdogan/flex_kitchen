@@ -66,7 +66,7 @@ class functions {
             <td style="float:left"> Kontozustand </td>
             <td style="float:left">:</td>
             <td style="float:left; font-weight: bold" > 
-                <div style="background-color: white;border-radius:50% ;padding:3px; color:black" id="accountBalance">0 €</div>
+                <div style="background-color: white;border-radius:50% ;padding:3px 15px 3px 15px; color:black" id="accountBalance">0 €</div>
             </td>
          </tr>
          <tr>

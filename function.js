@@ -35,22 +35,14 @@ function clickArticle(articleId){
   modal.style.display = "block";
   clickedArticleId = articleId;
 }
-function sendSelectedProductForUser(){
-  var currentUserId = getCookie("userid");
-  $.ajax({
-      url: 'php_scripts/dbPersonArticleMatrixPost.php?clickedArticleId='+clickedArticleId+'&personId='+currentUserId, //call storeemdata.php to store form data
-      success: function(html) {
-                var obj = JSON.parse(html);
-                      alert(obj);
-                    }
-          });
-}
 
 window.onclick = function(event) {
-  var modal = document.getElementById('myModal');
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
+
+  var targetId = event.target.id;
+  if(targetId == "productConfirmationBtn" || targetId == "productCancelationBtn"){
+    document.getElementById('myModal').style.display = "none";
+    window.location.href = "articles.php";
+  }
 }
 
 function setCookie(cookieName,cookieValue,nDays) {
@@ -96,8 +88,9 @@ function setLoggedUser(id) {
                         //set logged user image src
                         document.getElementById('loggedUserImg').style.backgroundImage = "url('"+obj.img_path+"')";
                       }
+                      var indexToCut = obj.account_balance.indexOf(".")+3;
 
-                      document.getElementById('accountBalance').innerHTML = obj.account_balance+' €';
+                      document.getElementById('accountBalance').innerHTML = obj.account_balance.substr(0, indexToCut)+' €';
                       if(obj.account_balance < 0){
                         document.getElementById('accountBalance').style.backgroundColor = "red";
                       }
@@ -118,6 +111,17 @@ function setAccountBalance(personId, lastEntryRequsted){
                         document.getElementById('lastBuy').innerHTML = obj.name;
                       }
                     }
+          });
+}
+
+function sendSelectedProductForUser(){
+  var currentUserId = getCookie("userid");
+  $.ajax({
+      url: 'php_scripts/dbPersonArticleMatrixPost.php?selectedArticleId='+clickedArticleId+'&personId='+currentUserId, //call storeemdata.php to store form data
+      success: function(html) {
+                var obj = JSON.parse(html);
+
+               }
           });
 }
 
