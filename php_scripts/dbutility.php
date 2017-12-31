@@ -15,6 +15,7 @@ if ($result->num_rows > 0) {
         $response['lastname'] =$row["lastname"];
         $response['email'] = $row["email"];
         $response['img_path'] = $row["img_path"];
+        $response['account_balance'] = $row["account_balance"];
     }
     echo json_encode($response);
 } else {

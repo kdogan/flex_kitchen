@@ -51,14 +51,28 @@ class functions {
         }
         echo $result;
     }
+
     public function getActiveUserIcon(){
         echo 
-            '<div id="loggedUserImg" style="width:60px;height:60px;float:left; background-image:url(\'https://codepo8.github.io/canvas-images-and-pixels/img/horse.png\');background-repeat:no-repeat;
-  background-size: cover">
-                </div>
-                <div style="float:left"> 
-                    <p id="loggedUserName"></p> 
-            </div>';
+            '<div id="loggedUserImg" style="width:60px;height:60px;float:left; background-image:url(\'default_user_img.png\');background-repeat:no-repeat;background-size: cover"></div>
+             <div style="float:left"> <p id="loggedUserName"></p></div>';
+    }
+
+    public function getUserAccountBalance(){
+
+        echo '
+        <table>
+         <tr>
+            <td style="float:left"> Kontozustand </td>
+            <td style="float:left">:</td>
+            <td style="float:left; font-weight: bold" id="accountBalance"> 0 €</td>
+         </tr>
+         <tr>
+            <td style="float:left"> letzte Kauf </td>
+            <td style="float:left">:</td>
+            <td style="float:left; font-weight: bold" id="lastBuy">letzte Getränk</td>
+         </tr>
+        </table>';
     }
 
     private function getAllFromTable($tableName){

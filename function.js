@@ -1,3 +1,4 @@
+var clickedArticleId = "";
 $(function() {
 
   $("#search")
@@ -27,8 +28,29 @@ function clickUser(user, id){
   //TODO : require password from user if loggin is activatet!!!
   window.location.href = "articles.php";
 }
+
 function clickArticle(articleId){
-  setSelectedArticle(articleId);
+  //TODO hier muss eine popup fenster gemacht werden und ausgewählte article darstellen
+  var modal = document.getElementById('myModal');
+  modal.style.display = "block";
+  clickedArticleId = articleId;
+}
+function sendSelectedProductForUser(){
+  var currentUserId = getCookie("userid");
+  $.ajax({
+      url: 'php_scripts/dbPersonArticleMatrixPost.php?clickedArticleId='+clickedArticleId+'&personId='+currentUserId, //call storeemdata.php to store form data
+      success: function(html) {
+                var obj = JSON.parse(html);
+                      alert(obj);
+                    }
+          });
+}
+
+window.onclick = function(event) {
+  var modal = document.getElementById('myModal');
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
 }
 
 function setCookie(cookieName,cookieValue,nDays) {
@@ -74,25 +96,26 @@ function setLoggedUser(id) {
                         //set logged user image src
                         document.getElementById('loggedUserImg').style.backgroundImage = "url('"+obj.img_path+"')";
                       }
+
+                      document.getElementById('accountBalance').innerHTML = obj.account_balance+' €';
+                      if(obj.account_balance < 0){
+                        document.getElementById('accountBalance').style.color = "red";
+                      }
                     }
           });
+    setAccountBalance(id,1);
 }
-function setSelectedArticle(id) {
-    $.ajax({
-            url: 'php_scripts/dbArticle.php?id='+id,
+
+function setAccountBalance(personId, lastEntryRequsted){
+
+  $.ajax({
+            url: 'php_scripts/dbPersonArticleMatrix.php?person_id='+personId+'&lastEntry='+lastEntryRequsted,
             success: function(html) {
                       var obj = JSON.parse(html);
 
                       if(obj.name !="" || obj.price !=""){
-                        document.getElementById('selectedArticle').style.display = "block";
                         // set logged user name
-                        document.getElementById('selectedArticleName').innerHTML = obj.name;
-                        document.getElementById('selectedArticlePrice').innerHTML = obj.price+'€';
-                      }
-                      
-                      if(obj.img_path !=""){
-                        //set logged user image src
-                        document.getElementById('selectedArticleImg').src=obj.img_path;
+                        document.getElementById('lastBuy').innerHTML = obj.name;
                       }
                     }
           });

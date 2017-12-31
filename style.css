@@ -7,7 +7,7 @@
     text-align: center;
 }
 .flex-container > * {
-    padding: 15px;
+    padding: 10px;
     -webkit-flex: 1 100%;
     flex: 1 100%;
 }
@@ -21,13 +21,13 @@ footer {background: #aaa; color:white; position:relative; width: 100%; bottom:0;
 }
 .user_img {
   width: 100%;
-  border-radius: 5px;
+  border-radius: 50px;
   background-color:#83bb26;
   min-width: 100px;
   min-height: 100px;
   height: 60px;
   padding-top:20%;
-  padding-bottom : 30%;
+  padding-bottom: 20%;
   background-repeat:no-repeat;
   background-size: 100% 100%;
 
@@ -85,22 +85,96 @@ menu li {
 }
 
 .search_form{
-  width:400px; 
-  min-width: 100px; 
+  width: 100%;
   float: right;
+}
+
+.header_first_column{
+  width: 25%;
+  float:left;
+  border-style: 1px solid;
+}
+.header_second_column{
+  width: 25%;
+  float:left;
+  border-style: 1px solid;
+}
+.header_third_column{
+  width: 50%;
+  float:left;
+  border-style: 1px solid;
 }
 
 input[type=text] {
     width: 100%;
     box-sizing: border-box;
-    border: 2px solid #ccc;
+    border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
     background-color: white;
     background-image: url('searchicon.png');
-    background-position: 10px 10px; 
+    background-position: 10px 10px;
     background-repeat: no-repeat;
     padding: 12px 20px 12px 40px;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
   }
+/** POPUP WINDOW **/
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+/* Modal Content */
+.modal-content {
+    background-color: #83bb26;
+    margin: auto;
+    padding: 20px;
+    border: 1px none #888;
+    width: fit-content;
+    align-content: center;
+    border-radius: 15px;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.popupButton{
+  background-repeat:no-repeat;
+  width:130px;
+  height: 130px;
+  border: none;
+  color: #83bb26;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 15em;
+  background-color: rgba(0, 0, 0, -0.5);
+}
+
+/** POPUP WINDOW END**/

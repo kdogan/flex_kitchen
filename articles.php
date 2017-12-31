@@ -10,33 +10,46 @@ echo '
       setLoggedUser(getCookie("userid"));
   </script>
 <div class="flex-container">
-<header>';
-$functions->getActiveUserIcon();
-echo '<div id="selectedArticle" style="float:left; display:none;">
-        <table>
-          <tr>
-            <td rowspan="2"><img id="selectedArticleImg" style="width:60px; height:60px;" src="https://codepo8.github.io/canvas-images-and-pixels/img/horse.png" href="#"></img></td>
-            <td rowspan="2"><p id="selectedArticleName"></p> <strong><p id="selectedArticlePrice"></p></strong></td>
-            <td><img id="confirmArticleBtn" style="width:30px; height:30px;" src="img/ok_btn.png" href="#"></img></td>
-          </tr>
-          <tr>
-            <td><img id="cancelArticleBtn" style="width:30px; height:30px;" src="img/x_btn.png" href="#"></img></td>
-          </tr>
-        </table>
-      </div>';
-
-echo '<div style="float:right">
-        <img style="width:50px; float:right;" src="logout.ico" href="#" onclick="logout(\'userid\')"></img>
-      </div>
-      <div style="float:right">
-        <form class="search_form"><input type="text" id="search" onkeyup="myFunction()" placeholder="Search for article.." title="Type in a name"></form>
-      </div>
+<header> 
+<!-- Header: first column -->
+  <div class="header_first_column">';
+    $functions->getActiveUserIcon();
+echo '
+</div> 
+<!-- Header: first column End-->
+<!-- Header: second column -->
+  <div class="header_second_column">';
+    $functions->getUserAccountBalance();
+echo '</div>
+<!-- Header: second column End-->
+<!-- Header: third column -->
+  <div class="header_third_column">
+    <div style="float:right"><img style="width:50px; float:right;" src="logout.ico" href="#" onclick="logout(\'userid\')"></img></div>
+    <div style="float:right"><form class="search_form"><input type="text" id="search" onkeyup="myFunction()" placeholder="Search for article.." title="Type in a name"></form></div>
+  </div>
+  <!-- Header: third column End-->
 </header>
 <div class="content">
   <menu>';
   $functions->getArticleLIs();
   echo '
   </menu>
+</div>';
+
+echo '<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <table style="font-size:3em">
+      <tr><td colspan="2">Sie haben</td></tr>
+      <tr><td colspan="2" id="selectedProductName">Clup Matte</td></tr>
+      <tr><td colspan="2"> ausgewählt</td></tr>
+      <tr>
+        <td><button class="popupButton" id="productConfirmationBtn" style="background-image:url(\'img/ok_btn.png\')" onclick="sendSelectedProductForUser()"></button> </td>
+        <td><button class="popupButton" id="productCancelationBtn" style="background-image:url(\'img/x_btn.png\')"></button></td>
+      </tr>
+</table>
+  </div>
+
 </div>';
 
 $functions->getFooter();
