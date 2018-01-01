@@ -7,7 +7,11 @@ echo '
 </head>
 <body>
   <script type="text/javascript">
-      setLoggedUser(getCookie("userid"));
+      if(getCookie("userid") !=""){
+        setLoggedUser(getCookie("userid"));
+      }else{
+        window.location.href = "index.php";
+      }
   </script>
 <div class="flex-container">
 <header> 

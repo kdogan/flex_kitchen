@@ -24,13 +24,15 @@ footer {background: #aaa;color:white;position: absolute;width: 100%;bottom: 0px;
   width: 100%;
   border-radius: 50px;
   background-color:#83bb26;
-  min-width: 100px;
+  min-width: 150px;
   min-height: 100px;
   height: 60px;
   padding-top:20%;
   padding-bottom: 20%;
   background-repeat:no-repeat;
   background-size: 100% 100%;
+  position:relative;
+  display:inline-block;
 
   &:hover{
   transition:all 150ms linear;
@@ -65,9 +67,9 @@ footer {background: #aaa;color:white;position: absolute;width: 100%;bottom: 0px;
   }
 }
 
-menu li { 
-  float: left; 
-  list-style: none; 
+menu li {
+  float: left;
+  list-style: none;
   width: 20%;
   min-width: 10em;
   display: inline-block;
@@ -76,9 +78,13 @@ menu li {
   margin-top:3px;
 } 
 @media only screen and (max-device-width : 300px) {
-  menu li {width: 100%; margin-right: 10px}
+  menu li {width: 100%;margin-right: 10px;}
   li p {font-size: 35px}
+  footer {position: relative;}
+  .user_img{width: 100%;}
   .search_form {width: 100%}
+  .notify-badge{right: 0px;width: 200px;height: 50px;}
+
 }
 @media screen and (min-width: 1000px) {
   menu li {width: 10%;}
@@ -179,3 +185,21 @@ input[type=text] {
 }
 
 /** POPUP WINDOW END**/
+
+
+.item {
+    position:relative;
+    padding-top: 20px;
+    display:inline-block;
+}
+.notify-badge{
+    position: absolute;
+    right: -15px;
+    top: 0px;
+    background: rgb(247, 171, 106);
+    text-align: center;
+    border-radius: 30px 30px 30px 30px;
+    color:white;
+    padding:5px 10px;
+    font-size: 100%;
+}

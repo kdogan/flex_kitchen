@@ -41,13 +41,19 @@ INSERT INTO `article`(`name`, `price`, `count`, `category`, `img_path`) VALUES (
 begin
  DECLARE oldBalance FLOAT;
  DECLARE articlePrice FLOAT;
+ DECLARE articleCount INT;
  DECLARE newBalance FLOAT;
  
  SET oldBalance = (SELECT account_balance FROM person WHERE id = NEW.person_id); 
  SET articlePrice = (SELECT price from article where id = NEW.article_id);
+ SET articleCount = (SELECT count from article where id = NEW.article_id);
  SET newBalance = oldBalance - articlePrice; 
  UPDATE person
  SET person.account_balance = newBalance
  WHERE person.id = NEW.person_id;
+ 
+ UPDATE article
+ SET article.count = articleCount-1
+ WHERE article.id = NEW.article_id;
       
 END

@@ -16,7 +16,7 @@ if(isset($id)){
         }
         echo json_encode($response);
     } else {
-        echo "-1";
+        echo "Error: ". $sql . "<br>" . $conn->error;
     }
     $conn->close();
 }

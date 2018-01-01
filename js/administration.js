@@ -1,0 +1,3 @@
+function closeAdminSite(){
+	alert("FOOOOO");
+}

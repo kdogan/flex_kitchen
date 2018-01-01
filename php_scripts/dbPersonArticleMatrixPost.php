@@ -14,8 +14,7 @@ if(isset($selectedArticleId) && isset($personId)){
     	echo "New record created successfully";
     }
 } else {
-	$foo = 'aritcle Id :'.$selectedArticleId.', personId :'.$personId;
-    echo "Error: ".$foo. " " . $sql . "<br>" . $conn->error;
+    echo "Error: ". $sql . "<br>" . $conn->error;
 }
 
 $conn->close(); 

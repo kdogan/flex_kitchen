@@ -42,10 +42,15 @@ class functions {
         if($persons->num_rows >0){
             $result = "";
             while($row = $persons->fetch_assoc()){
-                $result = $result.'<li class="article_div" id="'.$row["id"].'">
-                <img class="article_img" src="'.$row["img_path"].'" href="#" onclick="clickArticle(\''.$row["id"].'\')"></img>
-                <p>'.$row["name"].'</p>
-                <span><strong>'.$row["price"].' €</strong></span>
+                $id = $row["id"];
+                $result = $result.'<li style="width:fil-content">
+                <div class="user_div" id="'.$id.'">
+                    <div class="user_img" style="background-image: url(\''.$row["img_path"].'\');" href="#" onclick="clickArticle(\''.$id.'\')">
+                        <span class="notify-badge"><strong>'.$row["price"].' €</strong></span>
+                    </div>
+                    <p>'.$row["name"].'</p>
+                </div>
+                
                 </li>';
             }
         }
@@ -102,7 +107,7 @@ class functions {
     }
 
     public function getFooter(){
-        echo '<footer>Copyright &copy; flexlog.de</footer>
+        echo '<footer>Copyright &copy; e-oku.de</footer>
             </div>
             </body>
             </html>';

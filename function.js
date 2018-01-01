@@ -34,6 +34,8 @@ function clickArticle(articleId){
   var modal = document.getElementById('myModal');
   modal.style.display = "block";
   clickedArticleId = articleId;
+  setSelectedArticleNameInPopupWindow(articleId);
+  
 }
 
 window.onclick = function(event) {
@@ -117,10 +119,22 @@ function setAccountBalance(personId, lastEntryRequsted){
 function sendSelectedProductForUser(){
   var currentUserId = getCookie("userid");
   $.ajax({
-      url: 'php_scripts/dbPersonArticleMatrixPost.php?selectedArticleId='+clickedArticleId+'&personId='+currentUserId, //call storeemdata.php to store form data
+      url: 'php_scripts/dbPersonArticleMatrixPost.php?selectedArticleId='+clickedArticleId+'&personId='+currentUserId,
       success: function(html) {
                 var obj = JSON.parse(html);
+               }
+          });
+}
 
+function setSelectedArticleNameInPopupWindow(articleId){
+  var article = "";
+  $.ajax({
+      url: 'php_scripts/dbArticle.php?id='+articleId,
+      success: function(html) {
+                var obj = JSON.parse(html);
+                var selectedArticleName = document.getElementById('selectedProductName');
+                selectedProductName.innerHTML = obj["name"];
+                selectedProductName.style.fontWeight = 'bold';
                }
           });
 }
