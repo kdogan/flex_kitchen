@@ -31,10 +31,9 @@ CREATE USER 'flex_kitchen'@'localhost' IDENTIFIED BY 'root'
 grant all privileges on flex_kitchen.* to flex_kitchen@'%' identified by 'root'
 
 Insert Person
-INSERT INTO `person`(`firstname`, `lastname`, `email`, `tel_no`, `dept`, `img_path`) VALUES ("Hatun","Hanim","hatun@flex.de","8783",100,"test_bild2.png")
-INSERT INTO `article`(`name`, `price`, `count`, `category`, `img_path`) VALUES ("Clup Matte",1,20,1,"clup_matte.jpg")
 
-
+INSERT INTO `person`(`firstname`, `lastname`, `email`, `tel_no`, `img_path`, `account_balance`, `is_admin`, `user_pw`) 
+VALUES ('flex_firstname','flex_lastname','admin@flex.de',111,'admin.png',0,1,'897a779351421523cadbafccdce22efe')
 
 
 //Trigger

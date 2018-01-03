@@ -51,7 +51,7 @@ echo '<div id="myModal" class="modal">
         <td><button class="popupButton" id="productConfirmationBtn" style="background-image:url(\'img/ok_btn.png\')" onclick="sendSelectedProductForUser()"></button> </td>
         <td><button class="popupButton" id="productCancelationBtn" style="background-image:url(\'img/x_btn.png\')"></button></td>
       </tr>
-</table>
+    </table>
   </div>
 
 </div>';

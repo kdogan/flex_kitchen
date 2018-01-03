@@ -84,7 +84,7 @@ menu li {
   .user_img{width: 100%;}
   .search_form {width: 100%}
   .notify-badge{right: 0px;width: 200px;height: 50px;}
-
+  .login_modal-content{width: 80%}
 }
 @media screen and (min-width: 1000px) {
   menu li {width: 10%;}
@@ -127,7 +127,7 @@ input[type=text] {
     transition: width 0.4s ease-in-out;
   }
 /** POPUP WINDOW **/
-  .modal {
+.modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -157,6 +157,7 @@ input[type=text] {
     float: right;
     font-size: 28px;
     font-weight: bold;
+    margin-top: -30px;
 }
 
 .close:hover,

@@ -1,45 +1,25 @@
 <?php
-if (isset($_SESSION['login'])) {
-	header('Location: http://' . $_SERVER['HTTP_HOST'] . '/index.php');
-} else {
-	if (!empty($_POST)) {
-		if (empty($_POST['f']['username']) || empty($_POST['f']['password'])
-		) {
-			$message['error'] = 'Es wurden nicht alle Felder ausgefüllt.';
-		} else {
-			$mysqli = @new mysqli('localhost', 'root', '', 'loginsystem');
-			if ($mysqli->connect_error) {
-				$message['error'] = 'Datenbankverbindung fehlgeschlagen: ' . $mysqli->connect_error;
-			} else {
-				$query = sprintf(
-					"SELECT username, password FROM users WHERE username = '%s'",
-					$mysqli->real_escape_string($_POST['f']['username'])
-				);
-				$result = $mysqli->query($query);
-				if ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-					if (crypt($_POST['f']['password'], $row['password']) == $row['password']) {
-						session_start();
-						
-						$_SESSION = array(
-							'login' => true,
-							'user'  => array(
-								'username'  => $row['username']
-							)
-						);
-						$message['success'] = 'Anmeldung erfolgreich, <a href="index.php">weiter zum Inhalt.';
-						header('Location: http://' . $_SERVER['HTTP_HOST'] . '/index.php');
-					} else {
-						$message['error'] = 'Das Kennwort ist nicht korrekt.';
-					}
-				} else {
-					$message['error'] = 'Der Benutzer wurde nicht gefunden.';
-				}
-				$mysqli->close();
-			}
-		}
-	} else {
-		$message['notice'] = 'Geben Sie Ihre Zugangsdaten ein um sich anzumelden.<br />' .
-			'Wenn Sie noch kein Konto haben, gehen Sie <a href="./register.php">zur Registrierung</a>.';
-	}
+include ("dbConnector.php");
+session_start();
+$conn =getDBConnection();
+$errorMessage="";
+
+if(isset($_POST['login'])) {
+ $email = $_POST['email'];
+ $passwort = $_POST['passwort'];
+ 
+ $statement = $conn->prepare("SELECT * FROM person WHERE email = :email");
+ $result = $statement->execute(array('email' => $email));
+ $user = $statement->fetch();
+ 
+ //Überprüfung des Passworts
+ if ($user !== false && password_verify($passwort, $user['passwort'])) {
+ 	$_SESSION['userid'] = $user['id'];
+ 	$_SESSION['isAdmin'] = $user['is_admin'];
+ die('Login erfolgreich. Weiter zu <a href="geheim.php">internen Bereich</a>');
+ } else {
+ $errorMessage = "E-Mail oder Passwort war ungültig<br>";
+ }
+ 
 }
 ?>
