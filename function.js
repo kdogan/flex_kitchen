@@ -21,12 +21,44 @@ $(function() {
 
 function clickUser(user, id){
   // remove previous cockie
-  setCookie("userid",'',-1);
+  destroyPHPSession();
+  deleteCoockie();
   // set new cookie
-  setCookie("userid",id,1);
+    if(setPHPSession(id)){
+    setCookie(id,1);
+    window.location.href = "articles.php";
+  }
+}
 
-  //TODO : require password from user if loggin is activatet!!!
-  window.location.href = "articles.php";
+function deleteCoockie(){
+  setCookie('',-1);
+}
+
+function destroyPHPSession(){
+  var isDestroyed = false;
+  $.ajax({
+      url: 'php_scripts/login.php?destroySessionRequested=1',
+      success: function(html) {
+        var obj = JSON.parse(html);
+        isDestroyed = obj.isSessionDestroyed;               
+      }
+  });
+
+  return isDestroyed;
+}
+
+function setPHPSession(userId){
+  var sessionCreated = false;
+  $.ajax({
+      url: 'php_scripts/login.php?user_id='+userId,
+      async: false,
+      success: function(html) {
+        var obj = JSON.parse(html);
+        sessionCreated = obj.isSessionCreated; 
+      }
+  });
+  return sessionCreated;
+
 }
 
 function clickArticle(articleId){
@@ -47,12 +79,12 @@ window.onclick = function(event) {
   }
 }
 
-function setCookie(cookieName,cookieValue,nDays) {
+function setCookie(userId,nDays) {
  var today = new Date();
  var expire = new Date();
  if (nDays==null) nDays=1;
  expire.setTime(today.getTime() + 3600000*24*nDays);
- document.cookie = cookieName+"="+escape(cookieValue)+ ";expires="+expire.toGMTString();
+ document.cookie = "userid="+escape(userId)+ ";expires="+expire.toGMTString();
 }
 
 function getCookie(cname) {
