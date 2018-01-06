@@ -1,5 +1,8 @@
 
-<?php include ("php_script.php"); ?>
+<?php 
+  include ("php_script.php"); 
+  include ("php_scripts/login.php"); 
+?>
 
 <?php
 $functions = new functions();
@@ -8,12 +11,15 @@ echo'
 <head>
 <script>
 function checkCookie() {
-
-    var idInCookie = getCookie("userid");
-    var expiresInCookie = getCookie("expires");
-    if (idInCookie !="" && expiresInCookie >= 0) {
+      if('.$_SESSION["isAdmin"].'==-1){
+      
+      }else if('.$_SESSION["isAdmin"].'){
+        document.getElementById("adminLoginBtn").style.display="none";
+        window.location.href = "admin.php";
+      }else{
         window.location.href = "articles.php";
-    }
+      }
+    
 }
 </script>
 </head>
@@ -27,7 +33,7 @@ function checkCookie() {
 <div class="header_second_column" style="color:#83bb26"> .</div>
 <div class="header_third_column">
   <form class="search_form">
-  <div style="float:right"><img style="width:50px; float:right;" src="img/adminLogginImg.png" href="#" onclick="loggin()"></img></div>
+  <div style="float:right" id="adminLoginBtn"><img style="width:50px; float:right;" src="img/adminLogginImg.png" href="#" onclick="loggin()"></img></div>
    <div style="float:right"> <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"></div>
   </form>
 </div>

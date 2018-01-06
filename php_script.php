@@ -25,6 +25,8 @@ class functions {
         if($persons->num_rows >0){
             $result = "";
             while($row = $persons->fetch_assoc()){
+                //pass user if it is admin
+                if($row["is_admin"] == "1") continue;
                 $user = $row["firstname"].' '.$row["lastname"];
                 $id = $row["id"];
                 $result = $result.'<li class="user_div" id="'.$id.'">

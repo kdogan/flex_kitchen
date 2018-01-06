@@ -8,10 +8,6 @@ $errorMessage="";
 // Remove Session
 if(isset($_GET['destroySessionRequested']) && $_GET['destroySessionRequested'] ==1){
 	
-	if(isset($_SESSION['var'])){
-		session_unset(); 
-		session_destroy();
-	}
 	$response['isSessionDestroyed'] = true;
 	echo json_encode($response);
 }
@@ -19,38 +15,55 @@ if(isset($_GET['destroySessionRequested']) && $_GET['destroySessionRequested'] =
 // Create Session
 if(isset($_GET['user_id'])){
 	$userId = $_GET['user_id'];
-	$succes = setSession($userId);
+	$succes = setSession("id", $userId);
 	$response['isSessionCreated'] = $succes;
 	echo json_encode($response);
 }
 
+if(isset($_GET['logoutRequested'])){
+	session_unset();
+	$_SESSION['userid'] = "-1";
+    $_SESSION['isAdmin'] = "-1";
+	$response['logout'] = "succeeded";
+	echo json_encode($response);
+}
+
 // Login requested
-if(isset($_POST['login'])) {
-  $email = $_POST['email'];
-  $passwort = $_POST['passwort'];
- 
-  $statement = $conn->prepare("SELECT * FROM person WHERE email = :email");
-  $result = $statement->execute(array('email' => $email));
-  $user = $statement->fetch();
- 
-  //Überprüfung des Passworts
-  if ($user !== false && password_verify($passwort, $user['passwort'])) {
-  	 $_SESSION['userid'] = $user['id'];
- 	 $_SESSION['isAdmin'] = $user['is_admin'];
- 	 die('Login erfolgreich. Weiter zu <a href="geheim.php">internen Bereich</a>');
+if(isset($_GET['login'])) {
+  
+  $sessionCreated = setSession("email", "\"".$_REQUEST['email']."\"");
+  if($sessionCreated)
+ 	 $errorMessage="Login success!";
+ 	 $host  = $_SERVER['HTTP_HOST'];
+ 	 $extra = 'flex_kitchen/index.php';
+ 	 if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin']==="1"){
+	 	$extra = 'flex_kitchen/admin.php';
+	 }
+
+	 	
+ 	 header("Location: http://$host/$extra");
   } else {
  	 $errorMessage = "E-Mail oder Passwort war ungültig<br>";
   }
  $conn->close();
-}
 
 
-function setSession($userId){
-	$sql = 'SELECT * FROM person WHERE id ='.$userId;
+
+function setSession($attributeName, $attributeValue){
+
+	session_unset();
+	$sql = 'SELECT * FROM person WHERE '.$attributeName.'='.$attributeValue;
 	$conn =getDBConnection();
 	$result = $conn->query($sql);
-	if ($result->num_rows > 0) {
+	if ($result->num_rows > 0 ) {
     	while($row = $result->fetch_assoc()) {
+    		//TODO activate here if password re
+    		if(md5($_REQUEST['password']) != $row['user_pw']){
+    			$errorMessage ="wrong password";	
+    			return false;
+    		}
+    		$errorMessage =  "session is created";
+
         	$_SESSION['userid'] = $row["id"];
         	$_SESSION['isAdmin'] = $row['is_admin'];
     	}

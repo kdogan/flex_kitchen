@@ -1,5 +1,8 @@
 
-<?php include ("php_script.php"); ?>
+<?php 
+  include ("php_script.php"); 
+  include ("php_scripts/login.php");
+?>
 <?php
 $functions = new functions();
 $functions->getSiteHead();
@@ -7,8 +10,8 @@ echo '
 </head>
 <body>
   <script type="text/javascript">
-      if(getCookie("userid") !=""){
-        setLoggedUser(getCookie("userid"));
+      if('.array_key_exists("isAdmin",$_SESSION).'){
+        setLoggedUser('.$_SESSION["userid"].');
       }else{
         window.location.href = "index.php";
       }
@@ -28,7 +31,7 @@ echo '</div>
 <!-- Header: second column End-->
 <!-- Header: third column -->
   <div class="header_third_column">
-    <div style="float:right"><img style="width:50px; float:right;" src="logout.ico" href="#" onclick="logout(\'userid\')"></img></div>
+    <div style="float:right"><img style="width:50px; float:right;" src="logout.ico" href="#" onclick="closeAdminSite()"></img></div>
     <div style="float:right"><form class="search_form"><input type="text" id="search" onkeyup="myFunction()" placeholder="Search for article.." title="Type in a name"></form></div>
   </div>
   <!-- Header: third column End-->

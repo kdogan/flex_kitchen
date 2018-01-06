@@ -5,7 +5,7 @@ include("dbConnector.php");
 $id = $_GET["id"];
 
 if(isset($id)){
-$sql = 'SELECT * FROM person WHERE id ='.$id;
+$sql = 'SELECT * FROM person WHERE is_admin="0" and id ='.$id;
 $conn =getDBConnection();
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {

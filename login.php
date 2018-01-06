@@ -1,5 +1,5 @@
 <?php
-include ("php_scripts/login.php");
+//include ("php_scripts/login.php");
 echo'
 <style>
 /* Full-width input fields */
@@ -124,7 +124,7 @@ span.psw {
 
 <div id="id01" class="login_modal">
   
-  <form class="login_modal-content login_animate login_form" action="php_scripts/login.php" method="post">
+  <form class="login_modal-content login_animate login_form" action="php_scripts/login.php?login=1" method="POST">
     <div class="imgcontainer">
       <div onclick="document.getElementById(\'id01\').style.display=\'none\'" class="login_close" title="Close Modal">&times;</div>
       <img style="width:200px"src="img/login_avatar.png" alt="Avatar" class="avatar">
@@ -135,11 +135,11 @@ span.psw {
       <input class="login_input" type="text" placeholder="Enter EMail" name="email" required>
 
       <label><b>Password</b></label>
-      <input class="login_input" type="password" placeholder="Enter Password" name="psw" required>
+      <input class="login_input" type="password" placeholder="Enter Password" name="password" required>
         
       <button type="submit">Login</button>
     </div>
-    <div>foo</div>
+    <div>'.$errorMessage.'</div>
   </form>
   
 </div>

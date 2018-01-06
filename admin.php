@@ -1,25 +1,25 @@
 
 <?php 
-include ("php_scripts/administration.php"); 
 include ("php_script.php");
+include ("php_scripts/login.php");
 ?>
 
 <?php
-$administration = new administration();
 $functions = new functions();
 $functions->getSiteHead();
 
-echo'
-<script type="text/javascript" src="js/administration.js"></script>
-<head>
-<script>
-function checkCookie() {
-
-    // hier muss die Admin session geprüft werden
-}
+echo '
+	<script type="text/javascript" src="js/administration.js"></script>
+	<head>
+	<script>
+	function checkAccessForCurrentUser() {';
+	echo "if(".$_SESSION["isAdmin"]." == 0){
+		alert('Access danied for user id ".$_SESSION["userid"]."! You are not admin');
+		window.location.href = \"index.php\";}";
+echo '}
 </script>
 </head>
-<body onLoad="checkCookie();">
+<body onLoad="checkAccessForCurrentUser();">
 
 <div class="flex-container">
 <header>
@@ -37,7 +37,27 @@ function checkCookie() {
   
 <div class="content">';
   
-  $administration->getFirstContentOfAdminSite();
+  echo '
+<menu>
+  <li style="width:fil-content">
+      <div class="user_div">
+        <div class="user_img" style="background-image: url(\'img/users.png\');" href="#" onclick="showUsers()"></div>
+        <p>Employees</p>
+      </div>           
+    </li>
+    <li style="width:fil-content">
+      <div class="user_div">
+        <div class="user_img" style="background-image: url(\'img/products.png\');" href="#" onclick="showUsers()"></div>
+        <p>Products</p>
+      </div>    
+    </li>
+    <li style="width:fil-content">
+      <div class="user_div">
+        <div class="user_img" style="background-image: url(\'img/setting.png\');" href="#" onclick="showUsers()"></div>
+        <p>Setting</p>
+      </div>    
+    </li>
+  </menu>';
   
 echo '</div>';
 $functions->getFooter();

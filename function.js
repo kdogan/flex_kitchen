@@ -50,7 +50,7 @@ function destroyPHPSession(){
 function setPHPSession(userId){
   var sessionCreated = false;
   $.ajax({
-      url: 'php_scripts/login.php?user_id='+userId,
+      url: 'php_scripts/login.php?user_id='+userId+'&password=0',//TODO : set password if required
       async: false,
       success: function(html) {
         var obj = JSON.parse(html);
@@ -132,20 +132,28 @@ function setLoggedUser(id) {
           });
     setAccountBalance(id,1);
 }
-
+function closeAdminSite(){
+  $.ajax({
+      url: 'php_scripts/login.php?logoutRequested=1',
+      success: function(html) {
+            var obj = JSON.parse(html);
+            window.location.href = "index.php";
+      }
+  });
+}
 function setAccountBalance(personId, lastEntryRequsted){
 
   $.ajax({
-            url: 'php_scripts/dbPersonArticleMatrix.php?person_id='+personId+'&lastEntry='+lastEntryRequsted,
-            success: function(html) {
-                      var obj = JSON.parse(html);
+      url: 'php_scripts/dbPersonArticleMatrix.php?person_id='+personId+'&lastEntry='+lastEntryRequsted,
+      success: function(html) {
+            var obj = JSON.parse(html);
 
-                      if(obj.name !="" || obj.price !=""){
-                        // set logged user name
-                        document.getElementById('lastBuy').innerHTML = obj.name;
-                      }
-                    }
-          });
+            if(obj.name !="" || obj.price !=""){
+              // set logged user name
+              document.getElementById('lastBuy').innerHTML = obj.name;
+            }
+      }
+  });
 }
 
 function sendSelectedProductForUser(){
