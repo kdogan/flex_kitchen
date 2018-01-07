@@ -75,4 +75,29 @@ function setSession($attributeName, $attributeValue){
 	$conn->close();     
 }
 
+function hasSession(){
+	if(array_key_exists('userid', $_SESSION)){
+		if($_SESSION['userid'] =="-1"){
+			return 0;
+		}else{
+			return 1;
+		}
+
+	}
+	else{
+		return 0;
+	}
+}
+function isAdmin(){
+	if(hasSession()){
+		if($_SESSION["isAdmin"] == 0 || $_SESSION["isAdmin"] == -1){
+			return 0;
+		}else{
+			return 1;
+		}
+	}else{
+		return 0;
+	}
+}
+
 ?>

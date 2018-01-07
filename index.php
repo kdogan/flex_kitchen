@@ -11,14 +11,14 @@ echo'
 <head>
 <script>
 function checkCookie() {
-      if('.$_SESSION["isAdmin"].'==-1){
-      
-      }else if('.$_SESSION["isAdmin"].'){
-        document.getElementById("adminLoginBtn").style.display="none";
-        window.location.href = "admin.php";
+  if('.hasSession().'){
+    if('.isAdmin().'){
+      document.getElementById("adminLoginBtn").style.display="none";
+      window.location.href = "admin.php";
       }else{
         window.location.href = "articles.php";
       }
+  }
     
 }
 </script>

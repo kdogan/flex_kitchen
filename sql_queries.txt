@@ -6,7 +6,7 @@ CREATE TABLE `person` ( `id` INT UNSIGNED NOT NULL ,
 `lastname` VARCHAR(30) NOT NULL , 
 `email` VARCHAR(50) NOT NULL , 
 `tel_no` INT UNSIGNED NOT NULL , 
-`account_balance` double NOT NULL , 
+`account_balance` float NOT NULL , 
 PRIMARY KEY (`id`)) 
 ENGINE = InnoDB;
 
