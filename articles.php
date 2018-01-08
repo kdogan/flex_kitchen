@@ -10,7 +10,7 @@ echo '
 </head>
 <body>
   <script type="text/javascript">
-      if('.array_key_exists("isAdmin",$_SESSION).'){
+      if('.!isAdmin().'){
         setLoggedUser('.$_SESSION["userid"].');
       }else{
         window.location.href = "index.php";
