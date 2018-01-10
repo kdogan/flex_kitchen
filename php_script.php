@@ -37,6 +37,9 @@ class functions {
         }
         echo $result;
     }
+
+    
+
     public function getArticleLIs(){
 
         $persons = $this -> getAllFromTable("article");
@@ -57,6 +60,28 @@ class functions {
             }
         }
         echo $result;
+    }
+
+    public function getAdminPageContent(){
+
+        echo   '<li style="width:fil-content">
+      <div class="user_div">
+        <div class="user_img" style="background-image: url(\'img/users.png\');" href="#" onclick="getUsersInAdminPage()"></div>
+        <p>Employees</p>
+      </div>           
+    </li>
+    <li style="width:fil-content">
+      <div class="user_div">
+        <div class="user_img" style="background-image: url(\'img/products.png\');" href="#" onclick="showProducts()"></div>
+        <p>Products</p>
+      </div>    
+    </li>
+    <li style="width:fil-content">
+      <div class="user_div">
+        <div class="user_img" style="background-image: url(\'img/setting.png\');" href="#" onclick="showSetting()"></div>
+        <p>Setting</p>
+      </div>    
+    </li>';
     }
 
     public function getActiveUserIcon(){
@@ -84,7 +109,7 @@ class functions {
         </table>';
     }
 
-    private function getAllFromTable($tableName){
+    public function getAllFromTable($tableName){
 
         $conn = $this->getDBConnection();
         if (!$conn) {
@@ -110,7 +135,7 @@ class functions {
     }
 
     public function getFooter(){
-        echo '<footer>Copyright &copy; e-oku.de</footer>
+        echo '<footer id="footer">Copyright &copy; e-oku.de</footer>
             </div>
             </body>
             </html>';

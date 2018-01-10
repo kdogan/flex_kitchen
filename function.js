@@ -178,5 +178,4 @@ function setSelectedArticleNameInPopupWindow(articleId){
                }
           });
 }
-
-
+  
