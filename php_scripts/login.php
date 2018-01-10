@@ -77,15 +77,14 @@ function setSession($attributeName, $attributeValue){
 
 function hasSession(){
 	if(array_key_exists('userid', $_SESSION)){
-		if($_SESSION['userid'] =="-1"){
-			return 0;
-		}else{
-			return 1;
-		}
-
+	   if($_SESSION['userid'] =="-1"){
+		return 0;
+	   }else{
+		return 1;
+	   }
 	}
 	else{
-		return 0;
+	   return 0;
 	}
 }
 function isAdmin(){
@@ -97,6 +96,15 @@ function isAdmin(){
 		}
 	}else{
 		return 0;
+	}
+}
+
+function getSessionUserId(){
+	if(hasSession()){
+	   $uId = $_SESSION['userid'];
+	   return $uId;
+	}else{
+	   return -1;
 	}
 }
 
