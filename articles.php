@@ -10,11 +10,14 @@ echo '
 </head>
 <body>
   <script type="text/javascript">
-      if('.!isAdmin().'){
-        setLoggedUser('.$_SESSION["userid"].');
-      }else{
-        window.location.href = "index.php";
-      }
+  if('.!hasSession().'){
+    window.location.href = "index.php";
+  }
+    if('.!isAdmin().'){
+      setLoggedUser('.getSessionUserId().');
+    }else{
+      window.location.href = "index.php";
+    }
   </script>
 <div class="flex-container">
 <header> 
