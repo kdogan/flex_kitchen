@@ -22,9 +22,8 @@ if(isset($_GET['user_id'])){
 
 if(isset($_GET['logoutRequested'])){
 	session_unset();
-	$_SESSION['userid'] = "-1";
-    $_SESSION['isAdmin'] = "-1";
-	$response['logout'] = "succeeded";
+	session_destroy();
+	$response['logout'] = 1;
 	echo json_encode($response);
 }
 
@@ -76,12 +75,8 @@ function setSession($attributeName, $attributeValue){
 }
 
 function hasSession(){
-	if(array_key_exists('userid', $_SESSION)){
-	   if($_SESSION['userid'] =="-1"){
-		return 0;
-	   }else{
+	if(count($_SESSION) > 0){
 		return 1;
-	   }
 	}
 	else{
 	   return 0;
@@ -89,7 +84,7 @@ function hasSession(){
 }
 function isAdmin(){
 	if(hasSession()){
-		if($_SESSION["isAdmin"] == 0 || $_SESSION["isAdmin"] == -1){
+		if($_SESSION["isAdmin"] == 0){
 			return 0;
 		}else{
 			return 1;
@@ -100,12 +95,7 @@ function isAdmin(){
 }
 
 function getSessionUserId(){
-	if(hasSession()){
-	   $uId = $_SESSION['userid'];
-	   return $uId;
-	}else{
-	   return -1;
-	}
+	   return $_SESSION['userid'];;
 }
 
 ?>

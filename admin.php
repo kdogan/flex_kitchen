@@ -12,9 +12,15 @@ echo '
 	<head>
 	<script>
 	function checkAccessForCurrentUser() {
-		if('.!isAdmin().'){
+		if('.isAdmin().'){
+			
+		}else{
 			alert("Access danied for this user! You are not admin");
-			window.location.href = "index.php";
+			if('.hasSession().'){
+				window.location.href = "articles.php";
+			}else{
+				window.location.href = "index.php";
+			}
 		}
 	}
 	function searchUserInAdminPage(){

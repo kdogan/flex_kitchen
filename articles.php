@@ -9,8 +9,12 @@ $functions->getSiteHead();
 echo '
 <script type="text/javascript">
   function checkCookie(){
-      if('.!isAdmin().'){
-        setLoggedUser('.getSessionUserId().');
+      if('.hasSession().'){
+        if('.isAdmin().'){
+          window.location.href = "admin.php";
+        }else{
+          setLoggedUser('.getSessionUserId().');
+        }
       }else{
         window.location.href = "index.php";
       }
