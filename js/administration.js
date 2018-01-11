@@ -18,7 +18,7 @@ function goToAdminHome(){
       url: 'php_scripts/adminPageContent.php?adminHomeRequested=1',
       success: function(html) {
         
-        document.getElementById('admin_home_manu').innerHTML = html;
+        document.getElementById('contentInAdminPage').innerHTML = html;
       }
    });
 }

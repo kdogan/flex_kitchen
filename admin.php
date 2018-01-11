@@ -26,7 +26,7 @@ echo '
 	function searchUserInAdminPage(){
 		
       var value = document.getElementById("searchInAdminPage").value;
-      $("menu > div").each(function() {
+      $(".column").each(function() {
           if ($(this).text().toLowerCase().search(value.toLowerCase()) > -1) {
               $(this).show();
           }
@@ -54,7 +54,7 @@ echo '
 </div>
 </header>
   
-<div class="content">
+<div class="content" id="contentInAdminPage">
 <menu id="admin_home_manu">';
 $functions->getAdminPageContent();
 
