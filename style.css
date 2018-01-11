@@ -204,3 +204,33 @@ input[type=text] {
     padding:5px 10px;
     font-size: 100%;
 }
+
+
+
+/** ADMIN ****
+/* Create two equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 4px;
+    height: 120px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.box1, .box2, .box3{
+  float: left;
+  margin-right: 3.33333%;
+  margin-right: 3.33333%;
+  padding: 1px;
+  box-sizing: border-box;
+  max-height: 120px;
+}
+.box1 {width: 20%;}
+.box2 {width: 40%;}
+.box2 {width: 40%;}
