@@ -7,18 +7,18 @@
 $functions = new functions();
 $functions->getSiteHead();
 echo '
-</head>
-<body>
-  <script type="text/javascript">
-  if('.!hasSession().'){
-    window.location.href = "index.php";
+<script type="text/javascript">
+  function checkCookie(){
+      if('.!isAdmin().'){
+        setLoggedUser('.getSessionUserId().');
+      }else{
+        window.location.href = "index.php";
+      }
   }
-    if('.!isAdmin().'){
-      setLoggedUser('.getSessionUserId().');
-    }else{
-      window.location.href = "index.php";
-    }
   </script>
+</head>
+<body onLoad="checkCookie();">
+  
 <div class="flex-container">
 <header> 
 <!-- Header: first column -->
