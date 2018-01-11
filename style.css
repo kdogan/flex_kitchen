@@ -231,6 +231,6 @@ input[type=text] {
   box-sizing: border-box;
   max-height: 120px;
 }
-.box1 {width: 20%;}
-.box2 {width: 40%;}
-.box2 {width: 40%;}
+.box1 {width: 10%;}
+.box2 {width: 45%;}
+.box2 {width: 45%;}
