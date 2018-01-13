@@ -1,8 +1,5 @@
 <?php
-include ("dbConnector.php");
 session_start();
-$conn =getDBConnection();
-
 $errorMessage="";
 
 // Remove Session
@@ -35,6 +32,7 @@ if(isset($_GET['login'])) {
  	 $errorMessage="Login success!";
  	 $host  = $_SERVER['HTTP_HOST'];
  	 $extra = 'flex_kitchen/index.php';
+
  	 if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin']==="1"){
 	 	$extra = 'flex_kitchen/admin.php';
 	 }
@@ -44,31 +42,32 @@ if(isset($_GET['login'])) {
   } else {
  	 $errorMessage = "E-Mail oder Passwort war ungültig<br>";
   }
- $conn->close();
 
 
 
 function setSession($attributeName, $attributeValue){
+	require_once("./dbConnector.php");
+    $db = new dbConnector();
+    $conn = $db->getDBConnection();
 
 	session_unset();
 	$sql = 'SELECT * FROM person WHERE '.$attributeName.'='.$attributeValue;
-	$conn =getDBConnection();
 	$result = $conn->query($sql);
 	if ($result->num_rows > 0 ) {
     	while($row = $result->fetch_assoc()) {
     		//TODO activate here if password re
     		if(md5($_REQUEST['password']) != $row['user_pw']){
     			$errorMessage ="wrong password";	
-    			return false;
+    			return 0;
     		}
     		$errorMessage =  "session is created";
 
         	$_SESSION['userid'] = $row["id"];
         	$_SESSION['isAdmin'] = $row['is_admin'];
     	}
-    	return true;
+    	return 1;
 	} else {
-    	return false;
+    	return 0;
 	}
 	
 	$conn->close();     

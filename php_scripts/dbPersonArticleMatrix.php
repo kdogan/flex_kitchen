@@ -1,9 +1,11 @@
 <?php
 include("dbConnector.php");
+$db = new dbConnector();
+$conn = $db->getDBConnection();
 
 $person_id = $_GET["person_id"];
 $isLastEntryRequested = $_GET["lastEntry"];
-$conn =getDBConnection();
+
 
 if(!isset($isLastEntryRequested) || $isLastEntryRequested != 1){
     $sql = 'SELECT * FROM person_article_matrix WHERE person_id ='.$person_id.' ORDER BY ID DESC LIMIT 1';

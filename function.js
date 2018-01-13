@@ -24,7 +24,7 @@ function clickUser(user, id){
   destroyPHPSession();
   deleteCoockie();
   // set new cookie
-    if(setPHPSession(id)){
+  if(setPHPSession(id)){
     setCookie(id,1);
     window.location.href = "articles.php";
   }
@@ -48,7 +48,7 @@ function destroyPHPSession(){
 }
 
 function setPHPSession(userId){
-  var sessionCreated = false;
+  var sessionCreated = 0;
   $.ajax({
       url: 'php_scripts/login.php?user_id='+userId+'&password=0',//TODO : set password if required
       async: false,

@@ -16,6 +16,7 @@ echo '
           setLoggedUser('.getSessionUserId().');
         }
       }else{
+        alert("Foo");
         window.location.href = "index.php";
       }
   }
@@ -26,9 +27,9 @@ echo '
 <div class="flex-container">
 <header> 
 <!-- Header: first column -->
-  <div class="header_first_column">';
-    $functions->getActiveUserIcon();
-echo '
+  <div class="header_first_column">
+    <div id="loggedUserImg" style="width:60px;height:60px;float:left; background-image:url(\'default_user_img.png\');background-repeat:no-repeat;background-size: cover"></div>
+    <div style="float:left"> <p id="loggedUserName"></p></div>
 </div> 
 <!-- Header: first column End-->
 <!-- Header: second column -->

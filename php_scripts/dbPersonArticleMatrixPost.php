@@ -1,5 +1,7 @@
 <?php 
 include("dbConnector.php");
+$db = new dbConnector();
+$conn = $db->getDBConnection();
 
 $selectedArticleId = $_GET["selectedArticleId"];
 $personId =  $_GET["personId"];

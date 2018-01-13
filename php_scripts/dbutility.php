@@ -1,12 +1,13 @@
 <?php
 include("dbConnector.php");
+$db = new dbConnector();
+$conn = $db->getDBConnection();
 
 
 $id = $_GET["id"];
 
 if(isset($id)){
 $sql = 'SELECT * FROM person WHERE is_admin="0" and id ='.$id;
-$conn =getDBConnection();
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
@@ -21,6 +22,7 @@ if ($result->num_rows > 0) {
 } else {
     echo "-1";
 }
-$conn->close();     
+$conn->close(); 
+    
 }
 ?>

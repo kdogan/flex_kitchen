@@ -6,14 +6,12 @@
  */
 class functions {
     
-    //Yapıcı sınıfımız tanımlandı
+
     public function __construct(){
+        
     }
     
-    public function getDBConnection(){
-        $conn = mysqli_connect("localhost", "flex_kitchen", "root", "flex_kitchen");
-        return $conn;
-    }
+    
     /*
      * Url adresi verilen sayfanın içeriğini döndürür
      * $url => varchar
@@ -84,12 +82,6 @@ class functions {
     </li>';
     }
 
-    public function getActiveUserIcon(){
-        echo 
-            '<div id="loggedUserImg" style="width:60px;height:60px;float:left; background-image:url(\'default_user_img.png\');background-repeat:no-repeat;background-size: cover"></div>
-             <div style="float:left"> <p id="loggedUserName"></p></div>';
-    }
-
     public function getUserAccountBalance(){
 
         echo '
@@ -110,8 +102,9 @@ class functions {
     }
 
     public function getAllFromTable($tableName){
-
-        $conn = $this->getDBConnection();
+        require_once("php_scripts/dbConnector.php");
+        $db = new dbConnector();
+        $conn = $db->getDBConnection();
         if (!$conn) {
             die('Verbindung schlug fehl: ' . mysql_error());
         }
@@ -121,6 +114,7 @@ class functions {
         return $result;
 
     }
+
 
     public function getSiteHead(){
         echo '<!DOCTYPE html>
