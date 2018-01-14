@@ -40,7 +40,7 @@ echo '</div>
 <!-- Header: third column -->
   <div class="header_third_column">
     <div style="float:right"><img style="width:50px; float:right;" src="logout.ico" href="#" onclick="closeAdminSite()"></img></div>
-    <div style="float:right"><form class="search_form"><input type="text" id="search" onkeyup="myFunction()" placeholder="Search for article.." title="Type in a name"></form></div>
+    <div style="float:right"><form class="search_form"><input class="search" type="text" id="search" onkeyup="myFunction()" placeholder="Search for article.." title="Type in a name"></form></div>
   </div>
   <!-- Header: third column End-->
 </header>

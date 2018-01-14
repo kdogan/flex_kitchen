@@ -34,7 +34,7 @@ function checkCookie() {
 <div class="header_third_column">
   <form class="search_form">
   <div style="float:right" id="adminLoginBtn"><img style="width:50px; float:right;" src="img/adminLogginImg.png" href="#" onclick="login()"></img></div>
-   <div style="float:right"> <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"></div>
+   <div style="float:right"> <input type="text" class="search" id="search" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"></div>
   </form>
 </div>
 </header>

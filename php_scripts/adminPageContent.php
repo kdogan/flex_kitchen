@@ -39,9 +39,9 @@ function getUserDivsInAdminPage(){
                         <div class="box2">
                             <table>
                                 <tr>
-                                  <td>Name</td>
-                                  <td>:</td>
-                                  <td id="loggedUserName">'.$user.'</td>
+                                  <td style="float:left">Name</td>
+                                  <td style="float:left">:</td>
+                                  <td style="float:left; font-weight: bold" id="loggedUserName">'.$user.'</td>
                                 </tr>
                                 <tr>
 						            <td style="float:left"> Kontozustand </td>
@@ -58,7 +58,17 @@ function getUserDivsInAdminPage(){
 						         
                                 </table>
                                 </div>
-                        <div class="box3">Box3</div>
+                        		<div class="box3">
+                        		<table>
+                        		<tr>
+                                  <td style="float:left" ><input class="payment_input" type="text"></td>
+                                </tr>
+                                <tr>
+                                  <td style="float:left;" ><button class="button">Bezahlen</button></td>
+                                </tr>
+                                </table>
+                        	
+                        </div>
                     </div>';
         }
     }

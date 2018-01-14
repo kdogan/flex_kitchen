@@ -112,7 +112,7 @@ menu li {
   border-style: 1px solid;
 }
 
-input[type=text] {
+.search {
     width: 100%;
     box-sizing: border-box;
     border: 1px solid #ccc;
@@ -234,3 +234,28 @@ input[type=text] {
 .box1 {width: 10%;}
 .box2 {width: 45%;}
 .box2 {width: 45%;}
+
+.payment_input{
+  width: 104px;
+  height: 40px;
+  padding: 1px;
+  border:none;
+  border: 1px solid #555;
+  font-weight: bold;
+}
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 0px 1px;
+    cursor: pointer;
+}
+.button:hover{
+     background: #383;
+}
