@@ -35,6 +35,15 @@ echo '
           }
       });
 	}
+	function checkInputForNumber()
+	{
+		var x=document.forms["myForm"]["age"].value;
+		var regex=/^\-?([1-9]\d*|0)(\.\d?[1-9])?$/;// e.g 23.25
+		if (!x.match(regex))
+		{
+		    document.getElementById["errorMsgInUserPayment"].innerHTML = <p>Bitte geben Sie einen gültigen Betrag ein. z.B. 2.50</p>;
+		}
+	}
 </script>
 </head>
 <body onLoad="checkAccessForCurrentUser()">
