@@ -55,19 +55,20 @@ function getUserDivsInAdminPage(){
 						            <td style="float:left">:</td>
 						            <td style="float:left; font-weight: bold" id="lastBuy">'.$lastPurchase->{"name"}.' ('.$lastPurchase->{"buy_date"}.')</td>
 						         </tr>
-						         
                                 </table>
                                 </div>
                         		<div class="box3">
                         		<table>
+                                <tr>
+                                <td id="errorMsgInUserPayment"></td>
+                                </tr>
                         		<tr>
-                                  <td style="float:left" ><input class="payment_input" type="text"></td>
+                                  <td style="float:left" ><input class="payment_input" onkeyup="checkInputForNumber()" type="text"></td>
                                 </tr>
                                 <tr>
                                   <td style="float:left;" ><button class="button">Bezahlen</button></td>
                                 </tr>
                                 </table>
-                        	
                         </div>
                     </div>';
         }
