@@ -30,6 +30,7 @@ function getUserDivsInAdminPage(){
             $user = $row["firstname"].' '.$row["lastname"];
             $id = $row["id"];
             $accountBalance = $row["account_balance"];
+            $payButtonId = 'payButton_'.$id;
 
             $fetchedData = $fetchDataFromDB->getLastPurchases($id);
             $lastPurchase =json_decode($fetchedData);
@@ -58,18 +59,10 @@ function getUserDivsInAdminPage(){
                                 </table>
                                 </div>
                         		<div class="box3">
-                        		<table>
-                                <tr>
-                                <td id="errorMsgInUserPayment"></td>
-                                </tr>
-                        		<tr>
-                                  <td style="float:left" ><input class="payment_input" onkeyup="checkInputForNumber()" type="text"></td>
-                                </tr>
-                                <tr>
-                                  <td style="float:left;" ><button class="button">Bezahlen</button></td>
-                                </tr>
-                                </table>
-                        </div>
+                        			<div style="float:left;width:100%;font-size:10px" id="errorMsgInUserPayment"></div>
+                        			<div style="float:left;width:100%"><input class="payment_input" id="payment_input" placeholder="e.g. 2.50"onkeyup="checkInputForNumber(\''.$payButtonId.'\')" type="text"></div>
+                        			<div style="float:left;width:100%; margin-top:2px"><button id="'.$payButtonId.'" class="button">Bezahlen</button></div>
+                        		</div>
                     </div>';
         }
     }

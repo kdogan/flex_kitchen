@@ -35,13 +35,19 @@ echo '
           }
       });
 	}
-	function checkInputForNumber()
+	function checkInputForNumber(buttonId)
 	{
-		var x=document.forms["myForm"]["age"].value;
-		var regex=/^\-?([1-9]\d*|0)(\.\d?[1-9])?$/;// e.g 23.25
+		var input = document.getElementById("payment_input");
+		var payButton = document.getElementById(buttonId);
+		input.style.backgroundColor="#FFF";
+		payButton.disabled = false;
+		var x=document.getElementById("payment_input").value;
+		var regex=/^\-?([1-9]\d*|0)(\.\d?[1-9])?$/;
+		if(x=="") return;
 		if (!x.match(regex))
 		{
-		    document.getElementById["errorMsgInUserPayment"].innerHTML = <p>Bitte geben Sie einen gültigen Betrag ein. z.B. 2.50</p>;
+			payButton.disabled = true;
+		    input.style.backgroundColor="#FF0000";
 		}
 	}
 </script>

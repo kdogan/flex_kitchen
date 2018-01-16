@@ -16,7 +16,6 @@ echo '
           setLoggedUser('.getSessionUserId().');
         }
       }else{
-        alert("Foo");
         window.location.href = "index.php";
       }
   }
