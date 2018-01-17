@@ -35,19 +35,20 @@ echo '
           }
       });
 	}
-	function checkInputForNumber(buttonId)
+	function checkInputForNumber(inputPayment,buttonId)
 	{
-		var input = document.getElementById("payment_input");
+		var input = document.getElementById(inputPayment);
 		var payButton = document.getElementById(buttonId);
 		input.style.backgroundColor="#FFF";
-		payButton.disabled = false;
-		var x=document.getElementById("payment_input").value;
+		payButton.disabled = true;
+		var x=input.value;
 		var regex=/^\-?([1-9]\d*|0)(\.\d?[1-9])?$/;
 		if(x=="") return;
 		if (!x.match(regex))
 		{
-			payButton.disabled = true;
 		    input.style.backgroundColor="#FF0000";
+		}else{
+			payButton.disabled = false;
 		}
 	}
 </script>

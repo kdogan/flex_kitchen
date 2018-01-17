@@ -2,19 +2,33 @@
 
 
 $id = $_GET["id"];
-
-if(isset($id)){
+$amound = $_GET["amound"];
+if(isset($id) && !isset($amound)){
 	//TODO before execution of sql queries check if current user has right to access
  	$response = getPersonFromDB($id);
  	echo json_encode($response);
 }
 
+if(isset($id) && isset($amound)){
+	$response = updateAccountBalanceOfUser($id, $amound);
+ 	echo json_encode($response);
+}
+
 function updateAccountBalanceOfUser($userId, $amound){
+	require_once("dbConnector.php");
+	$db = new dbConnector();
+	$conn = $db->getDBConnection();
 	$person = getPersonFromDB($userId);
 	$oldAccountBalance = floatval($person["account_balance"]);
 	$newAccountBalance = $oldAccountBalance + floatval($amound);
-
+	$response = "Record updated successfully";
 	$sql = 'UPDATE person SET account_balance = '.$newAccountBalance.'WHERE id ='.$userId;
+
+	if ($conn->query($sql) === FALSE) {
+    	$response = "Error updating record: " . $conn->error;
+	} 
+	return $response;
+	$conn->close(); 
 }
 
 function getPersonFromDB($userId){
