@@ -39,18 +39,42 @@ echo '
 	{
 		var input = document.getElementById(inputPayment);
 		var payButton = document.getElementById(buttonId);
-		input.style.backgroundColor="#FFF";
-		payButton.disabled = true;
+		//input.style.backgroundColor="#FFF";
+		
 		var x=input.value;
-		var regex=/^\-?([1-9]\d*|0)(\.\d?[1-9])?$/;
-		if(x=="") return;
-		if (!x.match(regex))
+		
+		if (!isInputedAmoundValid(x) && x !="")
 		{
 		    input.style.backgroundColor="#FF0000";
 		}else{
-			payButton.disabled = false;
+			input.style.backgroundColor="#FFF";
 		}
 	}
+	function updateUserAmound(userId, inputFieldId){
+
+	  var input = document.getElementById(inputFieldId);
+	  var amound = input.value;
+	  if(isInputedAmoundValid(amound)){
+	    $.ajax({
+	      url: \'php_scripts/dbutility.php?id=\'+userId+\'&amound=\'+amound,
+	      success: function(html) {
+	                var obj = JSON.parse(html);
+	                var idOfBalanceToBeUpdated = "accountBalance"+userId;
+	                document.getElementById(idOfBalanceToBeUpdated).innerHTML = obj["newBalance"]+" €";
+	               }
+	    });
+	  }
+	}
+
+function isInputedAmoundValid(value){
+  var regex=/^\-?([1-9]\d*|0)(\.\d?[1-9])?$/;
+  if(value=="" || !value.match(regex)) {
+    return false;
+  }
+  else{
+    return true
+  }
+}
 </script>
 </head>
 <body onLoad="checkAccessForCurrentUser()">

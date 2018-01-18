@@ -21,12 +21,14 @@ function updateAccountBalanceOfUser($userId, $amound){
 	$person = getPersonFromDB($userId);
 	$oldAccountBalance = floatval($person["account_balance"]);
 	$newAccountBalance = $oldAccountBalance + floatval($amound);
-	$response = "Record updated successfully";
+	$response = "";
 	$sql = 'UPDATE person SET account_balance = '.$newAccountBalance.'WHERE id ='.$userId;
 
 	if ($conn->query($sql) === FALSE) {
     	$response = "Error updating record: " . $conn->error;
-	} 
+	}else{
+		$response = array('newBalance'=>(string)$newAccountBalance);
+	}
 	return $response;
 	$conn->close(); 
 }

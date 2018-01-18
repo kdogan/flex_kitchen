@@ -49,7 +49,7 @@ function getUserDivsInAdminPage(){
 						            <td style="float:left"> Kontozustand </td>
 						            <td style="float:left">:</td>
 						            <td style="float:left; font-weight: bold" > 
-						                <div style="background-color: white;border-radius:50% ;padding:3px 15px 3px 15px; color:black" id="accountBalance">'.$accountBalance.' €</div>
+						                <div style="background-color: white;border-radius:50% ;padding:3px 15px 3px 15px; color:black" id="accountBalance'.$id.'">'.$accountBalance.' €</div>
 						            </td>
 						         </tr>
 						         <tr>
@@ -64,7 +64,7 @@ function getUserDivsInAdminPage(){
                         			<div style="float:left;width:100%">
                         				<input class="payment_input" id="'.$inputPayment.'" placeholder="e.g. 2.50"onkeyup="checkInputForNumber(\''.$inputPayment.'\',\''.$payButtonId.'\')" type="text"></div>
                         			<div style="float:left;width:100%; margin-top:2px">
-                        				<a id="'.$payButtonId.'" class="button" type="button" disabled>Bezahlen</a>
+                        				<button id="'.$payButtonId.'" class="button"  onclick="updateUserAmound(\''.$id.'\',\''.$inputPayment.'\');">Bezahlen</button>
                         			</div>
                         		</div>
                     </div>';
