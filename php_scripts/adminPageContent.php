@@ -11,6 +11,10 @@ if(isset($_REQUEST['adminHomeRequested'])){
 	echo $functions->getAdminPageContent();
 }
 
+if(isset($_REQUEST['productsRequested'])){
+	echo getProductDivsInAdminPage();
+}
+
 function getUserDivsInAdminPage(){
 	require("../php_script.php");
 	require("dbFetchDataFromDB.php");
@@ -37,37 +41,95 @@ function getUserDivsInAdminPage(){
             $lastPurchase =json_decode($fetchedData);
 
             $result = $result.'<div class="column" style="background-color:#aaa000;">
-                        <div class="box1"><img style="width:120px;float:left" src="'.$row["img_path"].'" alt="user image"></div>
-                        <div class="box2">
-                            <table>
-                                <tr>
-                                  <td style="float:left">Name</td>
-                                  <td style="float:left">:</td>
-                                  <td style="float:left; font-weight: bold" id="loggedUserName">'.$user.'</td>
-                                </tr>
-                                <tr>
-						            <td style="float:left"> Kontozustand </td>
-						            <td style="float:left">:</td>
-						            <td style="float:left; font-weight: bold" > 
-						                <div style="background-color: white;border-radius:50% ;padding:3px 15px 3px 15px; color:black" id="accountBalance'.$id.'">'.$accountBalance.' €</div>
-						            </td>
-						         </tr>
-						         <tr>
-						            <td style="float:left"> letzte Kauf </td>
-						            <td style="float:left">:</td>
-						            <td style="float:left; font-weight: bold" id="lastBuy">'.$lastPurchase->{"name"}.' ('.$lastPurchase->{"buy_date"}.')</td>
-						         </tr>
-                                </table>
-                                </div>
-                        		<div class="box3">
-                        			<div style="float:left;width:100%;font-size:10px" id="errorMsgInUserPayment"></div>
-                        			<div style="float:left;width:100%">
-                        				<input class="payment_input" id="'.$inputPayment.'" placeholder="e.g. 2.50"onkeyup="checkInputForNumber(\''.$inputPayment.'\',\''.$payButtonId.'\')" type="text"></div>
-                        			<div style="float:left;width:100%; margin-top:2px">
-                        				<button id="'.$payButtonId.'" class="button"  onclick="updateUserAmound(\''.$id.'\',\''.$inputPayment.'\');">Bezahlen</button>
-                        			</div>
-                        		</div>
-                    </div>';
+            <div class="box1"><img style="width:120px;float:left" src="'.$row["img_path"].'" alt="user image"></div>
+            <div class="box2">
+                <table>
+                    <tr>
+                      <td style="float:left">Name</td>
+                      <td style="float:left">:</td>
+                      <td style="float:left; font-weight: bold" id="loggedUserName">'.$user.'</td>
+                    </tr>
+                    <tr>
+			            <td style="float:left"> Kontozustand </td>
+			            <td style="float:left">:</td>
+			            <td style="float:left; font-weight: bold" > 
+			                <div style="background-color: white;border-radius:50% ;padding:3px 15px 3px 15px; color:black" id="accountBalance'.$id.'">'.$accountBalance.' €</div>
+			            </td>
+			         </tr>
+			         <tr>
+			            <td style="float:left"> letzte Kauf </td>
+			            <td style="float:left">:</td>
+			            <td style="float:left; font-weight: bold" id="lastBuy">'.$lastPurchase->{"name"}.' ('.$lastPurchase->{"buy_date"}.')</td>
+			         </tr>
+                    </table>
+                    </div>
+            		<div class="box3">
+            			<div style="float:left;width:100%;font-size:10px" id="errorMsgInUserPayment"></div>
+            			<div style="float:left;width:100%">
+            				<input class="payment_input" id="'.$inputPayment.'" placeholder="e.g. 2.50"onkeyup="checkInputForNumber(\''.$inputPayment.'\',\''.$payButtonId.'\')" type="text"></div>
+            			<div style="float:left;width:100%; margin-top:2px">
+            				<button id="'.$payButtonId.'" class="button"  onclick="updateUserAmound(\''.$id.'\',\''.$inputPayment.'\');">Bezahlen</button>
+            			</div>
+            		</div>
+            </div>';
+        }
+    }
+    return $result;
+}
+
+function getProductDivsInAdminPage(){
+	require("../php_script.php");
+	$functions = new functions();
+	$products = $functions->getAllFromTable("article");
+    
+    $result = "<h2>No products found... :'(</h2>";
+
+    if($products->num_rows >0){
+        $result = "";
+        while($row = $products->fetch_assoc()){
+            
+            $productName = $row["name"];
+            $productId = $row["id"];
+            $NumOfProducts = $row["count"];
+            $price = $row["price"];
+            $category = $row["category"];
+            $image = $row["img_path"];
+
+            $payButtonId = 'payButton'.$productId;
+    		$inputPayment = 'inputPayment'.$productId;
+
+            $result = $result.'<div class="column" style="background-color:#aaa000;">
+            <div class="box1"><img style="width:120px;float:left" src="'.$image.'" alt="product image"></div>
+            <div class="box2">
+                <table>
+                    <tr>
+                      <td style="float:left">Name</td>
+                      <td style="float:left">:</td>
+                      <td style="float:left; font-weight: bold" id="loggedUserName">'.$productName.'</td>
+                    </tr>
+                    <tr>
+			            <td style="float:left"> Anzahl des Produkts </td>
+			            <td style="float:left">:</td>
+			            <td style="float:left; font-weight: bold" > 
+			              <div style="background-color: white;border-radius:50% ;padding:3px 15px 3px 15px; color:black" id="numOfProduct'.$productId.'">'.$NumOfProducts.' Stück</div>
+			            </td>
+			         </tr>
+			         <tr>
+			            <td style="float:left"> Kategorie</td>
+			            <td style="float:left">:</td>
+			            <td style="float:left; font-weight: bold" id="category'.$productId.'">'.$category.'</td>
+			         </tr>
+                    </table>
+                    </div>
+            		<div class="box3">
+            		  <div style="float:left;width:100%;font-size:10px" id="errorMsgInUserPayment"></div>
+            		  <div style="float:left;width:50%">
+            		   <input class="product_count" id="'.$inputPayment.'" placeholder="e.g. 20"onkeyup="checkInputForNumber(\''.$inputPayment.'\',\''.$payButtonId.'\')" type="text"></div>
+            		   <div style="float:left;width:50%; margin-top:2px">
+            			  <input style="width:40px;margin-left:5px" type="image" src="img/add_product_icon.png" alt="Submit">
+            			</div>
+            		</div>
+                </div>';
         }
     }
     return $result;

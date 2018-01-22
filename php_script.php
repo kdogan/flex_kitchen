@@ -70,7 +70,7 @@ class functions {
     </li>
     <li style="width:fil-content">
       <div class="user_div">
-        <div class="user_img" style="background-image: url(\'img/products.png\');" href="#" onclick="showProducts()"></div>
+        <div class="user_img" style="background-image: url(\'img/products.png\');" href="#" onclick="getProducts()"></div>
         <p>Products</p>
       </div>    
     </li>

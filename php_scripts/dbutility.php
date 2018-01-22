@@ -1,15 +1,15 @@
 <?php
 
-
-$id = $_GET["id"];
-$amound = $_GET["amound"];
-if(isset($id) && !isset($amound)){
+if(isset($_GET["id"]) && !isset($_GET["amound"])){
+	$id=$_GET["id"];
 	//TODO before execution of sql queries check if current user has right to access
  	$response = getPersonFromDB($id);
  	echo json_encode($response);
 }
 
-if(isset($id) && isset($amound)){
+if(isset($_GET["id"]) && isset($_GET["amound"])){
+	$id=$_GET["id"];
+	$amound = $_GET["amound"];
 	$response = updateAccountBalanceOfUser($id, $amound);
  	echo json_encode($response);
 }

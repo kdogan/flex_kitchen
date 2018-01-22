@@ -7,7 +7,15 @@ function getUsersInAdminPage(){
   $.ajax({
       url: 'php_scripts/adminPageContent.php?userRequested=1',
       success: function(html) {
-        
+        document.getElementById('admin_home_manu').innerHTML = html;
+      }
+   });
+}
+
+function getProducts(){
+  $.ajax({
+      url: 'php_scripts/adminPageContent.php?productsRequested=1',
+      success: function(html) {
         document.getElementById('admin_home_manu').innerHTML = html;
       }
    });
@@ -18,7 +26,7 @@ function goToAdminHome(){
       url: 'php_scripts/adminPageContent.php?adminHomeRequested=1',
       success: function(html) {
         
-        document.getElementById('contentInAdminPage').innerHTML = html;
+        document.getElementById('admin_home_manu').innerHTML = html;
       }
    });
 }

@@ -10,6 +10,16 @@ $functions->getSiteHead();
 
 echo '
 	<head>
+	<style>
+	.product_count {
+		width: 60px;
+		height: 40px;
+		padding: 1px;
+		border: none;
+		border: 1px solid #555;
+		font-weight: bold;
+	}
+	</style>
 	<script>
 	function checkAccessForCurrentUser() {
 		if('.isAdmin().'){
@@ -61,6 +71,7 @@ echo '
 	                var obj = JSON.parse(html);
 	                var idOfBalanceToBeUpdated = "accountBalance"+userId;
 	                document.getElementById(idOfBalanceToBeUpdated).innerHTML = obj["newBalance"]+" €";
+	                input.value = "";
 	               }
 	    });
 	  }
@@ -72,7 +83,7 @@ function isInputedAmoundValid(value){
     return false;
   }
   else{
-    return true
+    return true;
   }
 }
 </script>
@@ -95,7 +106,7 @@ function isInputedAmoundValid(value){
 </header>
   
 <div class="content" id="contentInAdminPage">
-<menu id="admin_home_manu">';
+<menu id="admin_home_manu" style="padding-left:0px">';
 $functions->getAdminPageContent();
 
 echo '</menu>
