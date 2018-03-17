@@ -14,6 +14,13 @@ if(isset($_GET["id"]) && isset($_GET["amound"])){
  	echo json_encode($response);
 }
 
+if(isset($_GET["productId"]) && isset($_GET["productNumber"])){
+	$id=$_GET["productId"];
+	$number = $_GET["productNumber"];
+	$response = updateProductNumber($id, $number);
+ 	echo json_encode($response);
+}
+
 function updateAccountBalanceOfUser($userId, $amound){
 	require_once("dbConnector.php");
 	$db = new dbConnector();
@@ -33,6 +40,25 @@ function updateAccountBalanceOfUser($userId, $amound){
 	$conn->close(); 
 }
 
+function updateProductNumber($productId, $productNumber){
+	require_once("dbConnector.php");
+	$db = new dbConnector();
+	$conn = $db->getDBConnection();
+	$product = getProductFromDB($productId);
+	$oldAccountBalance = floatval($product["count"]);
+	$newAccountBalance = $oldAccountBalance + $productNumber;
+	$response = "";
+	$sql = 'UPDATE article SET count = '.$newAccountBalance.' WHERE id ='.$productId;
+
+	if ($conn->query($sql) === FALSE) {
+    	$response = "Error updating record: " . $conn->error;
+	}else{
+		$response = array('newCount'=>(string)$newAccountBalance);
+	}
+	return $response;
+	$conn->close(); 
+}
+
 function getPersonFromDB($userId){
 	require_once("dbConnector.php");
 	$db = new dbConnector();
@@ -47,6 +73,28 @@ function getPersonFromDB($userId){
 	        $response['email'] = $row["email"];
 	        $response['img_path'] = $row["img_path"];
 	        $response['account_balance'] = $row["account_balance"];
+	    }
+	    return $response;
+	} else {
+	    return "-1";
+	}
+	$conn->close(); 
+}
+
+function getProductFromDB($productId){
+	require_once("dbConnector.php");
+	$db = new dbConnector();
+	$conn = $db->getDBConnection();
+	$sql = 'SELECT * FROM article WHERE id ='.$productId;
+	$result = $conn->query($sql);
+	if ($result->num_rows > 0) {
+	    while($row = $result->fetch_assoc()) {
+	        $response['id'] = $row["id"];
+	        $response['name'] = $row["name"];
+	        $response['price'] = $row["price"];
+	        $response['count'] = $row["count"];
+	        $response['category'] = $row["category"];
+	        $response['img_path'] = $row["img_path"];
 	    }
 	    return $response;
 	} else {

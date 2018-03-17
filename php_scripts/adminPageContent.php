@@ -85,7 +85,14 @@ function getProductDivsInAdminPage(){
     $result = "<h2>No products found... :'(</h2>";
 
     if($products->num_rows >0){
-        $result = "";
+        $result = "<div style='width:15%'>
+                        <div style='float:left;width:70%;background-color:yellow'>
+                            <p>Add New Product </p>
+                        </div>
+                        <div style='float:left;width:30%;''>
+                            <button class='button'style='width:100%'>+</button>
+                        </div>
+                    </div>";
         while($row = $products->fetch_assoc()){
             
             $productName = $row["name"];
@@ -122,13 +129,15 @@ function getProductDivsInAdminPage(){
                     </table>
                     </div>
             		<div class="box3">
-            		  <div style="float:left;width:100%;font-size:10px" id="errorMsgInUserPayment"></div>
-            		  <div style="float:left;width:50%">
-            		   <input class="product_count" id="'.$inputPayment.'" placeholder="e.g. 20"onkeyup="checkInputForNumber(\''.$inputPayment.'\',\''.$payButtonId.'\')" type="text"></div>
-            		   <div style="float:left;width:50%; margin-top:2px">
-            			  <input style="width:40px;margin-left:5px" type="image" src="img/add_product_icon.png" alt="Submit">
-            			</div>
-            		</div>
+                        <div style="float:left;width:100%;font-size:10px" id="errorMsgInUserPayment"></div>
+                        <div style="float:left;width:70%">
+                            <input class="payment_input" id="'.$inputPayment.'" onkeyup="checkInputForNumber(\''.$inputPayment.'\',\''.$payButtonId.'\')" type="text">
+                        </div>
+                        <div style="float:left;width:30%;">
+                            <button id="'.$payButtonId.'" class="button"  onclick="updateProductNumber(\''.$productId.'\',\''.$inputPayment.'\');">Add</button>
+                        </div>
+                    </div>
+            		  
                 </div>';
         }
     }

@@ -125,7 +125,7 @@ class functions {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
 <script type="text/javascript" src="function.js"></script>
 <script type="text/javascript" src="js/administration.js"></script>
-<link rel="stylesheet" href="style.css">';  
+<link rel="stylesheet" href="./css/style.css">';  
     }
 
     public function getFooter(){

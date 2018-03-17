@@ -245,18 +245,20 @@ menu li {
 }
 
 .button {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 0px 1px;
-    cursor: pointer;
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  height: 33px;
 }
 .button:hover{
-     background: #383;
+  background: #383;
+}
+.add_product_button{
+  height:100%; position:relative;width:100%;
 }
 

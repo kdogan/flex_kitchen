@@ -19,6 +19,8 @@ echo '
 		border: 1px solid #555;
 		font-weight: bold;
 	}
+	
+
 	</style>
 	<script>
 	function checkAccessForCurrentUser() {
@@ -76,6 +78,28 @@ echo '
 	    });
 	  }
 	}
+
+	function updateProductNumber(productId, inputFieldId){
+
+	  var input = document.getElementById(inputFieldId);
+	  var productNumber = input.value;
+	  if (isInteger(productNumber)){
+	    $.ajax({
+	      url: \'php_scripts/dbutility.php?productId=\'+productId+\'&productNumber=\'+productNumber,
+	      success: function(html) {
+	                var obj = JSON.parse(html);
+	                var idOfBalanceToBeUpdated = "numOfProduct"+productId;
+	                var numberOfProduct = obj["newCount"];
+	                document.getElementById(idOfBalanceToBeUpdated).innerHTML = numberOfProduct+" Stück";
+	                input.value = "";
+	               }
+	    });
+	  }
+	}
+
+function isInteger(x) {
+   return x % 1 === 0;
+}
 
 function isInputedAmoundValid(value){
   var regex=/^\-?([1-9]\d*|0)(\.\d?[1-9])?$/;
