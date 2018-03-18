@@ -1,5 +1,8 @@
+
 <?php
+
 echo'
+<link rel="stylesheet" href="./css/style.css">
 <style>
 /* Full-width input fields */
 .login_input {
@@ -12,19 +15,7 @@ echo'
 }
 
 /* Set a style for all buttons */
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-}
 
-button:hover {
-    opacity: 0.8;
-}
 
 /* Extra styles for the cancel button */
 .cancelbtn {
@@ -119,26 +110,55 @@ span.psw {
   .login_modal-content{width: 80%}
 }
 
+select {
+    background: transparent url("./img/arrow_down.png") no-repeat center;
+    background-position:right;
+    background-size:50px;
+    width:100%;
+    padding:8px;
+    margin-top:8px;
+    line-height:1;
+    -webkit-appearance:none;
+    box-shadow:inset 0 0 10px 0 rgba(0,0,0,0.6);
+    outline:none
+}
+.submit {
+    width:353px;
+    height:45px;
+    color:#fff;
+    margin-top:170px;
+    background-color:#1067a2;
+    font-size:20px;
+    font-weight:700
+}
+.button {
+
+
 </style>
 
-<div id="id01" class="login_modal">
+<div id="add_product_form" class="login_modal">
   
-  <form class="login_modal-content login_animate login_form" action="php_scripts/login.php?login=1" method="POST">
+  <form class="login_modal-content login_animate login_form" action="php_scripts/dbArticle.php?" method="POST">
     <div class="imgcontainer">
-      <div onclick="document.getElementById(\'id01\').style.display=\'none\'" class="login_close" title="Close Modal">&times;</div>
-      <img style="width:200px"src="img/login_avatar.png" alt="Avatar" class="avatar">
+      <div onclick="document.getElementById(\'add_product_form\').style.display=\'none\'" class="login_close" title="Close Modal">&times;</div>
     </div>
 
     <div class="login_container">
-      <label><b>EMail Address</b></label>
-      <input class="login_input" type="text" placeholder="Enter EMail" name="email" required>
+      <label><b>Produkt Name</b></label>
+      <input class="login_input" type="text" placeholder="Enter Name" name="product_name" required>
+      <label><b>Select Category</b></label>
+      <div><select name="product_category">
+      '.getCategoryOptionsElement().'
+      </select></div>
 
-      <label><b>Password</b></label>
-      <input class="login_input" type="password" placeholder="Enter Password" name="password" required>
+      <label><b>Price</b></label>
+      <input class="login_input" type="text" placeholder="Enter price e.g. 1.0" name="product_price" required>
+
+      <label><b>Enter picture name</b></label>
+      <input class="login_input" type="text" placeholder="e.g. test.png" name="product_img" required>
         
-      <button type="submit">Login</button>
+      <button class="button" type="submit">Save</button>
     </div>
-    <div>'.$errorMessage.'</div>
   </form>
   
 </div>
@@ -154,4 +174,14 @@ span.psw {
 	}
 </script>';
 
+function getCategoryOptionsElement(){
+    require("php_scripts/dbutility.php");
+    $categories = getCategoriesFromDB();
+    $result = "";
+    foreach ($categories as $key => $value) {
+        $result = $result."<option value=".$key.">".$value."</option>";
+    }
+    
+     return $result;
+}
 ?>

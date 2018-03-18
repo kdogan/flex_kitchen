@@ -2,6 +2,7 @@
 <?php 
 include ("php_script.php");
 include ("php_scripts/login.php");
+include ("add_product_form.php"); 
 ?>
 
 <?php

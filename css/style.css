@@ -226,18 +226,17 @@ menu li {
 .box1, .box2, .box3{
   float: left;
   margin-right: 3.33333%;
-  margin-right: 3.33333%;
   padding: 1px;
   box-sizing: border-box;
   max-height: 120px;
 }
 .box1 {width: 10%;}
 .box2 {width: 45%;}
-.box2 {width: 45%;}
+.box3 {width: 10%;}
 
 .payment_input{
-  width: 104px;
-  height: 30px;
+  width: 70px;
+  height: 33px;
   padding: 1px;
   border:none;
   border: 1px solid #555;
@@ -261,4 +260,5 @@ menu li {
 .add_product_button{
   height:100%; position:relative;width:100%;
 }
+
 

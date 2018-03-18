@@ -102,4 +102,21 @@ function getProductFromDB($productId){
 	}
 	$conn->close(); 
 }
+
+function getCategoriesFromDB(){
+	require_once("dbConnector.php");
+	$db = new dbConnector();
+	$conn = $db->getDBConnection();
+	$sql = 'SELECT * FROM category';
+	$result = $conn->query($sql);
+	if ($result->num_rows > 0) {
+	    while($row = $result->fetch_assoc()) {
+	        $response[$row["id"]] = $row["name"];
+	    }
+	    return $response;
+	} else {
+	    return "-1";
+	}
+	$conn->close(); 
+}
 ?>

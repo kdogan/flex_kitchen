@@ -40,7 +40,7 @@ function getUserDivsInAdminPage(){
             $fetchedData = $fetchDataFromDB->getLastPurchases($id);
             $lastPurchase =json_decode($fetchedData);
 
-            $result = $result.'<div class="column" style="background-color:#aaa000;">
+            $result = $result.'<div class="column" style="background-color:#DCDCDC">
             <div class="box1"><img style="width:120px;float:left" src="'.$row["img_path"].'" alt="user image"></div>
             <div class="box2">
                 <table>
@@ -64,10 +64,9 @@ function getUserDivsInAdminPage(){
                     </table>
                     </div>
             		<div class="box3">
-            			<div style="float:left;width:100%;font-size:10px" id="errorMsgInUserPayment"></div>
-            			<div style="float:left;width:100%">
+            			<div style="float:left;width:50%">
             				<input class="payment_input" id="'.$inputPayment.'" placeholder="e.g. 2.50"onkeyup="checkInputForNumber(\''.$inputPayment.'\',\''.$payButtonId.'\')" type="text"></div>
-            			<div style="float:left;width:100%; margin-top:2px">
+            			<div style="float:left;width:50%;">
             				<button id="'.$payButtonId.'" class="button"  onclick="updateUserAmound(\''.$id.'\',\''.$inputPayment.'\');">Bezahlen</button>
             			</div>
             		</div>
@@ -85,12 +84,12 @@ function getProductDivsInAdminPage(){
     $result = "<h2>No products found... :'(</h2>";
 
     if($products->num_rows >0){
-        $result = "<div style='width:15%'>
-                        <div style='float:left;width:70%;background-color:yellow'>
-                            <p>Add New Product </p>
+        $result = "<div style='width:15%;margin-buttom:10px'>
+                        <div style='float:left;width:70%;height:33px;background-color:grey'>
+                            <p><b>Add New Product</b></p>
                         </div>
-                        <div style='float:left;width:30%;''>
-                            <button class='button'style='width:100%'>+</button>
+                        <div style='float:left;width:20%;'>
+                            <button class='button'style='width:100%' onclick='add_new_product()'>+</button>
                         </div>
                     </div>";
         while($row = $products->fetch_assoc()){
@@ -105,7 +104,7 @@ function getProductDivsInAdminPage(){
             $payButtonId = 'payButton'.$productId;
     		$inputPayment = 'inputPayment'.$productId;
 
-            $result = $result.'<div class="column" style="background-color:#aaa000;">
+            $result = $result.'<div class="column" style="background-color:#DCDCDC">
             <div class="box1"><img style="width:120px;float:left" src="'.$image.'" alt="product image"></div>
             <div class="box2">
                 <table>
@@ -129,12 +128,11 @@ function getProductDivsInAdminPage(){
                     </table>
                     </div>
             		<div class="box3">
-                        <div style="float:left;width:100%;font-size:10px" id="errorMsgInUserPayment"></div>
-                        <div style="float:left;width:70%">
+                        <div style="float:left;width:50%">
                             <input class="payment_input" id="'.$inputPayment.'" onkeyup="checkInputForNumber(\''.$inputPayment.'\',\''.$payButtonId.'\')" type="text">
                         </div>
-                        <div style="float:left;width:30%;">
-                            <button id="'.$payButtonId.'" class="button"  onclick="updateProductNumber(\''.$productId.'\',\''.$inputPayment.'\');">Add</button>
+                        <div style="float:left;width:50%;">
+                            <button id="'.$payButtonId.'" class="button" style="width:100%;" onclick="updateProductNumber(\''.$productId.'\',\''.$inputPayment.'\');">+</button>
                         </div>
                     </div>
             		  

@@ -30,3 +30,8 @@ function goToAdminHome(){
       }
    });
 }
+
+function add_new_product(){
+  var loginWindow = document.getElementById("add_product_form");
+  loginWindow.style.display = "block";
+}
