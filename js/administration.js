@@ -35,3 +35,7 @@ function add_new_product(){
   var loginWindow = document.getElementById("add_product_form");
   loginWindow.style.display = "block";
 }
+function add_new_employee(){
+  var addNewEmployeeWindow = document.getElementById("add_employee_form");
+  addNewEmployeeWindow.style.display = "block";
+}

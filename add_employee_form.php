@@ -136,7 +136,7 @@ select {
 
 </style>
 
-<div id="add_product_form" class="login_modal">
+<div id="add_employee_form" class="login_modal">
   
   <form class="login_modal-content login_animate login_form" action="php_scripts/dbArticle.php?" method="POST">
     <div class="imgcontainer">
@@ -144,14 +144,12 @@ select {
     </div>
 
     <div class="login_container">
-      <label><b>Produkt Name</b></label>
-      <input class="login_input" type="text" placeholder="Enter Name" name="product_name" required>
-      <label><b>Select Category</b></label>
-      <div><select name="product_category">
-      '.getCategoryOptionsElement().'
-      </select></div><br/>
-      <label><b>Price</b></label>
-      <input class="login_input" type="text" placeholder="Enter price e.g. 1.0" name="product_price" required>
+      <label><b>First Name</b></label>
+      <input class="login_input" type="text" placeholder="Enter firstname" name="first_name" required>
+      <label><b>Last Name</b></label>
+      <input class="login_input" type="text" placeholder="Enter lastname" name="last_name" required>
+      <label><b>Email</b></label>
+      <input class="login_input" type="text" placeholder="e.g. testman@flexkitchen.com" name="email" required>
 
       <label><b>Enter picture name</b></label>
       <input class="login_input" type="text" placeholder="e.g. test.png" name="product_img" required>
@@ -172,14 +170,4 @@ select {
 	}
 </script>';
 
-function getCategoryOptionsElement(){
-    require("php_scripts/dbutility.php");
-    $categories = getCategoriesFromDB();
-    $result = "";
-    foreach ($categories as $key => $value) {
-        $result = $result."<option value=".$key.">".$value."</option>";
-    }
-    
-     return $result;
-}
 ?>

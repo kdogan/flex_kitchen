@@ -106,15 +106,15 @@ class functions {
         $db = new dbConnector();
         $conn = $db->getDBConnection();
         if (!$conn) {
-            die('Verbindung schlug fehl: ' . mysql_error());
+            die('database connectin fails: ' . mysql_error());
         }
         $sql = "SELECT * FROM ".$tableName;
         $result = $conn->query($sql);
         $conn->close();
         return $result;
-
     }
 
+    
 
     public function getSiteHead(){
         echo '<!DOCTYPE html>

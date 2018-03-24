@@ -24,9 +24,15 @@ function getUserDivsInAdminPage(){
 
     $persons = $functions->getAllFromTable("person");
     
-    $result = "<h2>No User found... :'(</h2>";
+    $result = "<div style='width:15%;margin-buttom:10px'>
+                        <div style='float:left;width:70%;height:33px;background-color:grey'>
+                            <p><b>Add New Employee</b></p>
+                        </div>
+                        <div style='float:left;width:20%;'>
+                            <button class='button'style='width:100%' onclick='add_new_employee()'>+</button>
+                        </div>
+                    </div>";
     if($persons->num_rows >0){
-        $result = "";
         while($row = $persons->fetch_assoc()){
             //pass user if it is admin
             if($row["is_admin"] == "1") continue;
@@ -77,11 +83,13 @@ function getUserDivsInAdminPage(){
 }
 
 function getProductDivsInAdminPage(){
+    require("dbutility.php");
 	require("../php_script.php");
 	$functions = new functions();
-	$products = $functions->getAllFromTable("article");
     
-    $result = "<h2>No products found... :'(</h2>";
+    
+	$products = $functions->getAllFromTable("article");
+    $categories = getCategoriesFromDB();
 
     if($products->num_rows >0){
         $result = "<div style='width:15%;margin-buttom:10px'>
@@ -98,7 +106,8 @@ function getProductDivsInAdminPage(){
             $productId = $row["id"];
             $NumOfProducts = $row["count"];
             $price = $row["price"];
-            $category = $row["category"];
+            $categoryId = $row["category"];
+            $categoryName = $categories[$categoryId];
             $image = $row["img_path"];
 
             $payButtonId = 'payButton'.$productId;
@@ -114,6 +123,11 @@ function getProductDivsInAdminPage(){
                       <td style="float:left; font-weight: bold" id="loggedUserName">'.$productName.'</td>
                     </tr>
                     <tr>
+                        <td style="float:left"> Preis</td>
+                        <td style="float:left">:</td>
+                        <td style="float:left; font-weight: bold" id="price'.$price.'">'.$price.' €</td>
+                     </tr>
+                    <tr>
 			            <td style="float:left"> Anzahl des Produkts </td>
 			            <td style="float:left">:</td>
 			            <td style="float:left; font-weight: bold" > 
@@ -123,7 +137,7 @@ function getProductDivsInAdminPage(){
 			         <tr>
 			            <td style="float:left"> Kategorie</td>
 			            <td style="float:left">:</td>
-			            <td style="float:left; font-weight: bold" id="category'.$productId.'">'.$category.'</td>
+			            <td style="float:left; font-weight: bold" id="category'.$productId.'">'.$categoryName.'</td>
 			         </tr>
                     </table>
                     </div>
@@ -141,4 +155,5 @@ function getProductDivsInAdminPage(){
     }
     return $result;
 }
+
 ?>
