@@ -3,7 +3,7 @@
 include ("php_script.php");
 include ("php_scripts/login.php");
 include ("add_product_form.php"); 
-include ("add_employee_form.php"); 
+include ("add_customer_form.php"); 
 ?>
 
 <?php

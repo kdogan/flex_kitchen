@@ -136,7 +136,7 @@ select {
 
 </style>
 
-<div id="add_employee_form" class="login_modal">
+<div id="add_customer_form" class="login_modal">
   
   <form class="login_modal-content login_animate login_form" action="php_scripts/dbArticle.php?" method="POST">
     <div class="imgcontainer">

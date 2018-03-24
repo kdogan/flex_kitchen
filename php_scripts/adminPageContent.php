@@ -29,7 +29,7 @@ function getUserDivsInAdminPage(){
                             <p><b>Add New Employee</b></p>
                         </div>
                         <div style='float:left;width:20%;'>
-                            <button class='button'style='width:100%' onclick='add_new_employee()'>+</button>
+                            <button class='button'style='width:100%' onclick='add_new_customer()'>+</button>
                         </div>
                     </div>";
     if($persons->num_rows >0){

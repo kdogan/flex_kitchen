@@ -62,7 +62,6 @@ function setPHPSession(userId){
 }
 
 function clickArticle(articleId){
-  //TODO hier muss eine popup fenster gemacht werden und ausgewählte article darstellen
   var modal = document.getElementById('myModal');
   modal.style.display = "block";
   clickedArticleId = articleId;
@@ -159,7 +158,7 @@ function setAccountBalance(personId, lastEntryRequsted){
 function sendSelectedProductForUser(){
   var currentUserId = getCookie("userid");
   $.ajax({
-      url: 'php_scripts/dbPersonArticleMatrixPost.php?selectedArticleId='+clickedArticleId+'&personId='+currentUserId,
+      url: 'php_scripts/dbutility.php?selectedArticleId='+clickedArticleId+'&person_id='+currentUserId,
       success: function(html) {
                 var obj = JSON.parse(html);
                }

@@ -119,4 +119,47 @@ function getCategoriesFromDB(){
 	}
 	$conn->close(); 
 }
+if(isset($_REQUEST["first_name"]) && isset($_REQUEST["last_name"]) &&isset($_REQUEST["email"]) && isset($_REQUEST["customer_img"])){
+	require_once("dbConnector.php");
+    $db = new dbConnector();
+    $conn = $db->getDBConnection();
+    $firstname = $_REQUEST["first_name"];
+    $lastname = $_REQUEST["last_name"];
+    $email = $_REQUEST["email"];
+    $telefon = $_REQUEST["telefon"];
+    $imaga_name = "img/".$_REQUEST["customer_img"];
+
+    $sql = 'INSERT INTO person (firstname, lastname, email, tel_no, img_path, account_balance, is_admin, user_pw) 
+    		VALUES ("'.$firstname.'","'.$lastname.'","'.$email.'",'.$telefon.',"'.$imaga_name.'", 0, 0,"cfcd208495d565ef66e7dff9f98764da")';
+    $result = $conn->query($sql);
+    if($conn->query($sql)){
+        echo "Records added successfully.";
+    } else{
+        echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+    }
+    $conn->close();
+}
+
+if(isset($_REQUEST["person_id"]) && isset($_REQUEST["selectedArticleId"])){
+	include("dbConnector.php");
+	$db = new dbConnector();
+	$conn = $db->getDBConnection();
+
+	$selectedArticleId = $_REQUEST["selectedArticleId"];
+	$personId =  $_REQUEST["person_id"];
+
+	$sql = 'INSERT INTO person_article_matrix (person_id, article_id, count, buy_date) VALUES ('.$personId.','.$selectedArticleId.',1,CURDATE())';
+	$result = mysqli_query($conn, $sql);
+
+	if(isset($selectedArticleId) && isset($personId)){
+
+	if ($result === TRUE) {
+		echo "New record created successfully";
+	}
+	} else {
+	echo "Error: ". $sql . "<br>" . $conn->error;
+	}
+
+$conn->close(); 
+}
 ?>
