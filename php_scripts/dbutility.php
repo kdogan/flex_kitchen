@@ -120,24 +120,15 @@ function getCategoriesFromDB(){
 	$conn->close(); 
 }
 if(isset($_REQUEST["first_name"]) && isset($_REQUEST["last_name"]) &&isset($_REQUEST["email"]) && isset($_REQUEST["customer_img"])){
-	require_once("dbConnector.php");
-    $db = new dbConnector();
-    $conn = $db->getDBConnection();
     $firstname = $_REQUEST["first_name"];
     $lastname = $_REQUEST["last_name"];
     $email = $_REQUEST["email"];
     $telefon = $_REQUEST["telefon"];
-    $imaga_name = "img/".$_REQUEST["customer_img"];
+    $imaga_name = $_REQUEST["customer_img"];
 
-    $sql = 'INSERT INTO person (firstname, lastname, email, tel_no, img_path, account_balance, is_admin, user_pw) 
-    		VALUES ("'.$firstname.'","'.$lastname.'","'.$email.'",'.$telefon.',"'.$imaga_name.'", 0, 0,"cfcd208495d565ef66e7dff9f98764da")';
-    $result = $conn->query($sql);
-    if($conn->query($sql)){
-        echo "Records added successfully.";
-    } else{
-        echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
-    }
-    $conn->close();
+    print("FOOOOOOOO");
+
+    $userInserted = insertUser($firstname, $lastname, $email, $telefon, $imaga_name);
 }
 
 if(isset($_REQUEST["person_id"]) && isset($_REQUEST["selectedArticleId"])){
@@ -160,6 +151,81 @@ if(isset($_REQUEST["person_id"]) && isset($_REQUEST["selectedArticleId"])){
 	echo "Error: ". $sql . "<br>" . $conn->error;
 	}
 
-$conn->close(); 
+	$conn->close(); 
+}
+
+$successfullyByInsertedUser = $errorByInsertedUser = "";
+
+define ('SITE_ROOT', realpath(dirname(__DIR__)));
+// Check if the form was submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    // Check if file was uploaded without errors
+    if(isset($_FILES["photo"]) && $_FILES["photo"]["error"] == 0 && $_REQUEST["first_name"] && $_REQUEST["last_name"] && $_REQUEST["email"] && $_REQUEST["telefon"]){
+    	$firstname = $_REQUEST["first_name"];
+    	$lastname = $_REQUEST["last_name"];
+    	$email = $_REQUEST["email"];
+    	$tel = $_REQUEST["telefon"];
+    	$img_path = $_FILES["photo"]["name"];
+    	$userInserted = insertUser($firstname, $lastname, $email, $tel, $img_path);
+
+        $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
+        $filename = $_FILES["photo"]["name"];
+        $filetype = $_FILES["photo"]["type"];
+        $filesize = $_FILES["photo"]["size"];
+    
+        // Verify file extension
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        if(!array_key_exists($ext, $allowed)){
+        	$errorByInsertedUser = "Error: Please select a valid file format.";
+        }
+    
+        // Verify file size - 5MB maximum
+        $maxsize = 5 * 1024 * 1024;
+        if($filesize > $maxsize){
+        	$errorByInsertedUser ="Error: File size is larger than the allowed limit.";
+
+        } 
+    
+        // Verify MYME type of the file
+        if(in_array($filetype, $allowed)){
+            // Check whether file exists before uploading it
+            if(file_exists("img/" . $_FILES["photo"]["name"])){
+                //echo $_FILES["photo"]["name"] . " is already exists.";
+                $errorByInsertedUser = $_FILES["photo"]["name"] . " is already exists.";
+            } else{
+            	if($userInserted == TRUE){
+                	move_uploaded_file($_FILES["photo"]["tmp_name"], SITE_ROOT.'/img/' . $_FILES["photo"]["name"]);
+                	//echo "Your file was uploaded successfully.";
+                	$successfullyByInsertedUser = "User iserted successfully";
+                }
+            } 
+        } else{
+            //echo "Error: There was a problem uploading your file. Please try again.";
+            $errorByInsertedUser = "Error: There was a problem uploading your file. Please try again.";
+        }
+    } else{
+        //echo "Error: " . $_FILES["photo"]["error"];
+        $errorByInsertedUser = "Error: " . $_FILES["photo"]["error"];
+    }
+}
+
+function insertUser($firstname, $lastname, $email, $telefon, $img_path){
+	require_once("dbConnector.php");
+    $db = new dbConnector();
+    $conn = $db->getDBConnection();
+
+    $imaga_name = "img/".$img_path;
+
+    $sql = 'INSERT INTO person (firstname, lastname, email, tel_no, img_path, account_balance, is_admin, user_pw) 
+    		VALUES ("'.$firstname.'","'.$lastname.'","'.$email.'",'.$telefon.',"'.$imaga_name.'", 0, 0,"cfcd208495d565ef66e7dff9f98764da")';
+
+    $result = $conn->query($sql);
+    if($result){
+        $successfullyByInsertedUser = "Records added successfully.";
+    } else{
+        $errorByInsertedUser = "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+    }
+    $conn->close();
+    return $result;
 }
 ?>

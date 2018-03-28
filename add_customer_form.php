@@ -137,7 +137,7 @@ select {
 
 <div id="add_customer_form" class="login_modal">
   
-  <form class="login_modal-content login_animate login_form" action="php_scripts/dbutility.php?" method="POST">
+  <form class="login_modal-content login_animate login_form" action="php_scripts/dbutility.php?" method="POST" enctype="multipart/form-data">
   
     <div class="imgcontainer">
       <h4>ADD NEW CUSTOMER</h4>
@@ -150,11 +150,11 @@ select {
       <label><b>Last Name</b></label>
       <input class="login_input" type="text" placeholder="Enter lastname" name="last_name" required>
       <label><b>Email</b></label>
-      <input class="login_input" type="text" placeholder="e.g. testman@flexkitchen.com" name="email" required>
+      <input class="login_input" type="email" placeholder="e.g. testman@flexkitchen.com" name="email" required>
       <label><b>Telefon</b></label>
-      <input class="login_input" type="text" name="telefon" required>
-      <label><b>Enter picture name</b></label>
-      <input class="login_input" type="text" placeholder="e.g. test.png" name="customer_img" required>
+      <input class="login_input" type="tel" name="telefon" required>
+      <label><b>Select picture</b></label>
+      <input type="file" name="photo" id="user_photo" required>
     </div>
     <div style="text-align: center; margin-bottom:10px"><button class="button" type="submit">Save</button></div>
   </form>
