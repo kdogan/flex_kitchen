@@ -81,6 +81,8 @@ function getPersonFromDB($userId){
 	$conn->close(); 
 }
 
+
+
 function getProductFromDB($productId){
 	require_once("dbConnector.php");
 	$db = new dbConnector();
@@ -125,8 +127,6 @@ if(isset($_REQUEST["first_name"]) && isset($_REQUEST["last_name"]) &&isset($_REQ
     $email = $_REQUEST["email"];
     $telefon = $_REQUEST["telefon"];
     $imaga_name = $_REQUEST["customer_img"];
-
-    print("FOOOOOOOO");
 
     $userInserted = insertUser($firstname, $lastname, $email, $telefon, $imaga_name);
 }
