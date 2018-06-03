@@ -1,10 +1,3 @@
-
-<?php
-
-echo'
-<link rel="stylesheet" href="./css/style.css">
-<style>
-/* Full-width input fields */
 .login_input {
     width: 100%;
     padding: 12px 20px;
@@ -131,43 +124,3 @@ select {
     font-size:20px;
     font-weight:700
 }
-.button {
-
-
-</style>
-
-<div id="add_customer_form" class="login_modal">
-  
-  <form class="login_modal-content login_animate login_form" action="php_scripts/dbArticle.php?" method="POST">
-    <div class="imgcontainer">
-      <div onclick="document.getElementById(\'add_product_form\').style.display=\'none\'" class="login_close" title="Close Modal">&times;</div>
-    </div>
-
-    <div class="login_container">
-      <label><b>First Name</b></label>
-      <input class="login_input" type="text" placeholder="Enter firstname" name="first_name" required>
-      <label><b>Last Name</b></label>
-      <input class="login_input" type="text" placeholder="Enter lastname" name="last_name" required>
-      <label><b>Email</b></label>
-      <input class="login_input" type="text" placeholder="e.g. testman@flexkitchen.com" name="email" required>
-
-      <label><b>Enter picture name</b></label>
-      <input class="login_input" type="text" placeholder="e.g. test.png" name="product_img" required>
-    </div>
-    <div style="text-align: center; margin-bottom:10px"><button class="button" type="submit">Save</button></div>
-  </form>
-  
-</div>
-<script>
-	// Get the modal
-	var login_modal = document.getElementById(\'id01\');
-
-	// When the user clicks anywhere outside of the modal, close it
-	window.onclick = function(event) {
-    	if (event.target == login_modal) {
-        	modal.style.display = "none";
-    	}
-	}
-</script>';
-
-?>
