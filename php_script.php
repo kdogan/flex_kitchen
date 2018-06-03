@@ -29,7 +29,7 @@ class functions {
                 $id = $row["id"];
                 $result = $result.'<li class="user_div" id="'.$id.'">
                 <div class="user_img" style="background-image: url(\''.$row["img_path"].'\');" href="#" onclick="clickUser(\''.$user.'\',\''.$id.'\')"></div>
-                <p>'.$user.'</p>
+                <span class="user_name_span">'.$user.'</span>
                 </li>';
             }
         }
