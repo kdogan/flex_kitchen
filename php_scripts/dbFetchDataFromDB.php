@@ -115,4 +115,15 @@ class fetchDataFromDB {
 		$conn->close();
 	}
 
+	public function getAllFromTable($tableName){
+        $conn = $this->getDBConnection();
+        if (!$conn) {
+            die('database connectin fails: ' . mysql_error());
+        }
+        $sql = "SELECT * FROM ".$tableName;
+        $result = $conn->query($sql);
+        $conn->close();
+        return $result;
+    }
+
 }

@@ -40,14 +40,9 @@ function checkCookie() {
 </header>
   
 <div class="content">
-  <menu>';
-  $functions->getUserLIs();
-  echo '
-  </menu>
-</div>';
-$functions->getFooter();
+  <menu>'. $functions->getUserLIs().' </menu>
+</div>'.$functions->getFooter();
 
 include ('login.php');
-
 
 ?>

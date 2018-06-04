@@ -27,14 +27,12 @@ echo '
 <header> 
 <!-- Header: first column -->
   <div class="header_first_column">
-    <div id="loggedUserImg" style="width:60px;height:60px;float:left; background-image:url(\'default_user_img.png\');background-repeat:no-repeat;background-size: cover"></div>
+    <div id="loggedUserImg" style="width:60px;height:60px;float:left; background-image:url(\'img/default_user_img.png\');background-repeat:no-repeat;background-size: cover"></div>
     <div style="float:left"> <p id="loggedUserName"></p></div>
 </div> 
 <!-- Header: first column End-->
 <!-- Header: second column -->
-  <div class="header_second_column">';
-    $functions->getUserAccountBalance();
-echo '</div>
+  <div class="header_second_column">'. $functions->getUserAccountBalance().'</div>
 <!-- Header: second column End-->
 <!-- Header: third column -->
   <div class="header_third_column">
@@ -44,11 +42,9 @@ echo '</div>
   <!-- Header: third column End-->
 </header>
 <div class="content">
-  <menu>';
-  $functions->getArticleLIs();
-  echo '
-  </menu>
-</div>';
+  <menu>'.$functions->getArticleLIs().'</menu>
+</div>'.$functions->getFooter();
+
 
 echo '<div id="myModal" class="modal">
   <!-- Modal content -->
@@ -66,5 +62,4 @@ echo '<div id="myModal" class="modal">
 
 </div>';
 
-$functions->getFooter();
 ?>

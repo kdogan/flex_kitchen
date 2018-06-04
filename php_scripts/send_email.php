@@ -62,8 +62,9 @@ foreach($allCustomers as $customer){
     </div>
     </body>
     </html>';
+    echo $htmlContent;
      //sendEmailToCustomer($customer->email, $htmlContent);
-   sendEmailToCustomer("kamuran1905@yahoo.de", $htmlContent);//REMOVE THIS ONLY TEST
+   //sendEmailToCustomer("kamuran1905@yahoo.de", $htmlContent);//REMOVE THIS ONLY TEST
 
 }
 

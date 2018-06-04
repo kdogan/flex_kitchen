@@ -13,7 +13,7 @@
 }
 body{height: 100%;}
 header {background-color:#83bb26;color:white; width: 100%;max-height: 90px;}
-#footer {background: #aaa;color:white;position:relative;width: 100%;}
+.footer {background: #aaa;color:white;position:relative;width: 100%;}
 
 .user_div .article_div{
   float: left;
@@ -22,7 +22,7 @@ header {background-color:#83bb26;color:white; width: 100%;max-height: 90px;}
 }
 .user_img {
   width: 100%;
-  background-color:#83bb26;
+  background-color: #FF4500;
   min-width: 150px;
   min-height: 100px;
   height: 60px;
@@ -32,6 +32,7 @@ header {background-color:#83bb26;color:white; width: 100%;max-height: 90px;}
   background-size: 100% 100%;
   position:relative;
   display:inline-block;
+  border: 1px solid #FF4500
 
   &:hover{
   transition:all 150ms linear;
@@ -45,16 +46,19 @@ header {background-color:#83bb26;color:white; width: 100%;max-height: 90px;}
   outline: all dotted #959595;
   outline-offset: -4px;
   }
+  border-radius:;
+  border: 1px solid #FF4500;
 }
-.user_name_span{
+.name_label_span{
   margin-top: -28px;
   position: absolute;
-  background-color: red;
+  background-color: #101010;
   border-radius: 6px;
   padding: 3px;
   font-size: 1em;
   font-weight: bold;
   margin-left: -80px;
+  color: white;
 }
 .article_img {
   width: 100%;
@@ -89,7 +93,7 @@ menu li {
 @media only screen and (max-device-width : 300px) {
   menu li {width: 100%;margin-right: 10px;}
   li p {font-size: 35px}
-  #footer {position: relative;}
+  .footer {position: relative;}
   .user_img{width: 100%;}
   .search_form {width: 100%}
   .notify-badge{right: 0px;width: 200px;height: 50px;}
@@ -128,7 +132,7 @@ menu li {
     border-radius: 4px;
     font-size: 16px;
     background-color: white;
-    background-image: url('searchicon.png');
+    background-image: url('../img/searchicon.png');
     background-position: 10px 10px;
     background-repeat: no-repeat;
     padding: 12px 20px 12px 40px;
@@ -204,7 +208,7 @@ menu li {
 }
 .notify-badge{
     position: absolute;
-    right: -15px;
+    right: 0px;
     top: 0px;
     background: rgb(247, 171, 106);
     text-align: center;
@@ -224,6 +228,7 @@ menu li {
     padding: 5px;
     margin-bottom: 4px;
     height: 120px;
+    background-color: FF4500;
 }
 
 /* Clear floats after the columns */

@@ -29,11 +29,11 @@ class functions {
                 $id = $row["id"];
                 $result = $result.'<li class="user_div" id="'.$id.'">
                 <div class="user_img" style="background-image: url(\''.$row["img_path"].'\');" href="#" onclick="clickUser(\''.$user.'\',\''.$id.'\')"></div>
-                <span class="user_name_span">'.$user.'</span>
+                <span class="name_label_span">'.$user.'</span>
                 </li>';
             }
         }
-        echo $result;
+        return $result;
     }
 
     
@@ -51,13 +51,13 @@ class functions {
                     <div class="user_img" style="background-image: url(\''.$row["img_path"].'\');" href="#" onclick="clickArticle(\''.$id.'\')">
                         <span class="notify-badge"><strong>'.$row["price"].' €</strong></span>
                     </div>
-                    <p>'.$row["name"].'</p>
+                    <span class="name_label_span">'.$row["name"].'</span>
                 </div>
                 
                 </li>';
             }
         }
-        echo $result;
+        return $result;
     }
 
     public function getAdminPageContent(){
@@ -84,33 +84,26 @@ class functions {
 
     public function getUserAccountBalance(){
 
-        echo '
-        <table>
-         <tr>
-            <td style="float:left"> Kontozustand </td>
-            <td style="float:left">:</td>
-            <td style="float:left; font-weight: bold" > 
-                <div style="background-color: white;border-radius:50% ;padding:3px 15px 3px 15px; color:black" id="accountBalance">0 €</div>
-            </td>
-         </tr>
-         <tr>
-            <td style="float:left"> letzte Kauf </td>
-            <td style="float:left">:</td>
-            <td style="float:left; font-weight: bold" id="lastBuy">letzte Getränk</td>
-         </tr>
-        </table>';
+        return '<table>
+                 <tr>
+                    <td style="float:left"> Kontozustand </td>
+                    <td style="float:left">:</td>
+                    <td style="float:left; font-weight: bold" > 
+                        <div style="background-color: white;border-radius:50% ;padding:3px 15px 3px 15px; color:black" id="accountBalance">0 €</div>
+                    </td>
+                 </tr>
+                 <tr>
+                    <td style="float:left"> letzte Kauf </td>
+                    <td style="float:left">:</td>
+                    <td style="float:left; font-weight: bold" id="lastBuy">letzte Getränk</td>
+                 </tr>
+                </table>';
     }
 
     public function getAllFromTable($tableName){
-        require_once("php_scripts/dbConnector.php");
-        $db = new dbConnector();
-        $conn = $db->getDBConnection();
-        if (!$conn) {
-            die('database connectin fails: ' . mysql_error());
-        }
-        $sql = "SELECT * FROM ".$tableName;
-        $result = $conn->query($sql);
-        $conn->close();
+        require_once("php_scripts/dbFetchDataFromDB.php");
+        $fetchDataFromDB = new fetchDataFromDB();
+        $result = $fetchDataFromDB->getAllFromTable($tableName);
         return $result;
     }
 
@@ -129,10 +122,12 @@ class functions {
     }
 
     public function getFooter(){
-        echo '<footer id="footer">Copyright &copy; e-oku.de</footer>
-            </div>
-            </body>
-            </html>';
+        return '<div class="footer">
+                    <footer id="footer">Copyright &copy; e-oku.de</footer>
+                </div>
+                </div>
+                </body>
+                </html>';
     }
 }
 ?>

@@ -46,7 +46,7 @@ function getUserDivsInAdminPage(){
             $fetchedData = $fetchDataFromDB->getLastPurchases($id);
             $lastPurchase =json_decode($fetchedData);
 
-            $result = $result.'<div class="column" style="background-color:#DCDCDC">
+            $result = $result.'<div class="column">
             <div class="box1"><img style="width:120px;float:left" src="'.$row["img_path"].'" alt="user image"></div>
             <div class="box2">
                 <table>
@@ -113,7 +113,7 @@ function getProductDivsInAdminPage(){
             $payButtonId = 'payButton'.$productId;
     		$inputPayment = 'inputPayment'.$productId;
 
-            $result = $result.'<div class="column" style="background-color:#DCDCDC">
+            $result = $result.'<div class="column">
             <div class="box1"><img style="width:120px;float:left" src="'.$image.'" alt="product image"></div>
             <div class="box2">
                 <table>
