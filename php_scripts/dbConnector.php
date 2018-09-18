@@ -6,7 +6,7 @@ class dbConnector{
     }
 
 	public function getDBConnection(){
-	    $conn = mysqli_connect("localhost", "flex_kitchen", "root", "flex_kitchen");
+	    $conn = mysqli_connect("localhost", "flex_user", "cxz6KNEQn8YJe0UN", "flex_kitchen");
 	    return $conn;
 	}
 }
