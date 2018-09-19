@@ -25,8 +25,8 @@ function clickUser(user, id){
   deleteCoockie();
   // set new cookie
   if(setPHPSession(id)){
-    setCookie(id,1);
-    window.location.href = "articles.php";
+    //setCookie(id,1);
+    window.location.href = "index.php";
   }
 }
 
@@ -74,7 +74,7 @@ window.onclick = function(event) {
   var targetId = event.target.id;
   if(targetId == "productConfirmationBtn" || targetId == "productCancelationBtn"){
     document.getElementById('myModal').style.display = "none";
-    window.location.href = "articles.php";
+    window.location.href = "index.php";
   }
 }
 

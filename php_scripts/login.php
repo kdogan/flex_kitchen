@@ -44,10 +44,6 @@ if(isset($_GET['admin_login_requested'])) {
   } else {
  	 $errorMessage = "E-Mail oder Passwort war ungültig<br>";
   }
-  print("foo");
-	exit;
-  echo json_encode($errorMessage);
-}
 
 function setSession($attributeName, $attributeValue){
 	require_once("./dbConnector.php");
@@ -98,7 +94,7 @@ function isAdmin(){
 }
 
 function getSessionUserId(){
-	return $_SESSION['userid'];;
+	   return $_SESSION['userid'];;
 }
 
 ?>

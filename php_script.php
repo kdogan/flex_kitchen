@@ -1,7 +1,7 @@
 <?php
 class FunctionScript{
 
-    public function getArticleLIs(){
+function getArticleLIs(){
 
         $persons = $this -> getAllFromTable("article");
         $result = "<h2>No Article found... :'(</h2>";
