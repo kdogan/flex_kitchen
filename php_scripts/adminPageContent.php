@@ -6,9 +6,8 @@ if(isset($_REQUEST['userRequested'])){
 	echo getUserDivsInAdminPage();
 }
 if(isset($_REQUEST['adminHomeRequested'])){
-	require("../php_script.php");
-	$functions = new functions();
-	echo $functions->getAdminPageContent();
+	require("content_script.php");
+	echo getAdminPageContent();
 }
 
 if(isset($_REQUEST['productsRequested'])){
