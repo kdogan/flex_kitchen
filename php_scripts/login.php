@@ -25,25 +25,29 @@ if(isset($_GET['logoutRequested'])){
 }
 
 // Login requested
-if(isset($_GET['login'])) {
-  
-  $sessionCreated = setSession("email", "\"".$_REQUEST['email']."\"");
-  if($sessionCreated)
+if(isset($_GET['admin_login_requested'])) {
+  if(!isset($_REQUEST['email'])){
+	  echo json_encode("Email missing!");
+	  exit;
+  }
+  $email = $_REQUEST['email'];
+  $sessionCreated = setSession("email", "\"".$email."\"");
+  if($sessionCreated){
  	 $errorMessage="Login success!";
- 	 $host  = $_SERVER['HTTP_HOST'];
- 	 $extra = 'flex_kitchen/index.php';
-
- 	 if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin']==="1"){
-	 	$extra = 'flex_kitchen/admin.php';
-	 }
-
-	 	
+	  $host  = $_SERVER['HTTP_HOST'];
+	  $extra = '/index.php';
+	  //Hacy only for localtest
+	  if(strpos($host, 'localhost:8080') !== false){
+		  $extra = "flex_kitchen".$extra;
+	  }
  	 header("Location: http://$host/$extra");
   } else {
  	 $errorMessage = "E-Mail oder Passwort war ungültig<br>";
   }
-
-
+  print("foo");
+	exit;
+  echo json_encode($errorMessage);
+}
 
 function setSession($attributeName, $attributeValue){
 	require_once("./dbConnector.php");
@@ -94,7 +98,7 @@ function isAdmin(){
 }
 
 function getSessionUserId(){
-	   return $_SESSION['userid'];;
+	return $_SESSION['userid'];;
 }
 
 ?>
