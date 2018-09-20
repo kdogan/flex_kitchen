@@ -46,19 +46,19 @@ function getHomePageContent(){
                 <div class="header_third_column">
                 <form class="search_form">
                     <div style="float:right" id="adminLoginBtn"><img style="width:50px; float:right;" src="img/adminLogginImg.png" href="#" onclick="login()"></img></div>
-                    <div style="float:right"> <input type="text" class="search" id="search" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"></div>
+                    <div style="float:right"> <input type="text" class="search" id="search" placeholder="Search for names.." title="Type in a name"></div>
                 </form>
             </div>
             </header>
             <div class="content">
-            <menu>'. $script->getUserLIs().'</menu>
+            <menu>'. $script->getUserLIs().'</menu>'.getLoginPage().'
         </div>'.getFooter();
 }
 
 function getAdminPage(){
 return '
 <!DOCTYPE html>
-	<html>'.getPageScriptBinding().'<head>
+    <html><link rel="stylesheet" href="./css/window_style.css">'.getPageScriptBinding().'<head>
 	<style>
         .product_count {
             width: 60px;
@@ -146,7 +146,7 @@ function isInputedAmoundValid(value){
 }
 </script>
 </head>
-<body onLoad="checkAccessForCurrentUser()">
+<body">
 
 <div class="flex-container">
 <header>
@@ -164,36 +164,30 @@ function isInputedAmoundValid(value){
 </header>
   
 <div class="content" id="contentInAdminPage">
-<menu id="admin_home_manu" style="padding-left:0px">'.getAdminPageContent().'</menu>
-</div>'.getFooter();
+<menu id="admin_home_manu" style="padding-left:0px">'.getAdminPageContent().'</menu>'.getWindowToAddNewProduct().getWindowToAddNewPerson().'</div>'.getFooter();
 }
 
 function getArticlePage(){
+    require_once("login.php");
     require_once("php_script.php");
     $script = new FunctionScript();
     return '
     <!DOCTYPE html>
     <html>'.getPageScriptBinding().'<head>     
     </head>
-    <body onLoad="checkCookie();">
+    <body">
       
     <div class="flex-container">
     <header> 
-    <!-- Header: first column -->
       <div class="header_first_column">
-        <div id="loggedUserImg" style="width:60px;height:60px;float:left; background-image:url(\'img/default_user_img.png\');background-repeat:no-repeat;background-size: cover"></div>
-        <div style="float:left"> <p id="loggedUserName"></p></div>
+        <div id="loggedUserImg" style="width:60px;height:60px;float:left; background-image:url(\''.getCurrentUserImagePath().'\');background-repeat:no-repeat;background-size: cover"></div>
+        <div style="float:left"> <p id="loggedUserName">'.getCurrentUserName().'</p></div>
     </div> 
-    <!-- Header: first column End-->
-    <!-- Header: second column -->
       <div class="header_second_column">'.getUserAccountBalance().'</div>
-    <!-- Header: second column End-->
-    <!-- Header: third column -->
       <div class="header_third_column">
         <div style="float:right"><img style="width:50px; float:right;" src="logout.ico" href="#" onclick="closeAdminSite()"></img></div>
-        <div style="float:right"><form class="search_form"><input class="search" type="text" id="search" onkeyup="myFunction()" placeholder="Search for article.." title="Type in a name"></form></div>
+        <div style="float:right"><form class="search_form"><input class="search" type="text" id="search" placeholder="Search for article.." title="Type in a name"></form></div>
       </div>
-      <!-- Header: third column End-->
     </header>
     <div class="content">
       <menu>'.$script->getArticleLIs().'</menu>
@@ -308,7 +302,8 @@ span.psw {
     background-color: #fefefe;
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;
-    width: 30%; /* Could be more or less, depending on screen size */
+    width: 20%; /* Could be more or less, depending on screen size */
+    min-width: 300px;
 }
 
 /* The Close Button (x) */
@@ -352,22 +347,21 @@ span.psw {
 @media (max-width : 300px) {
   .login_modal-content{width: 80%}
 }
-
 </style>
 
-<div id="id01" class="login_modal">
+<div id="admin_login_Window" class="login_modal">
   
-  <form class="login_modal-content login_animate login_form" action="php_scripts/login.php?login=1" method="POST">
+  <form class="login_modal-content login_animate login_form" action="php_scripts/login.php?admin_login_requested=1" method="POST">
     <div class="imgcontainer">
-      <div onclick="document.getElementById(\'id01\').style.display=\'none\'" class="login_close" title="Close Modal">&times;</div>
+      <div onclick="document.getElementById(\'admin_login_Window\').style.display=\'none\'" class="login_close" title="Close Modal">&times;</div>
       <img style="width:200px"src="img/login_avatar.png" alt="Avatar" class="avatar">
     </div>
 
     <div class="login_container">
-      <label><b>EMail Address</b></label>
+      <label><b class="label_text">EMail Address</b></label>
       <input class="login_input" type="text" placeholder="Enter EMail" name="email" required>
 
-      <label><b>Password</b></label>
+      <label><b class="label_text">Password</b></label>
       <input class="login_input" type="password" placeholder="Enter Password" name="password" required>
         
       <button type="submit">Login</button>
@@ -378,7 +372,7 @@ span.psw {
 </div>
 <script>
 	// Get the modal
-	var login_modal = document.getElementById(\'id01\');
+	var login_modal = document.getElementById(\'admin_login_Window\');
 
 	// When the user clicks anywhere outside of the modal, close it
 	window.onclick = function(event) {
@@ -387,5 +381,95 @@ span.psw {
     	}
 	}
 </script>';
+}
+
+function getAdminPageContent(){
+    return   '<li style="width:fil-content">
+ <div class="user_div">
+   <div class="user_img" style="background-image: url(\'img/users.png\');" href="#" onclick="getUsersInAdminPage()"></div>
+   <p>Employees</p>
+ </div>           
+</li>
+<li style="width:fil-content">
+ <div class="user_div">
+   <div class="user_img" style="background-image: url(\'img/products.png\');" href="#" onclick="getProducts()"></div>
+   <p>Products</p>
+ </div>    
+</li>
+<li style="width:fil-content">
+ <div class="user_div">
+   <div class="user_img" style="background-image: url(\'img/setting.png\');" href="#" onclick="showSetting()"></div>
+   <p>Setting</p>
+ </div>    
+</li>';
+}
+
+function getWindowToAddNewProduct(){
+    return'
+<div id="add_product_form" class="login_modal">
+  
+  <form class="login_modal-content login_animate login_form" action="php_scripts/dbArticle.php?" method="POST">
+    <div class="imgcontainer">
+      <h4>ADD NEW PRODUCT</h4>
+      <div onclick="document.getElementById(\'add_product_form\').style.display=\'none\'" class="login_close" title="Close Modal">&times;</div>
+    </div>
+
+    <div class="login_container">
+      <label><b class="label_text">Produkt Name</b></label>
+      <input class="login_input" type="text" placeholder="Enter Name" name="product_name" required>
+      <label><b class="label_text">Select Category</b></label>
+      <div><select name="product_category">
+      '.getCategoryOptionsElement().'
+      </select></div><br/>
+      <label><b class="label_text">Price</b></label>
+      <input class="login_input" type="text" placeholder="Enter price e.g. 1.0" name="product_price" required>
+
+      <label><b class="label_text">Enter picture name</b></label>
+      <input class="login_input" type="text" placeholder="e.g. test.png" name="product_img" required>
+    </div>
+    <div style="text-align: center; margin-bottom:10px"><button class="button" type="submit">Save</button></div>
+  </form>
+  
+</div>';
+}
+
+function getWindowToAddNewPerson(){
+    return'
+<div id="add_customer_form" class="login_modal">
+  
+  <form class="login_modal-content login_animate login_form" action="php_scripts/dbutility.php?" method="POST" enctype="multipart/form-data">
+  
+    <div class="imgcontainer">
+      <h4>ADD NEW CUSTOMER</h4>
+      <div onclick="document.getElementById(\'add_customer_form\').style.display=\'none\'" class="login_close" title="Close Modal">&times;</div>
+    </div>
+
+    <div class="login_container">
+      <label><b class="label_text">First Name</b></label>
+      <input class="login_input" type="text" placeholder="Enter firstname" name="first_name" required>
+      <label><b class="label_text">Last Name</b></label>
+      <input class="login_input" type="text" placeholder="Enter lastname" name="last_name" required>
+      <label><b class="label_text">Email</b></label>
+      <input class="login_input" type="email" placeholder="e.g. testman@flexkitchen.com" name="email" required>
+      <label><b class="label_text">Telefon</b></label>
+      <input class="login_input" type="tel" name="telefon" required>
+      <label><b class="label_text">Select picture</b></label>
+      <input type="file" name="photo" id="user_photo" required>
+    </div>
+    <div style="text-align: center; margin-bottom:10px"><button class="button" type="submit">Save</button></div>
+  </form>
+  
+</div>';
+}
+
+function getCategoryOptionsElement(){
+    require("php_scripts/dbutility.php");
+    $categories = getCategoriesFromDB();
+    $result = "";
+    foreach ($categories as $key => $value) {
+        $result = $result."<option value=".$key.">".$value."</option>";
+    }
+    
+     return $result;
 }
 ?>

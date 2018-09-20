@@ -44,6 +44,10 @@ if(isset($_GET['admin_login_requested'])) {
   } else {
  	 $errorMessage = "E-Mail oder Passwort war ungültig<br>";
   }
+  print("foo");
+	exit;
+  echo json_encode($errorMessage);
+}
 
 function setSession($attributeName, $attributeValue){
 	require_once("./dbConnector.php");
@@ -64,6 +68,9 @@ function setSession($attributeName, $attributeValue){
 
         	$_SESSION['userid'] = $row["id"];
         	$_SESSION['isAdmin'] = $row['is_admin'];
+			$_SESSION['userName'] = $row['firstname'].' '.$row['lastname'];
+        	$_SESSION['imagePath'] = $row['img_path'];
+			
     	}
     	return 1;
 	} else {
@@ -96,5 +103,14 @@ function isAdmin(){
 function getSessionUserId(){
 	   return $_SESSION['userid'];;
 }
-
+function getCurrentUserName(){
+ return $_SESSION['userName'];
+}
+function getCurrentUserImagePath(){
+	$imagePath = $_SESSION['imagePath'];
+	if($imagePath == ""){
+		return 'img/default_user_img.png';
+	}
+	return $imagePath;
+}
 ?>

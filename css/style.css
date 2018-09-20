@@ -120,8 +120,7 @@ menu li {
   border-style: 1px solid;
 }
 .header_third_column{
-  width: 50%;
-  float:left;
+  float: right;
   border-style: 1px solid;
 }
 
@@ -274,5 +273,6 @@ menu li {
 .add_product_button{
   height:100%; position:relative;width:100%;
 }
-
-
+.label_text{
+  float:left;
+}

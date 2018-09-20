@@ -1,5 +1,5 @@
 function login(){
-	var loginWindow = document.getElementById("id01");
+	var loginWindow = document.getElementById("admin_login_Window");
 	loginWindow.style.display = "block";
 }
 

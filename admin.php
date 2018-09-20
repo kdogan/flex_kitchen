@@ -32,18 +32,6 @@ echo '
 
 	</style>
 	<script>
-	function checkAccessForCurrentUser() {
-		if('.isAdmin().'){
-			
-		}else{
-			alert("Access danied for this user! You are not admin");
-			if('.hasSession().'){
-				window.location.href = "articles.php";
-			}else{
-				window.location.href = "index.php";
-			}
-		}
-	}
 	function searchUserInAdminPage(){
 		
       var value = document.getElementById("searchInAdminPage").value;
@@ -121,7 +109,7 @@ function isInputedAmoundValid(value){
 }
 </script>
 </head>
-<body onLoad="checkAccessForCurrentUser()">
+<body>
 
 <div class="flex-container">
 <header>
