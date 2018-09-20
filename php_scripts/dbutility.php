@@ -168,7 +168,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     	$img_path = $_FILES["photo"]["name"];
     	$userInserted = insertUser($firstname, $lastname, $email, $tel, $img_path);
 
-        $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
+        $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png", "PNG"=>"image/PNG");
         $filename = $_FILES["photo"]["name"];
         $filetype = $_FILES["photo"]["type"];
         $filesize = $_FILES["photo"]["size"];
