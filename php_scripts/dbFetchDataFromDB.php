@@ -1,6 +1,5 @@
 <?php
 /**
- * Description of functions
  *
  * @author Kamuran Dogan
  */
@@ -10,31 +9,28 @@ class fetchDataFromDB {
     }
 
 	public function getLastPurchases($personId){
-		require_once("dbConnector.php");
-		$db = new dbConnector();
-		$conn = $db->getDBConnection();
 
-		//$conn = $this->getDBConnection();
+		$conn = $this->getDBConnection();
     	$sql = 'SELECT a.name as name, pam.person_id as person_id, pam.buy_date as buy_date 
     			FROM article a, person_article_matrix pam 
     			WHERE a.id = pam.article_id AND pam.person_id = '.$personId.' ORDER BY pam.id DESC LIMIT 1';
 
     	$result = $conn->query($sql);
 
-    	$response['name'] = "Name";
-	    $response['person_id'] = "PersonId";
-	    $response['buy_date'] = "Date";
+    	$response['id'] = -1;
+		$response['person_id'] = -1;
+		$response['article_id'] =-1;
+		$response['buy_date'] = "00.00.00.00";
 
 	    if ($result->num_rows > 0) {
 	        while($row = $result->fetch_assoc()) {
 	            $response['name'] = $row["name"];
 	            $response['person_id'] = $row["person_id"];
 	            $response['buy_date'] = $row["buy_date"];
-	            //echo json_encode($response);
 	        }
 	    }
 	    $conn->close();
-	    return json_encode($response);
+	    return $response;
 	}
 
 	function getDBConnection(){
@@ -124,6 +120,45 @@ class fetchDataFromDB {
         $result = $conn->query($sql);
         $conn->close();
         return $result;
-    }
+	}
+	
+	/*public function getLastPurchasedArticleName($personId){
+		$conn = $this->getDBConnection();
+		$sql =' SELECT name from article where id = (select article_id from person_article_matrix where person_id = '.$personId.' ORDER BY ID DESC LIMIT 1)';
+		$result = $conn->query($sql);
+		$name;
+		if ($result->num_rows > 0) {
+			while($row = $result->fetch_assoc()) {
+				$name = $row["name"];
+			}
+		} else{
+			$name = "Noch nix gekauft!";
+		}
+		$conn->close();
+		return $name;
+	}
 
+	public function getLastPersonArticleMatrixEntryForUser($personId){
+		$conn = $this->getDBConnection();
+		$sql = 'SELECT * FROM person_article_matrix WHERE person_id ='.$personId.' ORDER BY ID DESC LIMIT 1';
+		$response;
+		$result = $conn->query($sql);
+		if ($result->num_rows > 0) {
+			while($row = $result->fetch_assoc()) {
+				$response['id'] = $row["id"];
+				$response['person_id'] = $row["person_id"];
+				$response['article_id'] =$row["article_id"];
+				$response['buy_date'] = $row["buy_date"];
+			}
+		}else{
+			$response['id'] = -1;
+			$response['person_id'] = -1;
+			$response['article_id'] =-1;
+			$response['buy_date'] = "00.00.00.00";
+		} 
+
+		$conn->close();
+		return $response;
+	}*/
+	
 }
