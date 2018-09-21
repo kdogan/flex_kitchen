@@ -4,7 +4,6 @@ $errorMessage="";
 
 // Remove Session
 if(isset($_GET['destroySessionRequested']) && $_GET['destroySessionRequested'] ==1){
-	
 	$response['isSessionDestroyed'] = true;
 	echo json_encode($response);
 }
@@ -44,8 +43,6 @@ if(isset($_GET['admin_login_requested'])) {
   } else {
  	 $errorMessage = "E-Mail oder Passwort war ungültig<br>";
   }
-  print("foo");
-	exit;
   echo json_encode($errorMessage);
 }
 
@@ -70,8 +67,7 @@ function setSession($attributeName, $attributeValue){
         	$_SESSION['isAdmin'] = $row['is_admin'];
 			$_SESSION['userName'] = $row['firstname'].' '.$row['lastname'];
         	$_SESSION['imagePath'] = $row['img_path'];
-			
-    	}
+		}
     	return 1;
 	} else {
     	return 0;
@@ -101,7 +97,7 @@ function isAdmin(){
 }
 
 function getSessionUserId(){
-	   return $_SESSION['userid'];;
+	return $_SESSION['userid'];;
 }
 function getCurrentUserName(){
  return $_SESSION['userName'];
