@@ -66,18 +66,19 @@ header {background-color:#83bb26;color:white; width: 100%;max-height: 90px;}
   border-style: groove;
   background-color:#83bb26;
 
-  &:hover{
-    transition:all 150ms linear;
-    opacity: .85;
-  }
-  &:active{
-    transition: all 150ms linear;
-    opacity: .75;
-  }
-  &:focus{
-    outline: all dotted #959595;
-    outline-offset: -4px;
-  }
+  
+}
+.article_img:hover{
+  transition:all 150ms linear;
+  opacity: .85;
+}
+.article_img:active{
+  transition: all 150ms linear;
+  opacity: .75;
+}
+.article_img:focus{
+  outline: all dotted #959595;
+  outline-offset: -4px;
 }
 
 menu li {
@@ -227,7 +228,7 @@ menu li {
     padding: 5px;
     margin-bottom: 4px;
     height: 120px;
-    background-color: FF4500;
+    background-color: #FF4500;
 }
 
 /* Clear floats after the columns */

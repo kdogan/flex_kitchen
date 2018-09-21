@@ -22,8 +22,8 @@ function getUserAccountBalance(){
     $purchasedArticle = $script->getLastPurchasedArticle($currentUserId);
     $articleName = $purchasedArticle['name'];
     $date  = $purchasedArticle['buy_date'];
-
-    $amound = getAccountBalanceOfCurrentUser();//dbutility
+    
+    $amound = $script->getAccountBalanceOfCurrentUser();
     
     $color= "white";
     if( floatval($amound) < 0){
@@ -85,80 +85,7 @@ return '
         }
 	</style>
 	<script>
-	function searchUserInAdminPage(){
-      var value = document.getElementById("searchInAdminPage").value;
-      $(".column").each(function() {
-          if ($(this).text().toLowerCase().search(value.toLowerCase()) > -1) {
-              $(this).show();
-          }
-          else {
-              $(this).hide();
-          }
-      });
-	}
-	function checkInputForNumber(inputPayment,buttonId)
-	{
-		var input = document.getElementById(inputPayment);
-		var payButton = document.getElementById(buttonId);
-		//input.style.backgroundColor="#FFF";
-		
-		var x=input.value;
-		
-		if (!isInputedAmoundValid(x) && x !="")
-		{
-		    input.style.backgroundColor="#FF0000";
-		}else{
-			input.style.backgroundColor="#FFF";
-		}
-	}
-	function updateUserAmound(userId, inputFieldId){
-
-	  var input = document.getElementById(inputFieldId);
-	  var amound = input.value;
-	  if(isInputedAmoundValid(amound)){
-	    $.ajax({
-	      url: \'php_scripts/dbutility.php?id=\'+userId+\'&amound=\'+amound,
-	      success: function(html) {
-	                var obj = JSON.parse(html);
-	                var idOfBalanceToBeUpdated = "accountBalance"+userId;
-	                document.getElementById(idOfBalanceToBeUpdated).innerHTML = obj["newBalance"]+" €";
-	                input.value = "";
-	               }
-	    });
-	  }
-	}
-
-	function updateProductNumber(productId, inputFieldId){
-
-	  var input = document.getElementById(inputFieldId);
-	  var productNumber = input.value;
-	  if (isInteger(productNumber)){
-	    $.ajax({
-	      url: \'php_scripts/dbutility.php?productId=\'+productId+\'&productNumber=\'+productNumber,
-	      success: function(html) {
-	                var obj = JSON.parse(html);
-	                var idOfBalanceToBeUpdated = "numOfProduct"+productId;
-	                var numberOfProduct = obj["newCount"];
-	                document.getElementById(idOfBalanceToBeUpdated).innerHTML = numberOfProduct+" Stück";
-	                input.value = "";
-	               }
-	    });
-	  }
-	}
-
-function isInteger(x) {
-   return x % 1 === 0;
-}
-
-function isInputedAmoundValid(value){
-  var regex=/^\-?([1-9]\d*|0)(\.\d?[1-9])?$/;
-  if(value=="" || !value.match(regex)) {
-    return false;
-  }
-  else{
-    return true;
-  }
-}
+	
 </script>
 </head>
 <body">
@@ -478,8 +405,10 @@ function getWindowToAddNewPerson(){
 }
 
 function getCategoryOptionsElement(){
-    require("php_scripts/dbutility.php");
-    $categories = getCategoriesFromDB();
+    require_once("php_script.php");
+    $script = new FunctionScript();
+
+    $categories = $script->getCategoriesFromDB();
     $result = "";
     foreach ($categories as $key => $value) {
         $result = $result."<option value=".$key.">".$value."</option>";

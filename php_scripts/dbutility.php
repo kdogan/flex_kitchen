@@ -1,149 +1,54 @@
 <?php
 
 if(isset($_GET["id"]) && !isset($_GET["amound"])){
+	require_once("../php_script.php");
+	$script = new FunctionScript();
+
 	$id=$_GET["id"];
 	//TODO before execution of sql queries check if current user has right to access
- 	$response = getPersonFromDB($id);
+ 	$response = $script->getPersonFromDB($id);
  	echo json_encode($response);
 }
 
 if(isset($_GET["id"]) && isset($_GET["amound"])){
+	require_once("../php_script.php");
+	$script = new FunctionScript();
+	
 	$id=$_GET["id"];
 	$amound = $_GET["amound"];
-	$response = updateAccountBalanceOfUser($id, $amound);
+	$response = $script->updateAccountBalanceOfUser($id, $amound);
  	echo json_encode($response);
 }
 
 if(isset($_GET["productId"]) && isset($_GET["productNumber"])){
+	require_once("../php_script.php");
+	$script = new FunctionScript();
+
 	$id=$_GET["productId"];
 	$number = $_GET["productNumber"];
-	$response = updateProductNumber($id, $number);
+	$response = $script->updateProductNumber($id, $number);
  	echo json_encode($response);
 }
 
 if(isset($_GET['accountBalanceRequested'])){
-	$response = getAccountBalanceOfCurrentUser();
+	require_once("../php_script.php");
+    $script = new FunctionScript();
+
+	$response = $script->getAccountBalanceOfCurrentUser();
 	echo json_encode($response);
 }
 
-function getAccountBalanceOfCurrentUser(){
-	require_once("login.php");
-	require_once("dbConnector.php");
-	$db = new dbConnector();
-	$conn = $db->getDBConnection();
-
-	$userId = getSessionUserId();
-	$person = getPersonFromDB($userId);
-	$oldAccountBalance = floatval($person["account_balance"]);
-	$conn->close(); 
-	return $oldAccountBalance;
-}
-function updateAccountBalanceOfUser($userId, $amound){
-	require_once("dbConnector.php");
-	$db = new dbConnector();
-	$conn = $db->getDBConnection();
-	$person = getPersonFromDB($userId);
-	$oldAccountBalance = floatval($person["account_balance"]);
-	$newAccountBalance = $oldAccountBalance + floatval($amound);
-	$response = "";
-	$sql = 'UPDATE person SET account_balance = '.$newAccountBalance.'WHERE id ='.$userId;
-
-	if ($conn->query($sql) === FALSE) {
-    	$response = "Error updating record: " . $conn->error;
-	}else{
-		$response = array('newBalance'=>(string)$newAccountBalance);
-	}
-	return $response;
-	$conn->close(); 
-}
-
-function updateProductNumber($productId, $productNumber){
-	require_once("dbConnector.php");
-	$db = new dbConnector();
-	$conn = $db->getDBConnection();
-	$product = getProductFromDB($productId);
-	$oldAccountBalance = floatval($product["count"]);
-	$newAccountBalance = $oldAccountBalance + $productNumber;
-	$response = "";
-	$sql = 'UPDATE article SET count = '.$newAccountBalance.' WHERE id ='.$productId;
-
-	if ($conn->query($sql) === FALSE) {
-    	$response = "Error updating record: " . $conn->error;
-	}else{
-		$response = array('newCount'=>(string)$newAccountBalance);
-	}
-	return $response;
-	$conn->close(); 
-}
-
-function getPersonFromDB($userId){
-	require_once("dbConnector.php");
-	$db = new dbConnector();
-	$conn = $db->getDBConnection();
-	$sql = 'SELECT * FROM person WHERE is_admin="0" and id ='.$userId;
-	$result = $conn->query($sql);
-	if ($result->num_rows > 0) {
-	    while($row = $result->fetch_assoc()) {
-	        $response['id'] = $row["id"];
-	        $response['firstname'] = $row["firstname"];
-	        $response['lastname'] =$row["lastname"];
-	        $response['email'] = $row["email"];
-	        $response['img_path'] = $row["img_path"];
-	        $response['account_balance'] = $row["account_balance"];
-	    }
-	    return $response;
-	} else {
-	    return "-1";
-	}
-	$conn->close(); 
-}
-
-function getProductFromDB($productId){
-	require_once("dbConnector.php");
-	$db = new dbConnector();
-	$conn = $db->getDBConnection();
-	$sql = 'SELECT * FROM article WHERE id ='.$productId;
-	$result = $conn->query($sql);
-	if ($result->num_rows > 0) {
-	    while($row = $result->fetch_assoc()) {
-	        $response['id'] = $row["id"];
-	        $response['name'] = $row["name"];
-	        $response['price'] = $row["price"];
-	        $response['count'] = $row["count"];
-	        $response['category'] = $row["category"];
-	        $response['img_path'] = $row["img_path"];
-	    }
-	    return $response;
-	} else {
-	    return "-1";
-	}
-	$conn->close(); 
-}
-
-function getCategoriesFromDB(){
-	require_once("dbConnector.php");
-	$db = new dbConnector();
-	$conn = $db->getDBConnection();
-	$sql = 'SELECT * FROM category';
-	$result = $conn->query($sql);
-	if ($result->num_rows > 0) {
-	    while($row = $result->fetch_assoc()) {
-	        $response[$row["id"]] = $row["name"];
-	    }
-	    return $response;
-	} else {
-	    return "-1";
-	}
-	$conn->close(); 
-}
 if(isset($_REQUEST["first_name"]) && isset($_REQUEST["last_name"]) &&isset($_REQUEST["email"]) && isset($_REQUEST["customer_img"])){
     $firstname = $_REQUEST["first_name"];
     $lastname = $_REQUEST["last_name"];
     $email = $_REQUEST["email"];
     $telefon = $_REQUEST["telefon"];
-    $imaga_name = $_REQUEST["customer_img"];
+	$imaga_name = $_REQUEST["customer_img"];
 
-    $userInserted = insertUser($firstname, $lastname, $email, $telefon, $imaga_name);
+	require_once("php_script.php");
+    $script = new FunctionScript();
+
+    $userInserted = $script->insertUser($firstname, $lastname, $email, $telefon, $imaga_name);
 }
 
 if(isset($_REQUEST["articleBoughtRequsted"])){
@@ -170,11 +75,14 @@ if(isset($_REQUEST["articleBoughtRequsted"])){
 	$conn->close(); 
 }
 
-$successfullyByInsertedUser = $errorByInsertedUser = "";
+//$successfullyByInsertedUser = $errorByInsertedUser = "";
 
-define ('SITE_ROOT', realpath(dirname(__DIR__)));
 // Check if the form was submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
+	require_once("php_script.php");
+	$script = new FunctionScript();
+	define ('SITE_ROOT', realpath(dirname(__DIR__)));
+	
     // Check if file was uploaded without errors
     if(isset($_FILES["photo"]) && $_FILES["photo"]["error"] == 0 && $_REQUEST["first_name"] && $_REQUEST["last_name"] && $_REQUEST["email"] && $_REQUEST["telefon"]){
     	$firstname = $_REQUEST["first_name"];
@@ -182,7 +90,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     	$email = $_REQUEST["email"];
     	$tel = $_REQUEST["telefon"];
     	$img_path = $_FILES["photo"]["name"];
-    	$userInserted = insertUser($firstname, $lastname, $email, $tel, $img_path);
+    	$userInserted = $script->insertUser($firstname, $lastname, $email, $tel, $img_path);
 
         $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png","PNG" => "image/PNG");
         $filename = $_FILES["photo"]["name"];
@@ -223,25 +131,5 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         //echo "Error: " . $_FILES["photo"]["error"];
         $errorByInsertedUser = "Error: " . $_FILES["photo"]["error"];
     }
-}
-
-function insertUser($firstname, $lastname, $email, $telefon, $img_path){
-	require_once("dbConnector.php");
-    $db = new dbConnector();
-    $conn = $db->getDBConnection();
-
-    $imaga_name = "img/".$img_path;
-
-    $sql = 'INSERT INTO person (firstname, lastname, email, tel_no, img_path, account_balance, is_admin, user_pw) 
-    		VALUES ("'.$firstname.'","'.$lastname.'","'.$email.'",'.$telefon.',"'.$imaga_name.'", 0, 0,"cfcd208495d565ef66e7dff9f98764da")';
-
-    $result = $conn->query($sql);
-    if($result){
-        $successfullyByInsertedUser = "Records added successfully.";
-    } else{
-        $errorByInsertedUser = "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
-    }
-    $conn->close();
-    return $result;
 }
 ?>

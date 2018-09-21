@@ -16,10 +16,9 @@ class fetchDataFromDB {
     			WHERE a.id = pam.article_id AND pam.person_id = '.$personId.' ORDER BY pam.id DESC LIMIT 1';
 
     	$result = $conn->query($sql);
-
+		$response['name'] = "Noch nix gekauft";
     	$response['id'] = -1;
 		$response['person_id'] = -1;
-		$response['article_id'] =-1;
 		$response['buy_date'] = "00.00.00.00";
 
 	    if ($result->num_rows > 0) {
@@ -122,43 +121,127 @@ class fetchDataFromDB {
         return $result;
 	}
 	
-	/*public function getLastPurchasedArticleName($personId){
+	public function getAccountBalanceOfCurrentUser(){
+		require_once("login.php");
+
 		$conn = $this->getDBConnection();
-		$sql =' SELECT name from article where id = (select article_id from person_article_matrix where person_id = '.$personId.' ORDER BY ID DESC LIMIT 1)';
-		$result = $conn->query($sql);
-		$name;
-		if ($result->num_rows > 0) {
-			while($row = $result->fetch_assoc()) {
-				$name = $row["name"];
-			}
-		} else{
-			$name = "Noch nix gekauft!";
-		}
-		$conn->close();
-		return $name;
+		$userId = getSessionUserId();
+		$person = $this->getPersonFromDB($userId);
+		$oldAccountBalance = floatval($person["account_balance"]);
+		$conn->close(); 
+		return $oldAccountBalance;
 	}
 
-	public function getLastPersonArticleMatrixEntryForUser($personId){
+	public function updateAccountBalanceOfUser ($userId, $amound){
 		$conn = $this->getDBConnection();
-		$sql = 'SELECT * FROM person_article_matrix WHERE person_id ='.$personId.' ORDER BY ID DESC LIMIT 1';
-		$response;
+		$person = $this->getPersonFromDB($userId);
+        $oldAccountBalance = floatval($person["account_balance"]);
+        $newAccountBalance = $oldAccountBalance + floatval($amound);
+        $response = "";
+        $sql = 'UPDATE person SET account_balance = '.$newAccountBalance.'WHERE id ='.$userId;
+    
+        if ($conn->query($sql) === FALSE) {
+            $response = "Error updating record: " . $conn->error;
+        }else{
+            $response = array('newBalance'=>(string)$newAccountBalance);
+        }
+        return $response;
+        $conn->close(); 
+	}
+
+	public function updateProductNumber($productId, $productNumber){
+		$conn = $this->getDBConnection();
+
+		$product = $this->getProductFromDB($productId);
+        $oldAccountBalance = floatval($product["count"]);
+        $newAccountBalance = $oldAccountBalance + $productNumber;
+        $response = "";
+        $sql = 'UPDATE article SET count = '.$newAccountBalance.' WHERE id ='.$productId;
+    
+        if ($conn->query($sql) === FALSE) {
+            $response = "Error updating record: " . $conn->error;
+        }else{
+            $response = array('newCount'=>(string)$newAccountBalance);
+        }
+        return $response;
+        $conn->close(); 
+	}
+
+	function getProductFromDB($productId){
+		$conn = $this->getDBConnection();
+		
+		$sql = 'SELECT * FROM article WHERE id ='.$productId;
 		$result = $conn->query($sql);
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
 				$response['id'] = $row["id"];
-				$response['person_id'] = $row["person_id"];
-				$response['article_id'] =$row["article_id"];
-				$response['buy_date'] = $row["buy_date"];
+				$response['name'] = $row["name"];
+				$response['price'] = $row["price"];
+				$response['count'] = $row["count"];
+				$response['category'] = $row["category"];
+				$response['img_path'] = $row["img_path"];
 			}
-		}else{
-			$response['id'] = -1;
-			$response['person_id'] = -1;
-			$response['article_id'] =-1;
-			$response['buy_date'] = "00.00.00.00";
-		} 
+			return $response;
+		} else {
+			return "-1";
+		}
+		$conn->close(); 
+	}
 
-		$conn->close();
-		return $response;
-	}*/
+	function getCategoriesFromDB(){
+		$conn = $this->getDBConnection();
+
+        $sql = 'SELECT * FROM category';
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $response[$row["id"]] = $row["name"];
+            }
+            return $response;
+        } else {
+            return "-1";
+        }
+        $conn->close(); 
+	}
+	
+	public function insertUser($firstname, $lastname, $email, $telefon, $img_path){
+		$conn = $this->getDBConnection();
+        $imaga_name = "img/".$img_path;
+    
+        $sql = 'INSERT INTO person (firstname, lastname, email, tel_no, img_path, account_balance, is_admin, user_pw) 
+                VALUES ("'.$firstname.'","'.$lastname.'","'.$email.'",'.$telefon.',"'.$imaga_name.'", 0, 0,"cfcd208495d565ef66e7dff9f98764da")';
+    
+        $result = $conn->query($sql);
+        if($result){
+            $successfullyByInsertedUser = "Records added successfully.";
+        } else{
+            $errorByInsertedUser = "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+        }
+        $conn->close();
+        return $result;
+    }
+
+	//TODO duplicated with dbutility. remove from dbutility
+	function getPersonFromDB($userId){
+		require_once("dbConnector.php");
+		$db = new dbConnector();
+		$conn = $db->getDBConnection();
+		$sql = 'SELECT * FROM person WHERE is_admin="0" and id ='.$userId;
+		$result = $conn->query($sql);
+		if ($result->num_rows > 0) {
+			while($row = $result->fetch_assoc()) {
+				$response['id'] = $row["id"];
+				$response['firstname'] = $row["firstname"];
+				$response['lastname'] =$row["lastname"];
+				$response['email'] = $row["email"];
+				$response['img_path'] = $row["img_path"];
+				$response['account_balance'] = $row["account_balance"];
+			}
+			return $response;
+		} else {
+			return "-1";
+		}
+		$conn->close(); 
+	}
 	
 }

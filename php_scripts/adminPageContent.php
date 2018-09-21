@@ -19,7 +19,6 @@ function getUserDivsInAdminPage(){
 	require("dbFetchDataFromDB.php");
 
 	$functions = new FunctionScript();
-	$fetchDataFromDB = new fetchDataFromDB();
 
     $persons = $functions->getAllFromTable("person");
     
@@ -42,8 +41,8 @@ function getUserDivsInAdminPage(){
             $payButtonId = 'payButton'.$id;
             $inputPayment = 'inputPayment'.$id;
 
-            $fetchedData = $fetchDataFromDB->getLastPurchases($id);
-            $lastPurchase =json_decode($fetchedData);
+            $fetchedData = $functions->getLastPurchasedArticle($id);
+            $lastPurchase =$fetchedData;
 
             $result = $result.'<div class="column">
             <div class="box1"><img style="width:120px;float:left" src="'.$row["img_path"].'" alt="user image"></div>
@@ -64,7 +63,7 @@ function getUserDivsInAdminPage(){
 			         <tr>
 			            <td style="float:left"> letzte Kauf </td>
 			            <td style="float:left">:</td>
-			            <td style="float:left; font-weight: bold" id="lastBuy">'.$lastPurchase->{"name"}.' ('.$lastPurchase->{"buy_date"}.')</td>
+			            <td style="float:left; font-weight: bold" id="lastBuy">'.$lastPurchase["name"].' ('.$lastPurchase["buy_date"].')</td>
 			         </tr>
                     </table>
                     </div>
@@ -82,12 +81,11 @@ function getUserDivsInAdminPage(){
 }
 
 function getProductDivsInAdminPage(){
-    require("dbutility.php");
 	require("../php_script.php");
-	$functions = new FunctionScript();
+	$script = new FunctionScript();
     
-	$products = $functions->getAllFromTable("article");
-    $categories = getCategoriesFromDB();
+	$products = $script->getAllFromTable("article");
+    $categories = $script->getCategoriesFromDB();
 
     if($products->num_rows >0){
         $result = "<div style='width:15%;margin-buttom:10px'>

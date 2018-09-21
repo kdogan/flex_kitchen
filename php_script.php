@@ -22,10 +22,52 @@ class FunctionScript{
         return $result;
     }
 
+    public function getAccountBalanceOfCurrentUser(){
+        require_once("login.php");
+        require_once("php_scripts/dbFetchDataFromDB.php");
+
+        $currentUserId = getSessionUserId();
+        $fetchDataFromDB = new fetchDataFromDB();
+        $result = $fetchDataFromDB->getAccountBalanceOfCurrentUser($currentUserId);
+        return $result;
+    }
+    public function updateAccountBalanceOfUser($userId, $amound){
+        require_once("login.php");
+        require_once("php_scripts/dbFetchDataFromDB.php");
+        $currentUserId = getSessionUserId();
+        $fetchDataFromDB = new fetchDataFromDB();
+        $result = $fetchDataFromDB->updateAccountBalanceOfUser($currentUserId, $amound);
+        return $result;
+    }
+
+    function updateProductNumber($productId, $productNumber){
+        require_once("php_scripts/dbFetchDataFromDB.php");
+
+        $fetchDataFromDB = new fetchDataFromDB();
+        $result = $fetchDataFromDB->updateProductNumber($productId, $productNumber);
+        print($result);
+        exit;
+        return $result;
+    }
+
     public function getAllFromTable($tableName){
         require_once("php_scripts/dbFetchDataFromDB.php");
         $fetchDataFromDB = new fetchDataFromDB();
         $result = $fetchDataFromDB->getAllFromTable($tableName);
+        return $result;
+    }
+
+    public function getCategoriesFromDB(){
+        require_once("php_scripts/dbFetchDataFromDB.php");
+        $fetchDataFromDB = new fetchDataFromDB();
+        $result = $fetchDataFromDB->getCategoriesFromDB();
+        return $result;
+    }
+
+    public function insertUser($firstname, $lastname, $email, $telefon, $img_path){
+        require_once("php_scripts/dbFetchDataFromDB.php");
+        $fetchDataFromDB = new fetchDataFromDB();
+        $result = $fetchDataFromDB->insertUser($firstname, $lastname, $email, $telefon, $img_path);
         return $result;
     }
 
@@ -53,23 +95,7 @@ class FunctionScript{
         $fetchDataFromDB = new fetchDataFromDB();
         $purchasedArticle = $fetchDataFromDB-> getLastPurchases($personId);
         return $purchasedArticle;
-        
     }
-
-    
-    /*public function getLastPurchasedArticleName($personId){
-        require_once("php_scripts/dbFetchDataFromDB.php");
-        $fetchDataFromDB = new fetchDataFromDB();
-        $name = $fetchDataFromDB-> getLastPurchasedArticleName($personId);
-        return $name;
-    }
-
-    public function getLastPersonArticleMatrixEntryForUser($personId){
-        require_once("php_scripts/dbFetchDataFromDB.php");
-        $fetchDataFromDB = new fetchDataFromDB();
-        $lastEntry = $fetchDataFromDB-> getLastPersonArticleMatrixEntryForUser($personId);
-        return $lastEntry;
-    }*/
 }
 
 ?>
