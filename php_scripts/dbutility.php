@@ -21,6 +21,23 @@ if(isset($_GET["productId"]) && isset($_GET["productNumber"])){
  	echo json_encode($response);
 }
 
+if(isset($_GET['accountBalanceRequested'])){
+	$response = getAccountBalanceOfCurrentUser();
+	echo json_encode($response);
+}
+
+function getAccountBalanceOfCurrentUser(){
+	require_once("login.php");
+	require_once("dbConnector.php");
+	$db = new dbConnector();
+	$conn = $db->getDBConnection();
+
+	$userId = getSessionUserId();
+	$person = getPersonFromDB($userId);
+	$oldAccountBalance = floatval($person["account_balance"]);
+	$conn->close(); 
+	return $oldAccountBalance;
+}
 function updateAccountBalanceOfUser($userId, $amound){
 	require_once("dbConnector.php");
 	$db = new dbConnector();
@@ -81,8 +98,6 @@ function getPersonFromDB($userId){
 	$conn->close(); 
 }
 
-
-
 function getProductFromDB($productId){
 	require_once("dbConnector.php");
 	$db = new dbConnector();
@@ -131,26 +146,27 @@ if(isset($_REQUEST["first_name"]) && isset($_REQUEST["last_name"]) &&isset($_REQ
     $userInserted = insertUser($firstname, $lastname, $email, $telefon, $imaga_name);
 }
 
-if(isset($_REQUEST["person_id"]) && isset($_REQUEST["selectedArticleId"])){
+if(isset($_REQUEST["articleBoughtRequsted"])){
+	require_once("login.php");
 	include("dbConnector.php");
 	$db = new dbConnector();
 	$conn = $db->getDBConnection();
 
-	$selectedArticleId = $_REQUEST["selectedArticleId"];
-	$personId =  $_REQUEST["person_id"];
+	if(!isset($_REQUEST["selectedArticleId"])){
+		echo json_encode("No article selected to buy");
+		exit;
+	}
 
+	$selectedArticleId = $_REQUEST["selectedArticleId"];
+	$personId =  getSessionUserId();
 	$sql = 'INSERT INTO person_article_matrix (person_id, article_id, count, buy_date) VALUES ('.$personId.','.$selectedArticleId.',1,CURDATE())';
 	$result = mysqli_query($conn, $sql);
 
-	if(isset($selectedArticleId) && isset($personId)){
-
 	if ($result === TRUE) {
 		echo "New record created successfully";
-	}
 	} else {
-	echo "Error: ". $sql . "<br>" . $conn->error;
+		echo "Error: ". $sql . "<br>" . $conn->error;
 	}
-
 	$conn->close(); 
 }
 
@@ -168,7 +184,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     	$img_path = $_FILES["photo"]["name"];
     	$userInserted = insertUser($firstname, $lastname, $email, $tel, $img_path);
 
-        $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png", "PNG"=>"image/PNG");
+        $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png","PNG" => "image/PNG");
         $filename = $_FILES["photo"]["name"];
         $filetype = $_FILES["photo"]["type"];
         $filesize = $_FILES["photo"]["size"];
