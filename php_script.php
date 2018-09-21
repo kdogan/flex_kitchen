@@ -1,7 +1,7 @@
 <?php
 class FunctionScript{
 
-function getArticleLIs(){
+    public function getArticleLIs(){
 
         $persons = $this -> getAllFromTable("article");
         $result = "<h2>No Article found... :'(</h2>";
@@ -37,18 +37,39 @@ function getArticleLIs(){
             while($row = $persons->fetch_assoc()){
                 //don't show admin in index page
                 if($row["is_admin"] == "1") continue;
-
-                $user = $row["firstname"].' '.$row["lastname"];
+                $user = $row["firstname"]." ".$row["lastname"]; 
                 $id = $row["id"];
                 $imagePath = $row["img_path"];
                 $result = $result.'<li class="user_div" id="'.$id.'">
-                <div class="user_img" style="background-image: url(\''.$imagePath.'\');" href="#" onclick="clickUser(\''.$user.'\',\''.$id.'\')"></div>
+                <div class="user_img" style="background-image: url(\''.$imagePath.'\');" href="#" onclick="clickUser(\''.$id.'\')"></div>
                 <span class="name_label_span">'.$user.'</span>
                 </li>';
             }
         }
         return $result;
     }
+    public function getLastPurchasedArticle($personId){
+        require_once("php_scripts/dbFetchDataFromDB.php");
+        $fetchDataFromDB = new fetchDataFromDB();
+        $purchasedArticle = $fetchDataFromDB-> getLastPurchases($personId);
+        return $purchasedArticle;
+        
+    }
+
+    
+    /*public function getLastPurchasedArticleName($personId){
+        require_once("php_scripts/dbFetchDataFromDB.php");
+        $fetchDataFromDB = new fetchDataFromDB();
+        $name = $fetchDataFromDB-> getLastPurchasedArticleName($personId);
+        return $name;
+    }
+
+    public function getLastPersonArticleMatrixEntryForUser($personId){
+        require_once("php_scripts/dbFetchDataFromDB.php");
+        $fetchDataFromDB = new fetchDataFromDB();
+        $lastEntry = $fetchDataFromDB-> getLastPersonArticleMatrixEntryForUser($personId);
+        return $lastEntry;
+    }*/
 }
 
 ?>
