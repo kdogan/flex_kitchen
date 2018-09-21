@@ -1,5 +1,6 @@
 <?php
 include "login.php";
+include "dbutility.php";
 
 function getCurrentPageContent(){
     $currentPageContent = getHomePageContent(); //= getLoginPage();
@@ -14,18 +15,32 @@ function getCurrentPageContent(){
 }
 
 function getUserAccountBalance(){
+    require_once("php_script.php");
+    $script = new FunctionScript();
+
+    $currentUserId = getSessionUserId();
+    $purchasedArticle = $script->getLastPurchasedArticle($currentUserId);
+    $articleName = $purchasedArticle['name'];
+    $date  = $purchasedArticle['buy_date'];
+
+    $amound = getAccountBalanceOfCurrentUser();//dbutility
+    
+    $color= "white";
+    if( floatval($amound) < 0){
+        $color= "red";
+    }
     return '<table>
              <tr>
                 <td style="float:left"> Kontozustand </td>
                 <td style="float:left">:</td>
                 <td style="float:left; font-weight: bold" > 
-                    <div style="background-color: white;border-radius:50% ;padding:3px 15px 3px 15px; color:black" id="accountBalance">0 €</div>
+                    <div style="background-color: '.$color.';border-radius:50% ;padding:3px 15px 3px 15px; color:black" id="accountBalance">'.$amound.' €</div>
                 </td>
              </tr>
              <tr>
                 <td style="float:left"> letzte Kauf </td>
                 <td style="float:left">:</td>
-                <td style="float:left; font-weight: bold" id="lastBuy">letzte Getränk</td>
+                <td style="float:left; font-weight: bold" id="lastBuy">'.$articleName.' ('.$date.')</td>
              </tr>
             </table>';
 }
@@ -358,10 +373,10 @@ span.psw {
     </div>
 
     <div class="login_container">
-      <label><b class="label_text">EMail Address</b></label>
+      <label><b>EMail Address</b></label>
       <input class="login_input" type="text" placeholder="Enter EMail" name="email" required>
 
-      <label><b class="label_text">Password</b></label>
+      <label><b>Password</b></label>
       <input class="login_input" type="password" placeholder="Enter Password" name="password" required>
         
       <button type="submit">Login</button>
@@ -415,16 +430,16 @@ function getWindowToAddNewProduct(){
     </div>
 
     <div class="login_container">
-      <label><b class="label_text">Produkt Name</b></label>
+      <label><b style="float:left">Produkt Name</b></label>
       <input class="login_input" type="text" placeholder="Enter Name" name="product_name" required>
-      <label><b class="label_text">Select Category</b></label>
+      <label><b style="float:left">Select Category</b></label>
       <div><select name="product_category">
       '.getCategoryOptionsElement().'
       </select></div><br/>
-      <label><b class="label_text">Price</b></label>
+      <label><b style="float:left">Price</b></label>
       <input class="login_input" type="text" placeholder="Enter price e.g. 1.0" name="product_price" required>
 
-      <label><b class="label_text">Enter picture name</b></label>
+      <label><b style="float:left">Enter picture name</b></label>
       <input class="login_input" type="text" placeholder="e.g. test.png" name="product_img" required>
     </div>
     <div style="text-align: center; margin-bottom:10px"><button class="button" type="submit">Save</button></div>
@@ -445,15 +460,15 @@ function getWindowToAddNewPerson(){
     </div>
 
     <div class="login_container">
-      <label><b class="label_text">First Name</b></label>
+      <label><b style="float:left">First Name</b></label>
       <input class="login_input" type="text" placeholder="Enter firstname" name="first_name" required>
-      <label><b class="label_text">Last Name</b></label>
+      <label><b style="float:left">Last Name</b></label>
       <input class="login_input" type="text" placeholder="Enter lastname" name="last_name" required>
-      <label><b class="label_text">Email</b></label>
+      <label><b style="float:left">Email</b></label>
       <input class="login_input" type="email" placeholder="e.g. testman@flexkitchen.com" name="email" required>
-      <label><b class="label_text">Telefon</b></label>
+      <label><b style="float:left">Telefon</b></label>
       <input class="login_input" type="tel" name="telefon" required>
-      <label><b class="label_text">Select picture</b></label>
+      <label><b style="float:left">Select picture</b></label>
       <input type="file" name="photo" id="user_photo" required>
     </div>
     <div style="text-align: center; margin-bottom:10px"><button class="button" type="submit">Save</button></div>
