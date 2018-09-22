@@ -64,7 +64,7 @@ if(isset($_REQUEST["articleBoughtRequsted"])){
 
 	$selectedArticleId = $_REQUEST["selectedArticleId"];
 	$personId =  getSessionUserId();
-	$sql = 'INSERT INTO person_article_matrix (person_id, article_id, count, buy_date) VALUES ('.$personId.','.$selectedArticleId.',1,CURDATE())';
+	$sql = 'INSERT INTO person_article_matrix (person_id, article_id, count, buy_date) VALUES ('.$personId.','.$selectedArticleId.',1,now())';
 	$result = mysqli_query($conn, $sql);
 
 	if ($result === TRUE) {

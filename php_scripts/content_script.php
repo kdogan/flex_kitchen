@@ -55,7 +55,7 @@ function getHomePageContent(){
             <div class="flex-container">
             <header>
             <div class="header_first_column">
-                <div style="width: 50px; height: 50px; float: left"> FLEX KITCHEN</div>
+                <div style="width: 50px; height: 50px; float: left"> <img class="logo_img" src="img/logo.png" href="#"></img></div>
                 </div>
                 <div class="header_second_column" style="color:#83bb26"> </div>
                 <div class="header_third_column">
@@ -67,7 +67,7 @@ function getHomePageContent(){
             </header>
             <div class="content">
             <menu>'. $script->getUserLIs().'</menu>'.getLoginPage().'
-        </div>'.getFooter();
+        </div><!--'.getFooter().'-->';
 }
 
 function getAdminPage(){
@@ -93,20 +93,20 @@ return '
 <div class="flex-container">
 <header>
 <div class="header_first_column">
-  <div style="width: 50px; height: 50px; float: left"> FLEX KITCHEN</div>
+  <div style="width: 50px; height: 50px; float: left"> <img class="logo_img" src="img/logo.png" href="#"></img></div>
 </div>
 <div class="header_second_column" style="background-color:yellow;color:black"><h4> Aministration Bereich</h4></div>
 <div class="header_third_column">
   <form class="search_form">
-	<div style="float:right"><img style=" width:50px; float:right;" src="img/adminLogginImg.png" href="#" onclick="closeAdminSite()"></img></div>
-	<div style="float:right"><img style=" height:60px;float:right;" src="img/home.png" href="#" onclick="goToAdminHome()"></img></div>
+	<div style="float:right"><img class="user_logout_img user_logout_in_admin_page" src="img/user_logout.png" href="#" onclick="closeAdminSite()"></img></div>
+	<div style="float:right"><img style=" height:55px;float:right;" src="img/home.png" href="#" onclick="goToAdminHome()"></img></div>
 	<div style="float:right"> <input type="text" class="search" id="searchInAdminPage" onkeyup="searchUserInAdminPage()" placeholder="Search for names.." title="Type in a name"></div>
   </form>
 </div>
 </header>
   
 <div class="content" id="contentInAdminPage">
-<menu id="admin_home_manu" style="padding-left:0px">'.getAdminPageContent().'</menu>'.getWindowToAddNewProduct().getWindowToAddNewPerson().'</div>'.getFooter();
+<menu id="admin_home_manu" style="padding-left:0px">'.getAdminPageContent().'</menu>'.getWindowToAddNewProduct().getWindowToAddNewPerson().'</div><!--'.getFooter().'-->';
 }
 
 function getArticlePage(){
@@ -122,18 +122,18 @@ function getArticlePage(){
     <div class="flex-container">
     <header> 
       <div class="header_first_column">
-        <div id="loggedUserImg" style="width:60px;height:60px;float:left; background-image:url(\''.getCurrentUserImagePath().'\');background-repeat:no-repeat;background-size: cover"></div>
+        <div id="loggedUserImg" class="user_profil_icon" style="background-image:url(\'img/'.getCurrentUserImagePath().'\')"></div>
         <div style="float:left"> <p id="loggedUserName">'.getCurrentUserName().'</p></div>
     </div> 
       <div class="header_second_column">'.getUserAccountBalance().'</div>
       <div class="header_third_column">
-        <div style="float:right"><img style="width:50px; float:right;" src="logout.ico" href="#" onclick="closeAdminSite()"></img></div>
+        <div style="float:right"><img class="user_logout_img user_logout_in_article_page" src="img/user_logout.png" href="#" onclick="closeAdminSite()"></img></div>
         <div style="float:right"><form class="search_form"><input class="search" type="text" id="search" placeholder="Search for article.." title="Type in a name"></form></div>
       </div>
     </header>
     <div class="content">
       <menu>'.$script->getArticleLIs().'</menu>
-    </div>'.getFooter().'<div id="myModal" class="modal">
+    </div><!--'.getFooter().'--><div id="myModal" class="modal">
       <!-- Modal content -->
       <div class="modal-content">
         <table style="font-size:3em">
@@ -296,7 +296,7 @@ span.psw {
   <form class="login_modal-content login_animate login_form" action="php_scripts/login.php?admin_login_requested=1" method="POST">
     <div class="imgcontainer">
       <div onclick="document.getElementById(\'admin_login_Window\').style.display=\'none\'" class="login_close" title="Close Modal">&times;</div>
-      <img style="width:200px"src="img/login_avatar.png" alt="Avatar" class="avatar">
+      <img style="width:110px"src="img/login_avatar.png" alt="Avatar" class="avatar">
     </div>
 
     <div class="login_container">

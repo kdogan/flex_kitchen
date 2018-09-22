@@ -125,7 +125,8 @@ function closeAdminSite(){
       url: 'php_scripts/login.php?logoutRequested=1',
       success: function(html) {
             var obj = JSON.parse(html);
-            window.location.href = "index.php";
+            window.location.reload();
+            //window.location.href = "index.php";
       }
   });
 }

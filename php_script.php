@@ -1,27 +1,6 @@
 <?php
 class FunctionScript{
 
-    public function getArticleLIs(){
-
-        $persons = $this -> getAllFromTable("article");
-        $result = "<h2>No Article found... :'(</h2>";
-        if($persons->num_rows >0){
-            $result = "";
-            while($row = $persons->fetch_assoc()){
-                $id = $row["id"];
-                $result = $result.'<li style="width:fil-content">
-                <div class="user_div" id="'.$id.'">
-                    <div class="user_img" style="background-image: url(\''.$row["img_path"].'\');" href="#" onclick="clickArticle(\''.$id.'\')">
-                        <span class="notify-badge"><strong>'.$row["price"].' €</strong></span>
-                    </div>
-                    <span class="name_label_span">'.$row["name"].'</span>
-                </div>
-                </li>';
-            }
-        }
-        return $result;
-    }
-
     public function getAccountBalanceOfCurrentUser(){
         require_once("login.php");
         require_once("php_scripts/dbFetchDataFromDB.php");
@@ -32,11 +11,9 @@ class FunctionScript{
         return $result;
     }
     public function updateAccountBalanceOfUser($userId, $amound){
-        require_once("login.php");
         require_once("php_scripts/dbFetchDataFromDB.php");
-        $currentUserId = getSessionUserId();
         $fetchDataFromDB = new fetchDataFromDB();
-        $result = $fetchDataFromDB->updateAccountBalanceOfUser($currentUserId, $amound);
+        $result = $fetchDataFromDB->updateAccountBalanceOfUser($userId, $amound);
         return $result;
     }
 
@@ -45,8 +22,6 @@ class FunctionScript{
 
         $fetchDataFromDB = new fetchDataFromDB();
         $result = $fetchDataFromDB->updateProductNumber($productId, $productNumber);
-        print($result);
-        exit;
         return $result;
     }
 
@@ -83,13 +58,35 @@ class FunctionScript{
                 $id = $row["id"];
                 $imagePath = $row["img_path"];
                 $result = $result.'<li class="user_div" id="'.$id.'">
-                <div class="user_img" style="background-image: url(\''.$imagePath.'\');" href="#" onclick="clickUser(\''.$id.'\')"></div>
+                <div class="user_img" style="background-image: url(\'img/'.$imagePath.'\');" href="#" onclick="clickUser(\''.$id.'\')"></div>
                 <span class="name_label_span">'.$user.'</span>
                 </li>';
             }
         }
         return $result;
     }
+
+    public function getArticleLIs(){
+
+        $persons = $this -> getAllFromTable("article");
+        $result = "<h2>No Article found... :'(</h2>";
+        if($persons->num_rows >0){
+            $result = "";
+            while($row = $persons->fetch_assoc()){
+                $id = $row["id"];
+                $result = $result.'<li style="width:fil-content">
+                <div class="user_div" id="'.$id.'">
+                    <div class="user_img" style="background-image: url(img/\''.$row["img_path"].'\');" href="#" onclick="clickArticle(\''.$id.'\')">
+                        <span class="notify-badge"><strong>'.$row["price"].' €</strong></span>
+                    </div>
+                    <span class="name_label_span">'.$row["name"].'</span>
+                </div>
+                </li>';
+            }
+        }
+        return $result;
+    }
+
     public function getLastPurchasedArticle($personId){
         require_once("php_scripts/dbFetchDataFromDB.php");
         $fetchDataFromDB = new fetchDataFromDB();

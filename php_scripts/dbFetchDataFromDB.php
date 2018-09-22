@@ -8,6 +8,13 @@ class fetchDataFromDB {
 	public function __construct(){
     }
 
+	function getDBConnection(){
+		require_once("dbConnector.php");
+		$db = new dbConnector();
+		$conn = $db->getDBConnection();
+		return $conn;
+	}
+
 	public function getLastPurchases($personId){
 
 		$conn = $this->getDBConnection();
@@ -25,19 +32,13 @@ class fetchDataFromDB {
 	        while($row = $result->fetch_assoc()) {
 	            $response['name'] = $row["name"];
 	            $response['person_id'] = $row["person_id"];
-	            $response['buy_date'] = $row["buy_date"];
+				$response['buy_date'] = $row["buy_date"];
 	        }
 	    }
 	    $conn->close();
 	    return $response;
 	}
 
-	function getDBConnection(){
-		require_once("dbConnector.php");
-		$db = new dbConnector();
-		$conn = $db->getDBConnection();
-		return $conn;
-	}
 	public function getAllPurchasedArticlesForPersonFromDB($personId){
 
 		$conn = $this->getDBConnection();
@@ -115,7 +116,7 @@ class fetchDataFromDB {
         if (!$conn) {
             die('database connectin fails: ' . mysql_error());
         }
-        $sql = "SELECT * FROM ".$tableName;
+        $sql = "SELECT DISTINCT * FROM ".$tableName;
         $result = $conn->query($sql);
         $conn->close();
         return $result;

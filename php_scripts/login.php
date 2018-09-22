@@ -35,7 +35,7 @@ if(isset($_GET['admin_login_requested'])) {
   if($sessionCreated){
  	  $errorMessage="Login success!";
 	  $host  = $_SERVER['HTTP_HOST'];
-	  $extra = '/index.php';
+	  $extra = 'index.php';
 	  //Hacy only for localtest
 	  if(strpos($host, 'localhost') !== false){
 		  $extra = "flex_kitchen".$extra;
