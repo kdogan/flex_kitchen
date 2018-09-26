@@ -1,5 +1,5 @@
 function login(){
-	var loginWindow = document.getElementById("id01");
+	var loginWindow = document.getElementById("admin_login_Window");
 	loginWindow.style.display = "block";
 }
 
@@ -38,4 +38,77 @@ function add_new_product(){
 function add_new_customer(){
   var addNewEmployeeWindow = document.getElementById("add_customer_form");
   addNewEmployeeWindow.style.display = "block";
+}
+
+function searchUserInAdminPage(){
+  var value = document.getElementById("searchInAdminPage").value;
+  $(".column").each(function() {
+      if ($(this).text().toLowerCase().search(value.toLowerCase()) > -1) {
+          $(this).show();
+      }
+      else {
+          $(this).hide();
+      }
+  });
+}
+
+function checkInputForNumber(inputPayment,buttonId) {
+    var input = document.getElementById(inputPayment);
+    var payButton = document.getElementById(buttonId);
+   
+    var x=input.value;
+    if (!isInputedAmoundValid(x) && x !="")
+    {
+        input.style.backgroundColor="#FF0000";
+    }else{
+        input.style.backgroundColor="#FFF";
+    }
+}
+
+function updateUserAmound(userId, inputFieldId){
+
+    var input = document.getElementById(inputFieldId);
+    var amound = input.value;
+    if(isInputedAmoundValid(amound)){
+      $.ajax({
+        url: 'php_scripts/dbutility.php?id='+userId+'&amound='+amound,
+        success: function(html) {
+                  var obj = JSON.parse(html);
+                  var idOfBalanceToBeUpdated = "accountBalance"+userId;
+                  document.getElementById(idOfBalanceToBeUpdated).innerHTML = obj["newBalance"]+" €";
+                  input.value = "";
+                }
+      });
+    }
+}
+
+function updateProductNumber(productId, inputFieldId){
+    var input = document.getElementById(inputFieldId);
+    var productNumber = input.value;
+    if (isInteger(productNumber)){
+        $.ajax({
+          url: 'php_scripts/dbutility.php?productId='+productId+'&productNumber='+productNumber,
+          success: function(html) {
+                    var obj = JSON.parse(html);
+                    var idOfBalanceToBeUpdated = "numOfProduct"+productId;
+                    var numberOfProduct = obj["newCount"];
+                    document.getElementById(idOfBalanceToBeUpdated).innerHTML = numberOfProduct+" Stück";
+                    input.value = "";
+                    }
+        });
+    }
+}
+
+function isInteger(x) {
+  return x % 1 === 0;
+}
+
+function isInputedAmoundValid(value){
+    var regex=/^\-?([1-9]\d*|0)(\.\d?[1-9])?$/;
+    if(value=="" || !value.match(regex)) {
+      return false;
+    }
+    else{
+      return true;
+    }
 }

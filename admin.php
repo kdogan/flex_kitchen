@@ -7,7 +7,8 @@ include ("add_customer_form.php");
 ?>
 
 <?php
-$functions = new functions();echo '
+$functions = new functions();
+echo '
 <!DOCTYPE html>
 	<html>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -31,18 +32,6 @@ $functions = new functions();echo '
 
 	</style>
 	<script>
-	function checkAccessForCurrentUser() {
-		if('.isAdmin().'){
-			
-		}else{
-			alert("Access danied for this user! You are not admin");
-			if('.hasSession().'){
-				window.location.href = "articles.php";
-			}else{
-				window.location.href = "index.php";
-			}
-		}
-	}
 	function searchUserInAdminPage(){
 		
       var value = document.getElementById("searchInAdminPage").value;
@@ -120,7 +109,7 @@ function isInputedAmoundValid(value){
 }
 </script>
 </head>
-<body onLoad="checkAccessForCurrentUser()">
+<body>
 
 <div class="flex-container">
 <header>

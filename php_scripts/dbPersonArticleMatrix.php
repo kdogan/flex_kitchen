@@ -1,36 +1,26 @@
 <?php
-include("dbConnector.php");
-$db = new dbConnector();
-$conn = $db->getDBConnection();
-
 $person_id = $_GET["person_id"];
-$isLastEntryRequested = $_GET["lastEntry"];
-
+$isLastEntryRequested = $_GET["lastEntryRequested"];
 
 if(!isset($isLastEntryRequested) || $isLastEntryRequested != 1){
-    $sql = 'SELECT * FROM person_article_matrix WHERE person_id ='.$person_id.' ORDER BY ID DESC LIMIT 1';
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            $response['id'] = $row["id"];
-            $response['person_id'] = $row["person_id"];
-            $response['article_id'] =$row["article_id"];
-            $response['buy_date'] = $row["buy_date"];
-        }
-        echo json_encode($response);
-    } else{
-        echo "-1";
-    }   
+    $entry = getLastPersonArticleMatrixEntryForUser($person_id);
+    echo json_encode($entry);
 }else {
-    $sql = 'SELECT name from article where id = (select article_id from person_article_matrix where person_id = '.$person_id.' ORDER BY ID DESC LIMIT 1)';
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            $response['name'] = $row["name"];
-            echo json_encode($response);
-        }
-    }     
+    $response['name'] = getLastPurchasedArticleOfUser($person_id);
+    json_encode($response);
 }
-$conn->close();
+
+function getLastPurchasedArticleName($person_id){
+    require_once("../php_script.php");
+    $functionScript = new FunctionScript();
+    $purchasedArticle =  $functionScript->getLastPurchasedArticle($person_id);
+    return $purchasedArticle["name"];
+}
+
+function getLastPersonArticleMatrixEntryForUser($person_id){
+    require_once("../php_script.php");
+    $functionScript = new FunctionScript();
+    $purchasedArticle =  $functionScript->getLastPurchasedArticle($person_id);
+    return $purchasedArticle;
+}
 ?>

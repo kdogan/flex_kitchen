@@ -4,7 +4,6 @@ $errorMessage="";
 
 // Remove Session
 if(isset($_GET['destroySessionRequested']) && $_GET['destroySessionRequested'] ==1){
-	
 	$response['isSessionDestroyed'] = true;
 	echo json_encode($response);
 }
@@ -30,22 +29,21 @@ if(isset($_GET['admin_login_requested'])) {
 	  echo json_encode("Email missing!");
 	  exit;
   }
+ 
   $email = $_REQUEST['email'];
   $sessionCreated = setSession("email", "\"".$email."\"");
   if($sessionCreated){
- 	 $errorMessage="Login success!";
+ 	  $errorMessage="Login success!";
 	  $host  = $_SERVER['HTTP_HOST'];
-	  $extra = '/index.php';
+	  $extra = 'index.php';
 	  //Hacy only for localtest
-	  if(strpos($host, 'localhost:8080') !== false){
+	  if(strpos($host, 'localhost') !== false){
 		  $extra = "flex_kitchen".$extra;
 	  }
  	 header("Location: http://$host/$extra");
   } else {
  	 $errorMessage = "E-Mail oder Passwort war ungültig<br>";
   }
-  print("foo");
-	exit;
   echo json_encode($errorMessage);
 }
 
@@ -68,7 +66,9 @@ function setSession($attributeName, $attributeValue){
 
         	$_SESSION['userid'] = $row["id"];
         	$_SESSION['isAdmin'] = $row['is_admin'];
-    	}
+			$_SESSION['userName'] = $row['firstname'].' '.$row['lastname'];
+        	$_SESSION['imagePath'] = $row['img_path'];
+		}
     	return 1;
 	} else {
     	return 0;
@@ -100,5 +100,14 @@ function isAdmin(){
 function getSessionUserId(){
 	return $_SESSION['userid'];;
 }
-
+function getCurrentUserName(){
+ return $_SESSION['userName'];
+}
+function getCurrentUserImagePath(){
+	$imagePath = $_SESSION['imagePath'];
+	if($imagePath == ""){
+		return 'img/default_user_img.png';
+	}
+	return $imagePath;
+}
 ?>

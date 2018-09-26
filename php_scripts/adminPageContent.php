@@ -1,10 +1,10 @@
 <?php
 
-
 if(isset($_REQUEST['userRequested'])){
 
 	echo getUserDivsInAdminPage();
 }
+
 if(isset($_REQUEST['adminHomeRequested'])){
 	require("content_script.php");
 	echo getAdminPageContent();
@@ -18,14 +18,13 @@ function getUserDivsInAdminPage(){
 	require("../php_script.php");
 	require("dbFetchDataFromDB.php");
 
-	$functions = new functions();
-	$fetchDataFromDB = new fetchDataFromDB();
+	$functions = new FunctionScript();
 
     $persons = $functions->getAllFromTable("person");
     
-    $result = "<div style='width:15%;margin-buttom:10px'>
-                        <div style='float:left;width:70%;height:33px;background-color:grey'>
-                            <p><b>Add New Employee</b></p>
+    $result = "<div style='width:20%;margin-buttom:10px'>
+                        <div style='float:left;width:70%;height:37px;background-color:grey'>
+                            <p><b>Neue Mitarbeiter hinzufügen</b></p>
                         </div>
                         <div style='float:left;width:20%;'>
                             <button class='button'style='width:100%' onclick='add_new_customer()'>+</button>
@@ -42,11 +41,11 @@ function getUserDivsInAdminPage(){
             $payButtonId = 'payButton'.$id;
             $inputPayment = 'inputPayment'.$id;
 
-            $fetchedData = $fetchDataFromDB->getLastPurchases($id);
-            $lastPurchase =json_decode($fetchedData);
+            $fetchedData = $functions->getLastPurchasedArticle($id);
+            $lastPurchase =$fetchedData;
 
             $result = $result.'<div class="column">
-            <div class="box1"><img style="width:120px;float:left" src="'.$row["img_path"].'" alt="user image"></div>
+            <div class="box1"><img style="width:120px;float:left" src="img/'.$row["img_path"].'" alt="user image"></div>
             <div class="box2">
                 <table>
                     <tr>
@@ -64,7 +63,7 @@ function getUserDivsInAdminPage(){
 			         <tr>
 			            <td style="float:left"> letzte Kauf </td>
 			            <td style="float:left">:</td>
-			            <td style="float:left; font-weight: bold" id="lastBuy">'.$lastPurchase->{"name"}.' ('.$lastPurchase->{"buy_date"}.')</td>
+			            <td style="float:left; font-weight: bold" id="lastBuy">'.$lastPurchase["name"].' ('.$lastPurchase["buy_date"].')</td>
 			         </tr>
                     </table>
                     </div>
@@ -82,21 +81,19 @@ function getUserDivsInAdminPage(){
 }
 
 function getProductDivsInAdminPage(){
-    require("dbutility.php");
 	require("../php_script.php");
-	$functions = new functions();
+	$script = new FunctionScript();
     
-    
-	$products = $functions->getAllFromTable("article");
-    $categories = getCategoriesFromDB();
+	$products = $script->getAllFromTable("article");
+    $categories = $script->getCategoriesFromDB();
 
     if($products->num_rows >0){
         $result = "<div style='width:15%;margin-buttom:10px'>
-                        <div style='float:left;width:70%;height:33px;background-color:grey'>
+                        <div style='float:left;width:70%;height:37px;background-color:grey'>
                             <p><b>Add New Product</b></p>
                         </div>
                         <div style='float:left;width:20%;'>
-                            <button class='button'style='width:100%' onclick='add_new_product()'>+</button>
+                            <button class='button'style='width:100%' onclick='add_new_product()'>Add</button>
                         </div>
                     </div>";
         while($row = $products->fetch_assoc()){
@@ -113,7 +110,7 @@ function getProductDivsInAdminPage(){
     		$inputPayment = 'inputPayment'.$productId;
 
             $result = $result.'<div class="column">
-            <div class="box1"><img style="width:120px;float:left" src="'.$image.'" alt="product image"></div>
+            <div class="box1"><img style="width:120px;float:left" src="img/'.$image.'" alt="product image"></div>
             <div class="box2">
                 <table>
                     <tr>
@@ -145,7 +142,7 @@ function getProductDivsInAdminPage(){
                             <input class="payment_input" id="'.$inputPayment.'" onkeyup="checkInputForNumber(\''.$inputPayment.'\',\''.$payButtonId.'\')" type="text">
                         </div>
                         <div style="float:left;width:50%;">
-                            <button id="'.$payButtonId.'" class="button" style="width:100%;" onclick="updateProductNumber(\''.$productId.'\',\''.$inputPayment.'\');">+</button>
+                            <button id="'.$payButtonId.'" class="button" style="width:100%;" onclick="updateProductNumber(\''.$productId.'\',\''.$inputPayment.'\');">Einlagern</button>
                         </div>
                     </div>
             		  

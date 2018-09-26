@@ -138,7 +138,7 @@ span.psw {
         
       <button type="submit">Login</button>
     </div>
-    <div>'.$errorMessage.'</div>
+    <div></div>
   </form>
   
 </div>
