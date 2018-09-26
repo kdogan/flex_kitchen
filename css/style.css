@@ -32,23 +32,24 @@ header {background-color:#83bb26;color:white; width: 100%;max-height: 100px; hei
   background-size: 100% 100%;
   position:relative;
   display:inline-block;
-  border: 1px solid #FF4500
-
-  &:hover{
-  transition:all 150ms linear;
-  opacity: .85;
-  }
-  &:active{
-  transition: all 150ms linear;
-  opacity: .75;
-  }
-  &:focus{
-  outline: all dotted #959595;
-  outline-offset: -4px;
-  }
-  border-radius:;
+  border: 1px solid #FF4500;
+  border-radius: 80px;
   border: 1px solid #FF4500;
 }
+.user_img:hover{
+  transition:all 150ms linear;
+  opacity: .85;
+}
+.user_img:active{
+  transition: all 150ms linear;
+  opacity: .75;
+}
+
+.user_img:focus{
+  outline: all dotted #959595;
+  outline-offset: -4px;
+}
+
 .name_label_span{
   margin-top: -28px;
   position: absolute;
@@ -57,8 +58,9 @@ header {background-color:#83bb26;color:white; width: 100%;max-height: 100px; hei
   padding: 3px;
   font-size: 1em;
   font-weight: bold;
-  margin-left: -80px;
+  margin-left: -77px;
   color: white;
+  width: 150px;
 }
 .article_img {
   width: 100%;
@@ -111,12 +113,12 @@ menu li {
 }
 
 .header_first_column{
-  width: 25%;
+  width: 20%;
   float:left;
   border-style: 1px solid;
 }
 .header_second_column{
-  width: 25%;
+  width: 30%;
   float:left;
   border-style: 1px solid;
 }

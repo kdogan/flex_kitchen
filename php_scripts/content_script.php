@@ -1,8 +1,8 @@
 <?php
-include "login.php";
 include "dbutility.php";
 
 function getCurrentPageContent(){
+    require_once(__DIR__."/login.php");
     $currentPageContent = getHomePageContent(); //= getLoginPage();
     if(hasSession()){
         if(isAdmin()){

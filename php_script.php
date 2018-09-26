@@ -76,7 +76,7 @@ class FunctionScript{
                 $id = $row["id"];
                 $result = $result.'<li style="width:fil-content">
                 <div class="user_div" id="'.$id.'">
-                    <div class="user_img" style="background-image: url(img/\''.$row["img_path"].'\');" href="#" onclick="clickArticle(\''.$id.'\')">
+                    <div class="user_img" style="background-image: url(\'img/'.$row["img_path"].'\');" href="#" onclick="clickArticle(\''.$id.'\')">
                         <span class="notify-badge"><strong>'.$row["price"].' €</strong></span>
                     </div>
                     <span class="name_label_span">'.$row["name"].'</span>
