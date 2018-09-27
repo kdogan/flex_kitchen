@@ -136,7 +136,7 @@ class fetchDataFromDB {
 	public function updateAccountBalanceOfUser ($userId, $amound){
 		$conn = $this->getDBConnection();
 		$person = $this->getPersonFromDB($userId);
-        $oldAccountBalance = floatval($person["account_balance"]);
+		$oldAccountBalance = floatval($person["account_balance"]);
         $newAccountBalance = $oldAccountBalance + floatval($amound);
         $response = "";
         $sql = 'UPDATE person SET account_balance = '.$newAccountBalance.' WHERE id ='.$userId;
@@ -209,8 +209,8 @@ class fetchDataFromDB {
 		$conn = $this->getDBConnection();
         $imaga_name = $img_path;
 		$response = "not inserted";
-        $sql = 'INSERT INTO person (firstname, lastname, email, tel_no, img_path, account_balance, is_admin, user_pw) 
-                VALUES ("'.$firstname.'","'.$lastname.'","'.$email.'", "'.$telefon.'","'.$imaga_name.'", 0, 0,"cfcd208495d565ef66e7dff9f98764da")';
+        $sql = 'INSERT INTO article (firstname, lastname, email, tel_no, img_path, account_balance, is_admin, user_pw) 
+				VALUES ("'.$firstname.'","'.$lastname.'","'.$email.'", "'.$telefon.'","'.$imaga_name.'", 0, 0,"cfcd208495d565ef66e7dff9f98764da")';
     
         $result = $conn->query($sql);
         if($result){
@@ -220,7 +220,23 @@ class fetchDataFromDB {
         }
         $conn->close();
         return $response;
-    }
+	}
+	
+	public function insertArticle($articleName, $category, $price, $filename){
+		$conn = $this->getDBConnection();
+		
+		$response = "not inserted";
+		$sql = 'INSERT INTO article (name, price, count, category, img_path) VALUES ("'.$articleName.'",'.$price.',0,'.$category.',"'.$filename.'")';
+    
+        $result = $conn->query($sql);
+        if($result){
+            $response = "Records added successfully.";
+        } else{
+            $response = "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+        }
+        $conn->close();
+        return $response;
+	}
 
 	//TODO duplicated with dbutility. remove from dbutility
 	function getPersonFromDB($userId){
