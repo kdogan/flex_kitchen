@@ -122,7 +122,7 @@ function getArticlePage(){
     <div class="flex-container">
     <header> 
       <div class="header_first_column">
-        <div id="loggedUserImg" class="user_profil_icon" style="background-image:url(\'img/'.getCurrentUserImagePath().'\')"></div>
+        <div id="loggedUserImg" class="user_profil_icon" style="background-image:url(\''.$script->createUserImagePath(getCurrentUserImagePath()).'\')"></div>
         <div style="float:left"> <p id="loggedUserName">'.getCurrentUserName().'</p></div>
     </div> 
       <div class="header_second_column">'.getUserAccountBalance().'</div>
