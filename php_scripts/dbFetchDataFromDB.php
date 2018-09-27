@@ -139,7 +139,7 @@ class fetchDataFromDB {
         $oldAccountBalance = floatval($person["account_balance"]);
         $newAccountBalance = $oldAccountBalance + floatval($amound);
         $response = "";
-        $sql = 'UPDATE person SET account_balance = '.$newAccountBalance.'WHERE id ='.$userId;
+        $sql = 'UPDATE person SET account_balance = '.$newAccountBalance.' WHERE id ='.$userId;
     
         if ($conn->query($sql) === FALSE) {
             $response = "Error updating record: " . $conn->error;
