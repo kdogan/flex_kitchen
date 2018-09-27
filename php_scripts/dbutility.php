@@ -74,12 +74,10 @@ if(isset($_REQUEST["articleBoughtRequsted"])){
 	}
 	$conn->close(); 
 }
-
-//$successfullyByInsertedUser = $errorByInsertedUser = "";
-
+$errorByInsertedUser ="success";
 // Check if the form was submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-	require_once($_SERVER['DOCUMENT_ROOT']."/php_script.php");
+	require_once("../php_script.php");
 	
 	$script = new FunctionScript();
 	define ('SITE_ROOT', realpath(dirname(__DIR__)));
@@ -116,7 +114,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             } else{
             	if($userInserted == TRUE){
                 	move_uploaded_file($_FILES["photo"]["tmp_name"], SITE_ROOT.'/img/' . $filename);
-                	$successfullyByInsertedUser = "User iserted successfully";
+                	$errorByInsertedUser = "User and pickture inserting successfully";
                 }
             } 
         } else{
