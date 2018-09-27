@@ -23,8 +23,8 @@ header {background-color:#fafafa;color:white;border: 1px solid #aaa; width: 100%
 .user_img {
   width: 100%;
   background-color: #FF4500;
-  min-width: 150px;
-  min-height: 100px;
+  min-width: 120px;
+  min-height: 120px;
   height: 60px;
   padding-top:20%;
   padding-bottom: 20%;
@@ -33,7 +33,7 @@ header {background-color:#fafafa;color:white;border: 1px solid #aaa; width: 100%
   position:relative;
   display:inline-block;
   border: 1px solid #FF4500;
-  border-radius: 80px;
+  border-radius: 100px;
   border: 1px solid #FF4500;
 }
 .user_img:hover{
