@@ -79,25 +79,27 @@ if(isset($_REQUEST["articleBoughtRequsted"])){
 
 // Check if the form was submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-	require_once("php_script.php");
+	require_once($_SERVER['DOCUMENT_ROOT']."/php_script.php");
+	
 	$script = new FunctionScript();
 	define ('SITE_ROOT', realpath(dirname(__DIR__)));
 	
     // Check if file was uploaded without errors
     if(isset($_FILES["photo"]) && $_FILES["photo"]["error"] == 0 && $_REQUEST["first_name"] && $_REQUEST["last_name"] && $_REQUEST["email"] && $_REQUEST["telefon"]){
+		
     	$firstname = $_REQUEST["first_name"];
     	$lastname = $_REQUEST["last_name"];
     	$email = $_REQUEST["email"];
     	$tel = $_REQUEST["telefon"];
-    	$img_path = $_FILES["photo"]["name"];
-    	$userInserted = $script->insertUser($firstname, $lastname, $email, $tel, $img_path);
+		$filename = $_FILES["photo"]["name"];
 
+		$userInserted = $script->insertUser($firstname, $lastname, $email, $tel, $img_name);
+		print("image inserted");
+		exit;
         $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png","PNG" => "image/PNG");
-        $filename = $_FILES["photo"]["name"];
         $filetype = $_FILES["photo"]["type"];
         $filesize = $_FILES["photo"]["size"];
     
-        // Verify file extension
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
         if(!array_key_exists($ext, $allowed)){
         	$errorByInsertedUser = "Error: Please select a valid file format.";
@@ -112,23 +114,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
         // Verify MYME type of the file
         if(in_array($filetype, $allowed)){
-            // Check whether file exists before uploading it
-            if(file_exists("img/" . $_FILES["photo"]["name"])){
-                //echo $_FILES["photo"]["name"] . " is already exists.";
-                $errorByInsertedUser = $_FILES["photo"]["name"] . " is already exists.";
+            if(file_exists("img/" . $filename)){
+                $errorByInsertedUser = $filename . " is already exists.";
             } else{
             	if($userInserted == TRUE){
-                	move_uploaded_file($_FILES["photo"]["tmp_name"], SITE_ROOT.'/img/' . $_FILES["photo"]["name"]);
-                	//echo "Your file was uploaded successfully.";
+                	move_uploaded_file($_FILES["photo"]["tmp_name"], SITE_ROOT.'/img/' . $filename);
                 	$successfullyByInsertedUser = "User iserted successfully";
                 }
             } 
         } else{
-            //echo "Error: There was a problem uploading your file. Please try again.";
             $errorByInsertedUser = "Error: There was a problem uploading your file. Please try again.";
         }
     } else{
-        //echo "Error: " . $_FILES["photo"]["error"];
         $errorByInsertedUser = "Error: " . $_FILES["photo"]["error"];
     }
 }

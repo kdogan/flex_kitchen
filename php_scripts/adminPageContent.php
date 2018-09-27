@@ -110,7 +110,7 @@ function getProductDivsInAdminPage(){
     		$inputPayment = 'inputPayment'.$productId;
 
             $result = $result.'<div class="column">
-            <div class="box1"><img style="width:120px;float:left" src="img/'.$image.'" alt="product image"></div>
+            <div class="box1"><img style="width:120px;float:left; border-radius: 10px 0px 0px 10px;" src="img/'.$image.'" alt="product image"></div>
             <div class="box2">
                 <table>
                     <tr>
