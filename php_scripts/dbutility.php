@@ -93,9 +93,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     	$tel = $_REQUEST["telefon"];
 		$filename = $_FILES["photo"]["name"];
 
-		$userInserted = $script->insertUser($firstname, $lastname, $email, $tel, $img_name);
-		print("image inserted");
-		exit;
+		$userInserted = $script->insertUser($firstname, $lastname, $email, $tel, $filename);
+
         $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png","PNG" => "image/PNG");
         $filetype = $_FILES["photo"]["type"];
         $filesize = $_FILES["photo"]["size"];
@@ -104,12 +103,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(!array_key_exists($ext, $allowed)){
         	$errorByInsertedUser = "Error: Please select a valid file format.";
         }
-    
         // Verify file size - 5MB maximum
         $maxsize = 5 * 1024 * 1024;
         if($filesize > $maxsize){
         	$errorByInsertedUser ="Error: File size is larger than the allowed limit.";
-
         } 
     
         // Verify MYME type of the file
@@ -127,6 +124,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     } else{
         $errorByInsertedUser = "Error: " . $_FILES["photo"]["error"];
-    }
+	}
+	echo json_encode($errorByInsertedUser);
 }
 ?>
