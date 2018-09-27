@@ -114,7 +114,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             } else{
             	if($userInserted == TRUE){
                 	move_uploaded_file($_FILES["photo"]["tmp_name"], SITE_ROOT.'/img/' . $filename);
-                	$errorByInsertedUser = "User and pickture inserting successfully";
+                	$errorByInsertedUser = "User and picture inserting successfully";
                 }
             } 
         } else{
