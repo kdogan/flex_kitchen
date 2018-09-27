@@ -12,7 +12,7 @@
     flex: 1 100%;
 }
 body{height: 100%;}
-header {background-color:#fafafa;color:white; width: 100%;max-height: 100px; height: 60px;}
+header {background-color:#fafafa;color:white; width: 100%;max-height: 100px; height: 60px;border: 1px solid #aaa;}
 .footer {background: #aaa;color:white;position:relative;width: 100%;}
 
 .user_div .article_div{
@@ -299,3 +299,4 @@ menu{ padding-left: 0px;}
 .user_logout_in_article_page .user_logout_in_admin_page{
   float: right;
 }
+#loggedUserName{color:#000;font-weight: bold;}
