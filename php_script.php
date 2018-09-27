@@ -46,6 +46,13 @@ class FunctionScript{
         return $result;
     }
 
+    public function insertArticle($articleName, $category, $price, $filename){
+        require_once("php_scripts/dbFetchDataFromDB.php");
+        $fetchDataFromDB = new fetchDataFromDB();
+        $result = $fetchDataFromDB->insertArticle($articleName, $category, $price, $filename);
+        return $result;
+    }
+
     public function getUserLIs(){
         $persons = $this ->getAllFromTable("person");
         $result = "<h2>No User found... :'(</h2>";
