@@ -46,7 +46,7 @@ function getUserAccountBalance(){
 }
 
 function getHomePageContent(){
-    require_once("php_script.php");
+    require_once("./php_script.php");
     $script = new FunctionScript();
     return '<!DOCTYPE html>
             <html>'.getPageScriptBinding().'<head>
@@ -350,7 +350,7 @@ function getWindowToAddNewProduct(){
     return'
 <div id="add_product_form" class="login_modal">
   
-  <form class="login_modal-content login_animate login_form" action="php_scripts/dbArticle.php?" method="POST">
+  <form class="login_modal-content login_animate login_form" action="php_scripts/dbArticle.php?" method="POST" enctype="multipart/form-data">
     <div class="imgcontainer">
       <h4>ADD NEW PRODUCT</h4>
       <div onclick="document.getElementById(\'add_product_form\').style.display=\'none\'" class="login_close" title="Close Modal">&times;</div>
@@ -366,8 +366,8 @@ function getWindowToAddNewProduct(){
       <label><b style="float:left">Price</b></label>
       <input class="login_input" type="text" placeholder="Enter price e.g. 1.0" name="product_price" required>
 
-      <label><b style="float:left">Enter picture name</b></label>
-      <input class="login_input" type="text" placeholder="e.g. test.png" name="product_img" required>
+      <label><b style="float:left">Select a picture</b></label>
+      <input type="file" name="product_img" id="article_photo" required>
     </div>
     <div style="text-align: center; margin-bottom:10px"><button class="button" type="submit">Save</button></div>
   </form>
