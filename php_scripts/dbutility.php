@@ -124,5 +124,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $errorByInsertedUser = "Error: " . $_FILES["photo"]["error"];
 	}
 	echo json_encode($errorByInsertedUser);
+	header("Refresh:0; url=../index.php");
 }
 ?>
