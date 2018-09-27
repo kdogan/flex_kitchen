@@ -208,18 +208,18 @@ class fetchDataFromDB {
 	public function insertUser($firstname, $lastname, $email, $telefon, $img_path){
 		$conn = $this->getDBConnection();
         $imaga_name = $img_path;
-    
+		$response = "not inserted";
         $sql = 'INSERT INTO person (firstname, lastname, email, tel_no, img_path, account_balance, is_admin, user_pw) 
-                VALUES ("'.$firstname.'","'.$lastname.'","'.$email.'",'.$telefon.',"'.$imaga_name.'", 0, 0,"cfcd208495d565ef66e7dff9f98764da")';
+                VALUES ("'.$firstname.'","'.$lastname.'","'.$email.'", "'.$telefon.'","'.$imaga_name.'", 0, 0,"cfcd208495d565ef66e7dff9f98764da")';
     
         $result = $conn->query($sql);
         if($result){
-            $successfullyByInsertedUser = "Records added successfully.";
+            $response = "Records added successfully.";
         } else{
-            $errorByInsertedUser = "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+            $response = "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
         }
         $conn->close();
-        return $result;
+        return $response;
     }
 
 	//TODO duplicated with dbutility. remove from dbutility
