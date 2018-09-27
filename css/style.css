@@ -33,7 +33,7 @@ header {background-color:#fafafa;color:white; width: 100%;max-height: 100px; hei
   position:relative;
   display:inline-block;
   border: 1px solid #FF4500;
-  border-radius: 80px;
+  border-radius: 100px;
   border: 1px solid #FF4500;
 }
 .user_img:hover{
