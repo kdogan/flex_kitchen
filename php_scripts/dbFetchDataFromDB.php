@@ -207,7 +207,7 @@ class fetchDataFromDB {
 	
 	public function insertUser($firstname, $lastname, $email, $telefon, $img_path){
 		$conn = $this->getDBConnection();
-        $imaga_name = "img/".$img_path;
+        $imaga_name = $img_path;
     
         $sql = 'INSERT INTO person (firstname, lastname, email, tel_no, img_path, account_balance, is_admin, user_pw) 
                 VALUES ("'.$firstname.'","'.$lastname.'","'.$email.'",'.$telefon.',"'.$imaga_name.'", 0, 0,"cfcd208495d565ef66e7dff9f98764da")';
