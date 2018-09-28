@@ -99,7 +99,7 @@ return '
 <div class="header_third_column">
   <form class="search_form">
 	<div style="float:right"><img class="user_logout_img user_logout_in_admin_page" src="img/user_logout.png" href="#" onclick="closeAdminSite()"></img></div>
-	<div style="float:right"><img style=" height:55px;float:right;" src="img/home.png" href="#" onclick="goToAdminHome()"></img></div>
+	<div style="float:right"><img style=" height:50px;float:right;" src="img/home.png" href="#" onclick="goToAdminHome()"></img></div>
 	<div style="float:right"> <input type="text" class="search" id="searchInAdminPage" onkeyup="searchUserInAdminPage()" placeholder="Search for names.." title="Type in a name"></div>
   </form>
 </div>
