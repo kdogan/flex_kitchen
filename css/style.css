@@ -12,7 +12,7 @@
     flex: 1 100%;
 }
 body{height: 100%;}
-header {background-color:#83bb26;color:white; width: 100%;max-height: 100px; height: 75px;}
+header {background-color:#fafafa;color:white;border: 1px solid #aaa; width: 100%;max-height: 100px; height: 50px;}
 .footer {background: #aaa;color:white;position:relative;width: 100%;}
 
 .user_div .article_div{
@@ -23,8 +23,8 @@ header {background-color:#83bb26;color:white; width: 100%;max-height: 100px; hei
 .user_img {
   width: 100%;
   background-color: #FF4500;
-  min-width: 150px;
-  min-height: 100px;
+  min-width: 120px;
+  min-height: 120px;
   height: 60px;
   padding-top:20%;
   padding-bottom: 20%;
@@ -33,7 +33,7 @@ header {background-color:#83bb26;color:white; width: 100%;max-height: 100px; hei
   position:relative;
   display:inline-block;
   border: 1px solid #FF4500;
-  border-radius: 80px;
+  border-radius: 100px;
   border: 1px solid #FF4500;
 }
 .user_img:hover{
@@ -120,6 +120,7 @@ menu li {
 .header_second_column{
   width: 30%;
   float:left;
+  height: 50px;
   border-style: 1px solid;
 }
 .header_third_column{
@@ -283,8 +284,8 @@ menu li {
 
 .user_profil_icon{
   border-radius: 50px;
-  width:60px;
-  height:60px;
+  width:50px;
+  height:50px;
   float:left;
   background-repeat:no-repeat;
   background-size: cover
@@ -293,9 +294,13 @@ menu{ padding-left: 0px;}
 .user_logout_img{
   border-radius: 50px;
   background-color: #555;
-  width: 50px;
+  width: 45px;
 }
-.logo_img{width: 150px; height: 60;}
+.logo_img{width: 150px; height: 50;}
 .user_logout_in_article_page .user_logout_in_admin_page{
   float: right;
+}
+#loggedUserName{
+  color:#000;
+  font-weight: bold;
 }
