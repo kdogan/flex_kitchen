@@ -46,6 +46,13 @@ class FunctionScript{
         return $result;
     }
 
+    public function insertArticle($articleName, $category, $price, $filename){
+        require_once("php_scripts/dbFetchDataFromDB.php");
+        $fetchDataFromDB = new fetchDataFromDB();
+        $result = $fetchDataFromDB->insertArticle($articleName, $category, $price, $filename);
+        return $result;
+    }
+
     public function getUserLIs(){
         $persons = $this ->getAllFromTable("person");
         $result = "<h2>No User found... :'(</h2>";
@@ -58,7 +65,7 @@ class FunctionScript{
                 $id = $row["id"];
                 $imagePath = $row["img_path"];
                 $result = $result.'<li class="user_div" id="'.$id.'">
-                <div class="user_img" style="background-image: url(\'img/'.$imagePath.'\');" href="#" onclick="clickUser(\''.$id.'\')"></div>
+                <div class="user_img" style="background-image: url(\''.$this->createUserImagePath($row["img_path"]).'\');" href="#" onclick="clickUser(\''.$id.'\')"></div>
                 <span class="name_label_span">'.$user.'</span>
                 </li>';
             }
@@ -76,7 +83,7 @@ class FunctionScript{
                 $id = $row["id"];
                 $result = $result.'<li style="width:fil-content">
                 <div class="user_div" id="'.$id.'">
-                    <div class="user_img" style="background-image: url(\'img/'.$row["img_path"].'\');" href="#" onclick="clickArticle(\''.$id.'\')">
+                    <div class="user_img" style="background-image: url(\''.$this->createUserImagePath($row["img_path"]).'\');" href="#" onclick="clickArticle(\''.$id.'\')">
                         <span class="notify-badge"><strong>'.$row["price"].' €</strong></span>
                     </div>
                     <span class="name_label_span">'.$row["name"].'</span>
@@ -92,6 +99,15 @@ class FunctionScript{
         $fetchDataFromDB = new fetchDataFromDB();
         $purchasedArticle = $fetchDataFromDB-> getLastPurchases($personId);
         return $purchasedArticle;
+    }
+
+    public function createUserImagePath($image_path){
+        if(strpos($image_path, 'http') !== false){
+            return $image_path;
+        }else{
+            return 'img/'.$image_path;
+        }
+        
     }
 }
 

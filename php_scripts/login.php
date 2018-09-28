@@ -38,7 +38,7 @@ if(isset($_GET['admin_login_requested'])) {
 	  $extra = 'index.php';
 	  //Hacy only for localtest
 	  if(strpos($host, 'localhost') !== false){
-		  $extra = "flex_kitchen".$extra;
+		  $extra = "flex_kitchen/".$extra;
 	  }
  	 header("Location: http://$host/$extra");
   } else {

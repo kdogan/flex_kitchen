@@ -46,7 +46,7 @@ function getUserAccountBalance(){
 }
 
 function getHomePageContent(){
-    require_once("php_script.php");
+    require_once("./php_script.php");
     $script = new FunctionScript();
     return '<!DOCTYPE html>
             <html>'.getPageScriptBinding().'<head>
@@ -60,7 +60,7 @@ function getHomePageContent(){
                 <div class="header_second_column" style="color:#83bb26"> </div>
                 <div class="header_third_column">
                 <form class="search_form">
-                    <div style="float:right" id="adminLoginBtn"><img style="width:50px; float:right;" src="img/adminLogginImg.png" href="#" onclick="login()"></img></div>
+                    <div style="float:right" id="adminLoginBtn"><img style="width:45px; float:right;" src="img/adminLogginImg.png" href="#" onclick="login()"></img></div>
                     <div style="float:right"> <input type="text" class="search" id="search" placeholder="Search for names.." title="Type in a name"></div>
                 </form>
             </div>
@@ -99,7 +99,7 @@ return '
 <div class="header_third_column">
   <form class="search_form">
 	<div style="float:right"><img class="user_logout_img user_logout_in_admin_page" src="img/user_logout.png" href="#" onclick="closeAdminSite()"></img></div>
-	<div style="float:right"><img style=" height:55px;float:right;" src="img/home.png" href="#" onclick="goToAdminHome()"></img></div>
+	<div style="float:right"><img style=" height:50px;float:right;" src="img/home.png" href="#" onclick="goToAdminHome()"></img></div>
 	<div style="float:right"> <input type="text" class="search" id="searchInAdminPage" onkeyup="searchUserInAdminPage()" placeholder="Search for names.." title="Type in a name"></div>
   </form>
 </div>
@@ -122,7 +122,7 @@ function getArticlePage(){
     <div class="flex-container">
     <header> 
       <div class="header_first_column">
-        <div id="loggedUserImg" class="user_profil_icon" style="background-image:url(\'img/'.getCurrentUserImagePath().'\')"></div>
+        <div id="loggedUserImg" class="user_profil_icon" style="background-image:url(\''.$script->createUserImagePath(getCurrentUserImagePath()).'\')"></div>
         <div style="float:left"> <p id="loggedUserName">'.getCurrentUserName().'</p></div>
     </div> 
       <div class="header_second_column">'.getUserAccountBalance().'</div>
@@ -350,7 +350,7 @@ function getWindowToAddNewProduct(){
     return'
 <div id="add_product_form" class="login_modal">
   
-  <form class="login_modal-content login_animate login_form" action="php_scripts/dbArticle.php?" method="POST">
+  <form class="login_modal-content login_animate login_form" action="php_scripts/dbArticle.php?" method="POST" enctype="multipart/form-data">
     <div class="imgcontainer">
       <h4>ADD NEW PRODUCT</h4>
       <div onclick="document.getElementById(\'add_product_form\').style.display=\'none\'" class="login_close" title="Close Modal">&times;</div>
@@ -366,8 +366,8 @@ function getWindowToAddNewProduct(){
       <label><b style="float:left">Price</b></label>
       <input class="login_input" type="text" placeholder="Enter price e.g. 1.0" name="product_price" required>
 
-      <label><b style="float:left">Enter picture name</b></label>
-      <input class="login_input" type="text" placeholder="e.g. test.png" name="product_img" required>
+      <label><b style="float:left">Select a picture</b></label>
+      <input type="file" name="product_img" id="article_photo" required>
     </div>
     <div style="text-align: center; margin-bottom:10px"><button class="button" type="submit">Save</button></div>
   </form>

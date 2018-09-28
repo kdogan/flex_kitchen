@@ -67,9 +67,8 @@ header {background-color:#fafafa;color:white;border: 1px solid #aaa; width: 100%
   border-radius: 5px;
   border-style: groove;
   background-color:#83bb26;
-
-  
 }
+
 .article_img:hover{
   transition:all 150ms linear;
   opacity: .85;
@@ -296,7 +295,7 @@ menu{ padding-left: 0px;}
   background-color: #555;
   width: 45px;
 }
-.logo_img{width: 150px; height: 50;}
+.logo_img{width: 150px; height: 50px;}
 .user_logout_in_article_page .user_logout_in_admin_page{
   float: right;
 }
