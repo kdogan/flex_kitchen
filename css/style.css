@@ -120,6 +120,7 @@ menu li {
 .header_second_column{
   width: 30%;
   float:left;
+  height: 50px;
   border-style: 1px solid;
 }
 .header_third_column{
