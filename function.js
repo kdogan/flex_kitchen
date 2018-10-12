@@ -33,7 +33,7 @@ function destroyPHPSession(){
       url: 'php_scripts/login.php?destroySessionRequested=1',
       success: function(html) {
         var obj = JSON.parse(html);
-        isDestroyed = obj.isSessionDestroyed;               
+        isDestroyed = obj.isSessionDestroyed;
       }
   });
 
