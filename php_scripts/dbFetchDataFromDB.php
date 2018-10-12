@@ -42,10 +42,9 @@ class fetchDataFromDB {
 	public function getAllPurchasedArticlesForPersonFromDB($personId){
 
 		$conn = $this->getDBConnection();
-    	$sql = 'SELECT pam.article_id, sum(pam.count) as sum
-    			FROM article a, person_article_matrix pam
-    			WHERE a.id = pam.article_id AND pam.person_id = '.$personId.' && month(buy_date) = month(now())-1 && year(buy_date) = year(now()) GROUP BY article_id';
-
+    	$sql = 'SELECT article_id, sum(count) as sum
+    			FROM person_article_matrix
+    			WHERE person_id = '.$personId.' && month(buy_date) = month(now())-1 && year(buy_date) = year(now()) GROUP BY article_id';
     	$result = $conn->query($sql);
     	$purchasedArticlesByArticleId;
 
@@ -86,7 +85,30 @@ class fetchDataFromDB {
 		    $conn->close();
 		    return json_encode($customers);
 		} else {
-		    return "-1";
+		    return json_encode("-1");
+		}
+	}
+
+	function getPersonById($personId){
+		$conn = $this->getDBConnection();
+
+		$sql = 'SELECT * FROM person WHERE id ='.$personId.' AND is_admin="0"';
+		$result = $conn->query($sql);
+
+		if ($result->num_rows > 0) {
+		    $person;
+		    while($row = $result->fetch_assoc()) {
+		        $person['id'] = $row["id"];
+		        $person['firstname'] = $row["firstname"];
+		        $person['lastname'] =$row["lastname"];
+		        $person['email'] = $row["email"];
+		        $person['img_path'] = $row["img_path"];
+		        $person['account_balance'] = $row["account_balance"];
+		    }
+		    $conn->close();
+		    return json_encode($person);
+		} else {
+		    return json_encode("-1");
 		}
 	}
 
