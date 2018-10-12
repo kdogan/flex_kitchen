@@ -1,16 +1,15 @@
 <?php
 
-$allCustomersAsJSON = getAllPersons();
-$allCustomers = json_decode($allCustomersAsJSON);
+$allPersons = json_decode(getAllPersons());
 
-
-foreach($allCustomers as $customer){
-	$lastMonth= getMonthInGermany(date("M", strtotime("last month")));
+foreach($allPersons as $customer){
+	  $lastMonth= getMonthInGermany(date("M", strtotime("last month")));
     $purchasedArticlesJSON =  getAllPurchasedArticlesForCustomer($customer->id);
+    //print($customer->firstname." (".$customer->id.") purchased article :".$purchasedArticlesJSON."<br>");
     if($purchasedArticlesJSON == "-1") continue;
-
+     
     $purchasedArticles = json_decode($purchasedArticlesJSON);
-    $tr='';
+    $row='';
     $totalAmound = 0;
 
     foreach($purchasedArticles as $purchasedArticle){
@@ -22,7 +21,7 @@ foreach($allCustomers as $customer){
     	$numberOfPurchasedArticle = $purchasedArticle->sum;
 
     	$price = $numberOfPurchasedArticle * $articlePrice;
-    	$tr= $tr.' <tr style="background-color: #e0e0e0;height:20">
+    	$row= $row.' <tr style="background-color: #e0e0e0;height:20">
                 <td>'.$articleName.'</td><td>'.$numberOfPurchasedArticle.'</td><td>'.$price.' €</td>
             </tr>';
             $totalAmound = $totalAmound + $price;
@@ -35,7 +34,7 @@ foreach($allCustomers as $customer){
      $htmlContent = '
     <html>
     <head>
-        <title>Welcome to CodexWorld</title>
+        <title>Flex Kitchen</title>
     </head>
   <body>
       <div>
@@ -46,7 +45,7 @@ foreach($allCustomers as $customer){
        <table style="width: 100%; max-width:800px;border: 1px slid #FB4314; padding-right:10px;">
             <tr style="background-color: #808080;height:20">
                 <th>Getränk</th> <th>Anzahl</th> <th>Preis</th>
-           '.$tr.'
+           '.$row.'
            <tr style="border:2;height:20">
         <td></td><td></td><td>Gesamtbetrag: <strong>'.$totalAmound.' € </strong></td>
        </tr>
@@ -62,22 +61,19 @@ foreach($allCustomers as $customer){
     </div>
     </body>
     </html>';
-    echo $htmlContent;
-     //sendEmailToCustomer($customer->email, $htmlContent);
-   //sendEmailToCustomer("kamuran1905@yahoo.de", $htmlContent);//REMOVE THIS ONLY TEST
+    $lastMonth= getMonthInGermany(date("M", strtotime("last month")));
+    $subject = "Die Getränkeabrechnung ".$lastMonth." ".date('Y');
+    //sendEmailToCustomer($customer->email, $htmlContent, $subject);
+   sendEmailToCustomer("kamuran1905@yahoo.de", $htmlContent, $subject);//REMOVE THIS ONLY FOR TEST
 
 }
 
-function sendEmailToCustomer($to, $htmlContent){
-    // Set content-type header for sending HTML email
+function sendEmailToCustomer($to, $htmlContent, $subject){
     $headers = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
     // Additional headers
     $headers .= 'From: FlexKitchen<flexkitchen@example.com>' . "\r\n";
-    $lastMonth= getMonthInGermany(date("M", strtotime("last month")));
-    $subject = "Die Getränkeabrechnung ".$lastMonth." ".date('Y');
-
     // Send email
     if(mail($to,$subject,$htmlContent,$headers)){
         echo 'Email has sent successfully.';
@@ -106,18 +102,31 @@ function getArticle($articleId){
 }
 function getMonthInGermany($month){
 	$months=array(
-		"January"=>"Januar",
-		"February"=>"Februar",
-		"March"=>"März",
-		"April"=>"April",
-		"May"=>"Mai",
-		"June"=>"Juni",
-		"July"=>"Juli",
-		"August"=>"August",
-		"September"=>"September",
-		"October"=>"Oktober",
-		"November"=>"November",
-		"December"=>"Dezember"
+	"January"=>"Januar",
+	"February"=>"Februar",
+	"March"=>"März",
+	"April"=>"April",
+	"May"=>"Mai",
+	"June"=>"Juni",
+	"July"=>"Juli",
+	"August"=>"August",
+	"September"=>"September",
+	"October"=>"Oktober",
+	"November"=>"November",
+    	"December"=>"Dezember",
+    //
+	"Jan" => "Januar",
+	"Feb"=>"Februar",
+	"Mar"=>"März",
+	"Apr"=>"April",
+	"May"=>"Mai",
+	"Jun"=>"Juni",
+	"Jul"=>"Juli",
+	"Aug"=>"August",
+	"Sep" => "September",
+	"Oct"=>"Oktober",
+	"Nov"=>"November",
+	"Dec"=>"Dezember",
 	);
 	return $months[$month];
 }

@@ -25,6 +25,13 @@ class FunctionScript{
         return $result;
     }
 
+    public function getPersonById($personId){
+        require_once("php_scripts/dbFetchDataFromDB.php");
+        $fetchDataFromDB = new fetchDataFromDB();
+        $result = $fetchDataFromDB->getPersonById($personId);
+        return $result;
+    }
+
     public function getAllFromTable($tableName){
         require_once("php_scripts/dbFetchDataFromDB.php");
         $fetchDataFromDB = new fetchDataFromDB();
