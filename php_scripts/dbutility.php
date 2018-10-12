@@ -39,10 +39,10 @@ if(isset($_GET['accountBalanceRequested'])){
 }
 
 if(isset($_REQUEST["first_name"]) && isset($_REQUEST["last_name"]) &&isset($_REQUEST["email"]) && isset($_REQUEST["customer_img"])){
-    $firstname = $_REQUEST["first_name"];
-    $lastname = $_REQUEST["last_name"];
-    $email = $_REQUEST["email"];
-    $telefon = $_REQUEST["telefon"];
+  $firstname = $_REQUEST["first_name"];
+  $lastname = $_REQUEST["last_name"];
+  $email = $_REQUEST["email"];
+  $telefon = $_REQUEST["telefon"];
 	$imaga_name = $_REQUEST["customer_img"];
 
 	require_once("php_script.php");
@@ -63,12 +63,14 @@ if(isset($_REQUEST["articleBoughtRequsted"])){
 	}
 
 	$selectedArticleId = $_REQUEST["selectedArticleId"];
-	$personId =  getSessionUserId();
+  $personId =  getSessionUserId();
 	$sql = 'INSERT INTO person_article_matrix (person_id, article_id, count, buy_date) VALUES ('.$personId.','.$selectedArticleId.',1,now())';
 	$result = mysqli_query($conn, $sql);
 
 	if ($result === TRUE) {
-		echo "New record created successfully";
+    echo "New record created successfully";
+    //Send email on user
+    notifyUserForPurchasedArticle($personId, $selectedArticleId);
 	} else {
 		echo "Error: ". $sql . "<br>" . $conn->error;
 	}
@@ -89,7 +91,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     	$lastname = $_REQUEST["last_name"];
     	$email = $_REQUEST["email"];
     	$tel = $_REQUEST["telefon"];
-		$filename = $_FILES["photo"]["name"];
+		  $filename = $_FILES["photo"]["name"];
 
 		$userInserted = $script->insertUser($firstname, $lastname, $email, $tel, $filename);
 
@@ -126,4 +128,34 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	echo json_encode($errorByInsertedUser);
 	header("Refresh:0; url=../index.php");
 }
+
+function notifyUserForPurchasedArticle($personId, $selectedArticleId){
+  require_once("send_email.php");
+  require_once("../php_script.php");
+  $script = new FunctionScript();
+
+  $personToNotify = $script->getPersonById($personId);
+  $articleObject = getArticle($selectedArticleId);
+
+  $htmlContent = '
+    <html>
+    <head>
+        <title>Flex Kitchen</title>
+    </head>
+  <body>
+      <div>
+        <p>Hallo '.$personToNotify->firstname.',</p>
+        <p>Ein '.$articleObject->name.' ist am '.date().' von Dir gekauft</p><br/>
+        <p>Dies ist eine automatisch erstellte E-Mail. Bitte ANTWORTE NICHT auf diese Mail</p>
+      </div>
+    <br/>
+    <p>Viele Grüße </p>
+    <p>Flex Kitchen </p>
+    </body>
+    </html>';
+    echo $htmlContent;
+    $subject = "Du hast eine Getränke gekauft ".date();
+    sendEmailToCustomer($person->email, $htmlContent, $subject);
+}
+
 ?>
