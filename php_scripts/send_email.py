@@ -18,7 +18,7 @@ def send_email(sender, receiver, subject, content):
         msg.attach(html_body)
 
         try:
-            server = smtplib.SMTP('smarthost.flexlog.site',25)
+            server = smtplib.SMTP('smtp.gmail.com',587)
             server.sendmail(sender,receiver,msg.as_string())
             server.quit()
             return True
