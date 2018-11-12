@@ -31,6 +31,13 @@ class FunctionScript{
         $result = $fetchDataFromDB->getPersonById($personId);
         return $result;
     }
+    public function getArticleById($articleId){
+        require_once("php_scripts/dbFetchDataFromDB.php");
+        $fetchDataFromDB = new fetchDataFromDB();
+        $result = $fetchDataFromDB->getArticleById($articleId);
+        return $result;
+    }
+    
 
     public function getAllFromTable($tableName){
         require_once("php_scripts/dbFetchDataFromDB.php");

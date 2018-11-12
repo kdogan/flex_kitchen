@@ -91,37 +91,38 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     	$lastname = $_REQUEST["last_name"];
     	$email = $_REQUEST["email"];
     	$tel = $_REQUEST["telefon"];
-	$filename = $_FILES["photo"]["name"];
+	    $filename = $_FILES["photo"]["name"];
 
-	$userInserted = $script->insertUser($firstname, $lastname, $email, $tel, $filename);
+	    $userInserted = $script->insertUser($firstname, $lastname, $email, $tel, $filename);
+      //error_log("[dbUtility] user inserted: ".$userInserted, 0);
 
-        $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png","PNG" => "image/PNG");
-        $filetype = $_FILES["photo"]["type"];
-        $filesize = $_FILES["photo"]["size"];
-    
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-        if(!array_key_exists($ext, $allowed)){
-        	$errorByInsertedUser = "Error: Please select a valid file format.";
-        }
-        // Verify file size - 5MB maximum
-        $maxsize = 5 * 1024 * 1024;
-        if($filesize > $maxsize){
-        	$errorByInsertedUser ="Error: File size is larger than the allowed limit.";
-        } 
-    
-        // Verify MYME type of the file
-        if(in_array($filetype, $allowed)){
-            if(file_exists("img/" . $filename)){
-                $errorByInsertedUser = $filename . " is already exists.";
-            } else{
-            	if($userInserted == TRUE){
-                	move_uploaded_file($_FILES["photo"]["tmp_name"], SITE_ROOT.'/img/' . $filename);
-                	$errorByInsertedUser = "User and picture inserting successfully";
-                }
-            } 
-        } else{
-            $errorByInsertedUser = "Error: There was a problem uploading your file. Please try again.";
-        }
+      $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png","PNG" => "image/PNG");
+      $filetype = $_FILES["photo"]["type"];
+      $filesize = $_FILES["photo"]["size"];
+  
+      $ext = pathinfo($filename, PATHINFO_EXTENSION);
+      if(!array_key_exists($ext, $allowed)){
+      	$errorByInsertedUser = "Error: Please select a valid file format.";
+      }
+      // Verify file size - 5MB maximum
+      $maxsize = 5 * 1024 * 1024;
+      if($filesize > $maxsize){
+      	$errorByInsertedUser ="Error: File size is larger than the allowed limit.";
+      } 
+  
+      // Verify MYME type of the file
+      if(in_array($filetype, $allowed)){
+          if(file_exists("img/" . $filename)){
+              $errorByInsertedUser = $filename . " is already exists.";
+          } else{
+          	if($userInserted == TRUE){
+              	move_uploaded_file($_FILES["photo"]["tmp_name"], SITE_ROOT.'/img/' . $filename);
+              	$errorByInsertedUser = "User and picture inserting successfully";
+              }
+          } 
+      } else{
+          $errorByInsertedUser = "Error: There was a problem uploading your file. Please try again.";
+      }
     } else{
         $errorByInsertedUser = "Error: " . $_FILES["photo"]["error"];
 	}
@@ -133,10 +134,13 @@ function notifyUserForPurchasedArticle($personId, $selectedArticleId){
   require_once("send_email.php");
   require_once("../php_script.php");
   $script = new FunctionScript();
-
-  $personToNotify = $script->getPersonById($personId);
-  $articleObject = getArticle($selectedArticleId);
-
+  $email = 'email';
+  $firstname = 'firstname';
+  $articleName = 'name';
+  $personToNotify = json_decode($script->getPersonById($personId));
+  //error_log("email : ".$personToNotify->$email, 0);
+  $articleObject = json_decode($script->getArticleById($selectedArticleId));
+  $date = date('Y/m/d H:i:s');
   $htmlContent = '
     <html>
     <head>
@@ -144,8 +148,8 @@ function notifyUserForPurchasedArticle($personId, $selectedArticleId){
     </head>
   <body>
       <div>
-        <p>Hallo '.$personToNotify->firstname.',</p>
-        <p>Ein '.$articleObject->name.' ist am '.date().' von Dir gekauft</p><br/>
+        <p>Hallo '.$personToNotify->$firstname.',</p>
+        <p>Du hast gerade ein(e) '.$articleObject->$articleName.' gekauft</p><br/>
         <p>Dies ist eine automatisch erstellte E-Mail. Bitte ANTWORTE NICHT auf diese Mail</p>
       </div>
     <br/>
@@ -153,9 +157,8 @@ function notifyUserForPurchasedArticle($personId, $selectedArticleId){
     <p>Flex Kitchen </p>
     </body>
     </html>';
-    echo $htmlContent;
-    $subject = "Du hast eine Getränke gekauft ".date();
-    sendEmailToCustomer($person->email, $htmlContent, $subject);
+    $subject = "Du hast eine Getränke am ".$date." gekauft";
+    sendEmailToCustomer($personToNotify->$email, $htmlContent, $subject);
 }
 
 ?>

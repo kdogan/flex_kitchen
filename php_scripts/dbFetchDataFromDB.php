@@ -34,6 +34,8 @@ class fetchDataFromDB {
 	            $response['person_id'] = $row["person_id"];
 				$response['buy_date'] = $row["buy_date"];
 	        }
+	    }else{
+	    	error_log("[dbFechDataFromDB] no last purchases article found");
 	    }
 	    $conn->close();
 	    return $response;
@@ -55,6 +57,7 @@ class fetchDataFromDB {
 	            $purchasedArticlesByArticleId[$row["article_id"]] = $response;
 	        }
 	    }else{
+	    	error_log("[dbFechDataFromDB -> getAllPurchasedArticlesForPersonFromDB] no purchases articles found");
 	    	return -1;
 	    }
 	    $conn->close();
@@ -85,6 +88,7 @@ class fetchDataFromDB {
 		    $conn->close();
 		    return json_encode($customers);
 		} else {
+			error_log("[dbFechDataFromDB -> getAllPersonsFromDB] no person found from db");
 		    return json_encode("-1");
 		}
 	}
@@ -108,6 +112,31 @@ class fetchDataFromDB {
 		    $conn->close();
 		    return json_encode($person);
 		} else {
+			error_log("[dbFechDataFromDB -> getPersonById] no person found for id ".$personId);
+		    return json_encode("-1");
+		}
+	}
+
+	function getArticleById($articleId){
+		$conn = $this->getDBConnection();
+
+		$sql = 'SELECT * FROM article WHERE id ='.$articleId;
+		$result = $conn->query($sql);
+
+		if ($result->num_rows > 0) {
+		    $person;
+		    while($row = $result->fetch_assoc()) {
+		        $person['id'] = $row["id"];
+		        $person['name'] = $row["name"];
+		        $person['price'] =$row["price"];
+		        $person['count'] = $row["count"];
+		        $person['category'] = $row["category"];
+		        $person['img_path'] = $row["img_path"];
+		    }
+		    $conn->close();
+		    return json_encode($person);
+		} else {
+			error_log("[dbFechDataFromDB -> getArticleById] no article found for id ".$articleId);
 		    return json_encode("-1");
 		}
 	}
@@ -128,6 +157,7 @@ class fetchDataFromDB {
 		    }
 		    return $article;
 		} else {
+			error_log("[dbFechDataFromDB -> getArticleFromDB] no article found for id ".$productId);
 		    return "-1";
 		}
 		$conn->close();
@@ -206,6 +236,7 @@ class fetchDataFromDB {
 			}
 			return $response;
 		} else {
+			error_log("[dbFechDataFromDB -> getProductFromDB] no product found for id ".$productId);
 			return "-1";
 		}
 		$conn->close(); 
@@ -222,6 +253,7 @@ class fetchDataFromDB {
             }
             return $response;
         } else {
+        	error_log("[dbFechDataFromDB -> getCategoriesFromDB] no categories found ");
             return "-1";
         }
         $conn->close(); 
@@ -231,7 +263,7 @@ class fetchDataFromDB {
 		$conn = $this->getDBConnection();
         $imaga_name = $img_path;
 		$response = "not inserted";
-        $sql = 'INSERT INTO article (firstname, lastname, email, tel_no, img_path, account_balance, is_admin, user_pw) 
+        $sql = 'INSERT INTO person (firstname, lastname, email, tel_no, img_path, account_balance, is_admin, user_pw) 
 				VALUES ("'.$firstname.'","'.$lastname.'","'.$email.'", "'.$telefon.'","'.$imaga_name.'", 0, 0,"cfcd208495d565ef66e7dff9f98764da")';
     
         $result = $conn->query($sql);

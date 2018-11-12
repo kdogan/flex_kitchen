@@ -15,7 +15,8 @@ INSERT INTO `article` (`name`, `price`, `count`, `category`, `img_path`) VALUES
 ('Tee', 0.35, 18, 2, 'cay.jpg'),
 ('Wasser 1 lt', 1, 18, 1, 'wasser.jpg');
 
-CREATE USER 'flex_kitchen'@'localhost' IDENTIFIED BY 'root' grant all privileges on flex_kitchen.* to flex_kitchen@'%' identified by 'root';
+CREATE USER 'flex_kitchen'@'localhost' IDENTIFIED BY 'root';
+grant all privileges on flex_kitchen.* to flex_kitchen@'%' identified by 'root';
 
 CREATE TABLE `category` (
   `id` int(11) NOT NULL,
@@ -37,6 +38,7 @@ CREATE TABLE `person` (
   `account_balance` float DEFAULT NULL,
   `is_admin` tinyint(1) DEFAULT NULL,
   `user_pw` char(96) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT 1,
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

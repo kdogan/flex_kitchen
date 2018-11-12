@@ -70,7 +70,7 @@ function sendMonthlyEmails(){
         $email["content"] = $htmlContent;
 
         //$all_emails[$customer->email] = $email;
-        $all_emails["kamuran.dogan@flexlog.de"] = $email;
+        $all_emails["kamuran1905@yahoo.de"] = $email;
     }
     // open tem file to write email
     sendEmail("temp_emails_to_send.json", $all_emails);
