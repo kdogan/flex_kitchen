@@ -68,7 +68,7 @@ class fetchDataFromDB {
 
 		$conn = $this->getDBConnection();
 
-		$sql = 'SELECT * FROM person WHERE is_admin="0"';
+		$sql = 'SELECT * FROM person WHERE is_admin="0" AND is_active="1"';
 		$result = $conn->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -96,7 +96,7 @@ class fetchDataFromDB {
 	function getPersonById($personId){
 		$conn = $this->getDBConnection();
 
-		$sql = 'SELECT * FROM person WHERE id ='.$personId.' AND is_admin="0"';
+		$sql = 'SELECT * FROM person WHERE id ='.$personId.' AND is_admin="0" AND is_active="1"';
 		$result = $conn->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -179,16 +179,18 @@ class fetchDataFromDB {
 
 		$conn = $this->getDBConnection();
 		$userId = getSessionUserId();
-		$person = $this->getPersonFromDB($userId);
-		$oldAccountBalance = floatval($person["account_balance"]);
+		$person = json_decode($this->getPersonById($userId));
+		$account_balance = "account_balance";
+		$oldAccountBalance = floatval($person->$account_balance);
 		$conn->close(); 
 		return $oldAccountBalance;
 	}
 
 	public function updateAccountBalanceOfUser ($userId, $amound){
 		$conn = $this->getDBConnection();
-		$person = $this->getPersonFromDB($userId);
-		$oldAccountBalance = floatval($person["account_balance"]);
+		$person = json_decode($this->getPersonById($userId));
+		$account_balance = 'account_balance';
+		$oldAccountBalance = floatval($person->$account_balance);
         $newAccountBalance = $oldAccountBalance + floatval($amound);
         $response = "";
         $sql = 'UPDATE person SET account_balance = '.$newAccountBalance.' WHERE id ='.$userId;
@@ -205,8 +207,9 @@ class fetchDataFromDB {
 	public function updateProductNumber($productId, $productNumber){
 		$conn = $this->getDBConnection();
 
-		$product = $this->getProductFromDB($productId);
-        $oldAccountBalance = floatval($product["count"]);
+		$article = json_decode($this->getArticleById($productId));
+		$count = 'count';
+        $oldAccountBalance = floatval($article->$count);
         $newAccountBalance = $oldAccountBalance + $productNumber;
         $response = "";
         $sql = 'UPDATE article SET count = '.$newAccountBalance.' WHERE id ='.$productId;
@@ -216,30 +219,8 @@ class fetchDataFromDB {
         }else{
             $response = array('newCount'=>(string)$newAccountBalance);
         }
+        $conn->close();
         return $response;
-        $conn->close(); 
-	}
-
-	function getProductFromDB($productId){
-		$conn = $this->getDBConnection();
-		
-		$sql = 'SELECT * FROM article WHERE id ='.$productId;
-		$result = $conn->query($sql);
-		if ($result->num_rows > 0) {
-			while($row = $result->fetch_assoc()) {
-				$response['id'] = $row["id"];
-				$response['name'] = $row["name"];
-				$response['price'] = $row["price"];
-				$response['count'] = $row["count"];
-				$response['category'] = $row["category"];
-				$response['img_path'] = $row["img_path"];
-			}
-			return $response;
-		} else {
-			error_log("[dbFechDataFromDB -> getProductFromDB] no product found for id ".$productId);
-			return "-1";
-		}
-		$conn->close(); 
 	}
 
 	function getCategoriesFromDB(){
@@ -263,8 +244,8 @@ class fetchDataFromDB {
 		$conn = $this->getDBConnection();
         $imaga_name = $img_path;
 		$response = "not inserted";
-        $sql = 'INSERT INTO person (firstname, lastname, email, tel_no, img_path, account_balance, is_admin, user_pw) 
-				VALUES ("'.$firstname.'","'.$lastname.'","'.$email.'", "'.$telefon.'","'.$imaga_name.'", 0, 0,"cfcd208495d565ef66e7dff9f98764da")';
+        $sql = 'INSERT INTO person (firstname, lastname, email, tel_no, img_path, account_balance, is_admin, user_pw, is_active) 
+				VALUES ("'.$firstname.'","'.$lastname.'","'.$email.'", "'.$telefon.'","'.$imaga_name.'", 0, 0,"cfcd208495d565ef66e7dff9f98764da",1)';
     
         $result = $conn->query($sql);
         if($result){
@@ -291,28 +272,4 @@ class fetchDataFromDB {
         $conn->close();
         return $response;
 	}
-
-	//TODO duplicated with dbutility. remove from dbutility
-	function getPersonFromDB($userId){
-		require_once("dbConnector.php");
-		$db = new dbConnector();
-		$conn = $db->getDBConnection();
-		$sql = 'SELECT * FROM person WHERE is_admin="0" and id ='.$userId;
-		$result = $conn->query($sql);
-		if ($result->num_rows > 0) {
-			while($row = $result->fetch_assoc()) {
-				$response['id'] = $row["id"];
-				$response['firstname'] = $row["firstname"];
-				$response['lastname'] =$row["lastname"];
-				$response['email'] = $row["email"];
-				$response['img_path'] = $row["img_path"];
-				$response['account_balance'] = $row["account_balance"];
-			}
-			return $response;
-		} else {
-			return "-1";
-		}
-		$conn->close(); 
-	}
-	
 }
