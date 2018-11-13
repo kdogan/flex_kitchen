@@ -32,7 +32,7 @@ if(isset($_GET["productId"]) && isset($_GET["productNumber"])){
 
 if(isset($_GET['accountBalanceRequested'])){
 	require_once("../php_script.php");
-    $script = new FunctionScript();
+  $script = new FunctionScript();
 
 	$response = $script->getAccountBalanceOfCurrentUser();
 	echo json_encode($response);
@@ -159,6 +159,15 @@ function notifyUserForPurchasedArticle($personId, $selectedArticleId){
     </html>';
     $subject = "Du hast eine Getränke am ".$date." gekauft";
     sendEmailToCustomer($personToNotify->$email, $htmlContent, $subject);
+}
+
+if(isset($_GET['setUserInActive'])){
+  $personId=$_GET["personId"];
+  require_once("../php_script.php");
+  $script = new FunctionScript();
+
+  $response = $script->setUserInActive($personId);
+  echo json_encode($response);
 }
 
 ?>

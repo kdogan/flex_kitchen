@@ -46,6 +46,13 @@ class FunctionScript{
         return $result;
     }
 
+    public function getAllPersonFromDB(){
+        require_once("php_scripts/dbFetchDataFromDB.php");
+        $fetchDataFromDB = new fetchDataFromDB();
+        $result = $fetchDataFromDB->getAllPersonFromDB();
+        return $result;
+    }
+
     public function getCategoriesFromDB(){
         require_once("php_scripts/dbFetchDataFromDB.php");
         $fetchDataFromDB = new fetchDataFromDB();
@@ -68,7 +75,7 @@ class FunctionScript{
     }
 
     public function getUserLIs(){
-        $persons = $this ->getAllFromTable("person");
+        $persons = $this->getAllPersonFromDB();
         $result = "<h2>No User found... :'(</h2>";
         if($persons->num_rows >0){
             $result = "";
@@ -114,6 +121,13 @@ class FunctionScript{
         $purchasedArticle = $fetchDataFromDB-> getLastPurchases($personId);
         return $purchasedArticle;
     }
+    public function setUserInActive($personId){
+        require_once("php_scripts/dbFetchDataFromDB.php");
+        $fetchDataFromDB = new fetchDataFromDB();
+        $userInActiveSuccess = $fetchDataFromDB->setUserInActive($personId);
+        return $userInActiveSuccess;
+    }
+    
 
     public function createUserImagePath($image_path){
         if(strpos($image_path, 'http') !== false){

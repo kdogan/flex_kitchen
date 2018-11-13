@@ -99,6 +99,17 @@ function updateProductNumber(productId, inputFieldId){
     }
 }
 
+function setUserInActive(personId){
+        $.ajax({
+          url: 'php_scripts/dbutility.php?personId='+personId+'&setUserInActive=1',
+          success: function(html) {
+                    var obj = JSON.parse(html);
+                    location.reload();
+                    }
+        });
+    
+}
+
 function isInteger(x) {
   return x % 1 === 0;
 }

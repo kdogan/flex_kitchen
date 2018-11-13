@@ -35,7 +35,7 @@ class fetchDataFromDB {
 				$response['buy_date'] = $row["buy_date"];
 	        }
 	    }else{
-	    	error_log("[dbFechDataFromDB] no last purchases article found");
+	    	error_log("[dbFechDataFromDB -> getLastPurchases] no last purchases article found");
 	    }
 	    $conn->close();
 	    return $response;
@@ -96,7 +96,7 @@ class fetchDataFromDB {
 	function getPersonById($personId){
 		$conn = $this->getDBConnection();
 
-		$sql = 'SELECT * FROM person WHERE id ='.$personId.' AND is_admin="0" AND is_active="1"';
+		$sql = 'SELECT * FROM person WHERE id ='.$personId.' AND is_admin="0" AND is_active=1';
 		$result = $conn->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -169,6 +169,16 @@ class fetchDataFromDB {
             die('database connectin fails: ' . mysql_error());
         }
         $sql = "SELECT DISTINCT * FROM ".$tableName;
+        $result = $conn->query($sql);
+        $conn->close();
+        return $result;
+	}
+	public function getAllPersonFromDB(){
+		$conn = $this->getDBConnection();
+        if (!$conn) {
+            die('database connectin fails: ' . mysql_error());
+        }
+        $sql = "SELECT DISTINCT * FROM person WHERE is_active = '0'";
         $result = $conn->query($sql);
         $conn->close();
         return $result;
@@ -272,4 +282,17 @@ class fetchDataFromDB {
         $conn->close();
         return $response;
 	}
+
+	public function setUserInActive($personId){
+        $conn = $this->getDBConnection();
+        $response = 1;
+        $sql = 'UPDATE person SET is_active = 0 WHERE id ='.$personId;
+    
+        if ($conn->query($sql) === FALSE) {
+        	error_log("[dbFechDataFromDB -> setUserInActive] can not set person inactive");
+            $response = 0;
+        }
+        $conn->close(); 
+        return $response;
+    }
 }

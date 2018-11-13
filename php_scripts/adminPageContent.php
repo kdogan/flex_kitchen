@@ -16,11 +16,9 @@ if(isset($_REQUEST['productsRequested'])){
 
 function getUserDivsInAdminPage(){
 	require("../php_script.php");
-	require("dbFetchDataFromDB.php");
 
-	$functions = new FunctionScript();
-
-    $persons = $functions->getAllFromTable("person");
+	$script = new FunctionScript();
+    $persons = $script->getAllPersonFromDB();
     
     $result = "<div style='width:20%;margin-buttom:10px'>
                         <div style='float:left;width:70%;height:37px;background-color:grey'>
@@ -41,11 +39,11 @@ function getUserDivsInAdminPage(){
             $payButtonId = 'payButton'.$id;
             $inputPayment = 'inputPayment'.$id;
 
-            $fetchedData = $functions->getLastPurchasedArticle($id);
+            $fetchedData = $script->getLastPurchasedArticle($id);
             $lastPurchase =$fetchedData;
 
             $result = $result.'<div class="column">
-            <div class="box1"><img style="width:120px;float:left; border-radius: 10px 0px 0px 10px;" src='.$functions->createUserImagePath($row["img_path"]).' alt="user image"></div>
+            <div class="box1"><img style="width:120px;float:left; border-radius: 10px 0px 0px 10px;" src='.$script->createUserImagePath($row["img_path"]).' alt="user image"></div>
             <div class="box2">
                 <table>
                     <tr>
@@ -73,6 +71,9 @@ function getUserDivsInAdminPage(){
             			<div style="float:left;width:50%;">
             				<button id="'.$payButtonId.'" class="button"  onclick="updateUserAmound(\''.$id.'\',\''.$inputPayment.'\');">Bezahlen</button>
             			</div>
+                        <div style="float:left;width:100%; margin-top:2px">
+                            <button id="'.$payButtonId.'" class="button"  onclick="setUserInActive(\''.$id.'\');">Benutzer Löschen</button>
+                        </div>
             		</div>
             </div>';
         }
