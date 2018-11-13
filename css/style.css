@@ -23,9 +23,8 @@ header {background-color:#fafafa;color:white;border: 1px solid #aaa; width: 100%
 .user_img {
   width: 100%;
   background-color: #FF4500;
-  min-width: 120px;
-  min-height: 120px;
-  height: 60px;
+  min-width: 100px;
+  min-height: 100px;
   padding-top:20%;
   padding-bottom: 20%;
   background-repeat:no-repeat;

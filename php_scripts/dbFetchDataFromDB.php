@@ -178,7 +178,7 @@ class fetchDataFromDB {
         if (!$conn) {
             die('database connectin fails: ' . mysql_error());
         }
-        $sql = "SELECT DISTINCT * FROM person WHERE is_active = '0'";
+        $sql = "SELECT DISTINCT * FROM person WHERE is_active = 1";
         $result = $conn->query($sql);
         $conn->close();
         return $result;
