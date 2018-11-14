@@ -240,18 +240,18 @@ menu li {
     clear: both;
 }
 .box1, .box2, .box3{
-  float: left;
+  
   margin-right: 3.33333%;
   padding: 1px;
   box-sizing: border-box;
   max-height: 120px;
 }
-.box1 {width: 10%;}
-.box2 {width: 45%;}
-.box3 {width: 10%;}
+.box1 {width: 10%;float: left;}
+.box2 {width: 55%;float: left;}
+.box3 {width: 15%;float: right;}
 
 .payment_input{
-  width: 70px;
+  width: 50px;
   height: 33px;
   padding: 1px;
   border:none;
