@@ -55,7 +55,7 @@ header {background-color:#fafafa;color:white;border: 1px solid #aaa; width: 100%
   background-color: #101010;
   border-radius: 6px;
   padding: 3px;
-  font-size: 1em;
+  font-size: 90%;
   font-weight: bold;
   margin-left: -77px;
   color: white;
@@ -294,7 +294,7 @@ menu{ padding-left: 0px;}
   background-color: #555;
   width: 45px;
 }
-.logo_img{width: 150px; height: 50px;}
+.logo_img{width: 150px; height: 35px;}
 .user_logout_in_article_page .user_logout_in_admin_page{
   float: right;
 }
