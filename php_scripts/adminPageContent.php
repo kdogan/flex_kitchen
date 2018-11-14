@@ -32,7 +32,7 @@ function getUserDivsInAdminPage(){
         while($row = $persons->fetch_assoc()){
             //pass user if it is admin
             if($row["is_admin"] == "1") continue;
-            
+
             $user = $row["firstname"].' '.$row["lastname"];
             $id = $row["id"];
             $accountBalance = $row["account_balance"];
@@ -54,7 +54,7 @@ function getUserDivsInAdminPage(){
                     <tr>
 			            <td style="float:left"> Kontozustand </td>
 			            <td style="float:left">:</td>
-			            <td style="float:left; font-weight: bold" > 
+			            <td style="float:left; font-weight: bold" >
 			                <div style="background-color: white;border-radius:50% ;padding:3px 15px 3px 15px; color:black" id="accountBalance'.$id.'">'.$accountBalance.' €</div>
 			            </td>
 			         </tr>
@@ -66,13 +66,13 @@ function getUserDivsInAdminPage(){
                     </table>
                     </div>
             		<div class="box3">
-            			<div style="float:left;width:50%">
+            			<div style="float:left">
             				<input class="payment_input" id="'.$inputPayment.'" placeholder="e.g. 2.50"onkeyup="checkInputForNumber(\''.$inputPayment.'\',\''.$payButtonId.'\')" type="text"></div>
-            			<div style="float:left;width:50%;">
+            			<div style="float:left;">
             				<button id="'.$payButtonId.'" class="button"  onclick="updateUserAmound(\''.$id.'\',\''.$inputPayment.'\');">Bezahlen</button>
             			</div>
-                        <div style="float:left;width:100%; margin-top:2px">
-                            <button id="'.$payButtonId.'" class="button"  onclick="setUserInActive(\''.$id.'\');">Benutzer Löschen</button>
+                        <div style="float:right;">
+                            <img id="'.$payButtonId.'" class="button" src="img/remove_user_icon.png" onclick="setUserInActive(\''.$id.'\');">
                         </div>
             		</div>
             </div>';
