@@ -84,11 +84,10 @@ class FunctionScript{
                 if($row["is_admin"] == "1") continue;
                 $user = $row["firstname"]." ".$row["lastname"]; 
                 $id = $row["id"];
-                $imagePath = $row["img_path"];
+                $src = $this->createUserImagePath($row["img_path"]);
                 $result = $result.'<li class="user_div" id="'.$id.'">
-                <div class="user_img" style="background-image: url(\''.$this->createUserImagePath($row["img_path"]).'\');" href="#" onclick="clickUser(\''.$id.'\')"></div>
-                <span class="name_label_span">'.$user.'</span>
-                </li>';
+                <div class="user_img" style="background-image: url(\''.$src.'\');" href="#" onclick="clickUser(\''.$id.'\')"></div>
+                <span class="name_label_span">'.$user.'</span></li>';
             }
         }
         return $result;

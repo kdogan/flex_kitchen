@@ -8,6 +8,7 @@ function getUsersInAdminPage(){
       url: 'php_scripts/adminPageContent.php?userRequested=1',
       success: function(html) {
         document.getElementById('admin_home_manu').innerHTML = html;
+        document.getElementById('header_second_column_in_admin').innerHTML = "<div><img class='icon_image' src='img/add_user_icon.png' onclick='add_new_customer()'/></div>";
       }
    });
 }
@@ -17,6 +18,7 @@ function getProducts(){
       url: 'php_scripts/adminPageContent.php?productsRequested=1',
       success: function(html) {
         document.getElementById('admin_home_manu').innerHTML = html;
+        document.getElementById('header_second_column_in_admin').innerHTML = "<div><img class='icon_image' src='img/add_product_icon.png' onclick='add_new_product()'/></div>";
       }
    });
 }
@@ -25,8 +27,8 @@ function goToAdminHome(){
 	$.ajax({
       url: 'php_scripts/adminPageContent.php?adminHomeRequested=1',
       success: function(html) {
-        
         document.getElementById('admin_home_manu').innerHTML = html;
+        document.getElementById('header_second_column_in_admin').innerHTML = "";
       }
    });
 }
@@ -99,15 +101,38 @@ function updateProductNumber(productId, inputFieldId){
     }
 }
 
+function confirmUserDeleting(personName, personId){
+  var r = confirm("Möchten Sie wirklich "+personName+" löschen?");
+    if (r == true) {
+      setUserInActive(personId);
+    } 
+}
+
 function setUserInActive(personId){
-        $.ajax({
-          url: 'php_scripts/dbutility.php?personId='+personId+'&setUserInActive=1',
-          success: function(html) {
-                    var obj = JSON.parse(html);
-                    location.reload();
-                    }
-        });
-    
+    $.ajax({
+      url: 'php_scripts/dbutility.php?personId='+personId+'&setUserInActive=1',
+      success: function(html) {
+                var obj = JSON.parse(html);
+                getUsersInAdminPage();
+                }
+    }); 
+}
+
+function confirmProductDeleting(productName, productId){
+  var r = confirm("Möchten Sie wirklich das Product "+productName+" löschen?");
+    if (r == true) {
+      deleteProduct(productId);
+    } 
+}
+
+function deleteProduct(productId){
+  $.ajax({
+    url: 'php_scripts/dbutility.php?productId='+productId+'&deleteProductRequested=1',
+    success: function(html) {
+              var obj = JSON.parse(html);
+              getProducts();
+              }
+  }); 
 }
 
 function isInteger(x) {

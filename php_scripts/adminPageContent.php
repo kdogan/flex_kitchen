@@ -19,15 +19,7 @@ function getUserDivsInAdminPage(){
 
 	$script = new FunctionScript();
     $persons = $script->getAllPersonFromDB();
-    
-    $result = "<div style='width:20%;margin-buttom:10px'>
-                        <div style='float:left;width:70%;height:37px;background-color:grey'>
-                            <p><b>Neue Mitarbeiter hinzufügen</b></p>
-                        </div>
-                        <div style='float:left;width:20%;'>
-                            <button class='button'style='width:100%' onclick='add_new_customer()'>+</button>
-                        </div>
-                    </div>";
+    $result = "";
     if($persons->num_rows >0){
         while($row = $persons->fetch_assoc()){
             //pass user if it is admin
@@ -41,9 +33,9 @@ function getUserDivsInAdminPage(){
 
             $fetchedData = $script->getLastPurchasedArticle($id);
             $lastPurchase =$fetchedData;
-
+            $src = $script->createUserImagePath($row["img_path"]);
             $result = $result.'<div class="column">
-            <div class="box1"><img style="width:120px;float:left; border-radius: 10px 0px 0px 10px;" src='.$script->createUserImagePath($row["img_path"]).' alt="user image"></div>
+            <div class="box1"><img style="width:120px;float:left; border-radius: 10px 0px 0px 10px;" src='.$src.' alt="user image"></div>
             <div class="box2">
                 <table>
                     <tr>
@@ -65,16 +57,17 @@ function getUserDivsInAdminPage(){
 			         </tr>
                     </table>
                     </div>
-            		<div class="box3">
-            			<div style="float:left">
-            				<input class="payment_input" id="'.$inputPayment.'" placeholder="e.g. 2.50"onkeyup="checkInputForNumber(\''.$inputPayment.'\',\''.$payButtonId.'\')" type="text"></div>
-            			<div style="float:left;">
-            				<button id="'.$payButtonId.'" class="button"  onclick="updateUserAmound(\''.$id.'\',\''.$inputPayment.'\');">Bezahlen</button>
-            			</div>
-                        <div style="float:right;">
-                            <img id="'.$payButtonId.'" class="button" src="img/remove_user_icon.png" onclick="setUserInActive(\''.$id.'\');">
+                    <div class="box3">
+                        <div class="input_in_grid">
+                            <input class="payment_input" id="'.$inputPayment.'" placeholder="e.g. 2.50" onkeyup="checkInputForNumber(\''.$inputPayment.'\',\''.$payButtonId.'\')" type="text">
                         </div>
-            		</div>
+                        <div class="payment_button_in_grid">
+            				<button id="'.$payButtonId.'" class="button"  onclick="updateUserAmound(\''.$id.'\',\''.$inputPayment.'\');">Bezahlen</button>
+                        </div>
+                        <div class="remove_user_in_grid">
+                            <img class="icon_image" style="margin-top:3px;" id="'.$payButtonId.'" src="img/remove_user_icon.png" onclick="confirmUserDeleting(\''.$user.'\',\''.$id.'\');"/>
+                        </div>
+                    </div>
             </div>';
         }
     }
@@ -89,14 +82,7 @@ function getProductDivsInAdminPage(){
     $categories = $script->getCategoriesFromDB();
 
     if($products->num_rows >0){
-        $result = "<div style='width:15%;margin-buttom:10px'>
-                        <div style='float:left;width:70%;height:37px;background-color:grey'>
-                            <p><b>Add New Product</b></p>
-                        </div>
-                        <div style='float:left;width:20%;'>
-                            <button class='button'style='width:100%' onclick='add_new_product()'>Add</button>
-                        </div>
-                    </div>";
+        $result = "";
         while($row = $products->fetch_assoc()){
             
             $productName = $row["name"];
@@ -139,14 +125,16 @@ function getProductDivsInAdminPage(){
                     </table>
                     </div>
             		<div class="box3">
-                        <div style="float:left;width:50%">
+                        <div class="input_in_grid">
                             <input class="payment_input" id="'.$inputPayment.'" onkeyup="checkInputForNumber(\''.$inputPayment.'\',\''.$payButtonId.'\')" type="text">
                         </div>
-                        <div style="float:left;width:50%;">
+                        <div class="payment_button_in_grid">
                             <button id="'.$payButtonId.'" class="button" style="width:100%;" onclick="updateProductNumber(\''.$productId.'\',\''.$inputPayment.'\');">Einlagern</button>
                         </div>
+                        <div class="remove_user_in_grid">
+                            <img class="icon_image" style="margin-top:3px;" id="'.$payButtonId.'" src="img/remove_product_icon.png" onclick="confirmProductDeleting(\''.$productName.'\',\''.$productId.'\');"/>
+                        </div>
                     </div>
-            		  
                 </div>';
         }
     }
