@@ -1,8 +1,7 @@
 <?php
 
 if(isset($_GET["id"]) && !isset($_GET["amound"])){
-	require_once("../php_script.php");
-	$script = new FunctionScript();
+	$script = getPHPScript();
 
 	$id=$_GET["id"];
 	//TODO before execution of sql queries check if current user has right to access
@@ -11,8 +10,7 @@ if(isset($_GET["id"]) && !isset($_GET["amound"])){
 }
 
 if(isset($_GET["id"]) && isset($_GET["amound"])){
-	require_once("../php_script.php");
-	$script = new FunctionScript();
+	$script = getPHPScript();
 	
 	$id=$_GET["id"];
 	$amound = $_GET["amound"];
@@ -21,8 +19,7 @@ if(isset($_GET["id"]) && isset($_GET["amound"])){
 }
 
 if(isset($_GET["productId"]) && isset($_GET["productNumber"])){
-	require_once("../php_script.php");
-	$script = new FunctionScript();
+	$script = getPHPScript();
 
 	$id=$_GET["productId"];
 	$number = $_GET["productNumber"];
@@ -31,8 +28,7 @@ if(isset($_GET["productId"]) && isset($_GET["productNumber"])){
 }
 
 if(isset($_GET['accountBalanceRequested'])){
-	require_once("../php_script.php");
-  $script = new FunctionScript();
+	$script = getPHPScript();
 
 	$response = $script->getAccountBalanceOfCurrentUser();
 	echo json_encode($response);
@@ -45,8 +41,7 @@ if(isset($_REQUEST["first_name"]) && isset($_REQUEST["last_name"]) &&isset($_REQ
   $telefon = $_REQUEST["telefon"];
 	$imaga_name = $_REQUEST["customer_img"];
 
-	require_once("php_script.php");
-    $script = new FunctionScript();
+	$script = getPHPScript();
 
     $userInserted = $script->insertUser($firstname, $lastname, $email, $telefon, $imaga_name);
 }
@@ -63,7 +58,7 @@ if(isset($_REQUEST["articleBoughtRequsted"])){
 	}
 
 	$selectedArticleId = $_REQUEST["selectedArticleId"];
-  $personId =  getSessionUserId();
+    $personId =  getSessionUserId();
 	$sql = 'INSERT INTO person_article_matrix (person_id, article_id, count, buy_date) VALUES ('.$personId.','.$selectedArticleId.',1,now())';
 	$result = mysqli_query($conn, $sql);
 
@@ -79,9 +74,8 @@ if(isset($_REQUEST["articleBoughtRequsted"])){
 $errorByInsertedUser ="success";
 // Check if the form was submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-	require_once("../php_script.php");
-	
-	$script = new FunctionScript();
+    $script = getPHPScript();
+    
 	define ('SITE_ROOT', realpath(dirname(__DIR__)));
 	
     // Check if file was uploaded without errors
@@ -122,9 +116,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           } 
       } else{
           $errorByInsertedUser = "Error: There was a problem uploading your file. Please try again.";
+          error_log("Error by user image upload : ".$errorByInsertedUser, 0);
       }
     } else{
         $errorByInsertedUser = "Error: " . $_FILES["photo"]["error"];
+        error_log("Error user insert : ".$errorByInsertedUser, 0);
 	}
 	echo json_encode($errorByInsertedUser);
 	header("Refresh:0; url=../index.php");
@@ -132,8 +128,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 function notifyUserForPurchasedArticle($personId, $selectedArticleId){
   require_once("send_email.php");
-  require_once("../php_script.php");
-  $script = new FunctionScript();
+  $script = getPHPScript();
+
   $email = 'email';
   $firstname = 'firstname';
   $articleName = 'name';
@@ -151,6 +147,7 @@ function notifyUserForPurchasedArticle($personId, $selectedArticleId){
         <p>Hallo '.$personToNotify->$firstname.',</p>
         <p>Du hast gerade ein(e) '.$articleObject->$articleName.' gekauft</p><br/>
         <p>Dies ist eine automatisch erstellte E-Mail. Bitte ANTWORTE NICHT auf diese Mail</p>
+        <p> Der Kauf wurde vom PC (<b>'.$_SERVER["REMOTE_ADDR"].'</b>) durchgeführt</p>
       </div>
     <br/>
     <p>Viele Grüße </p>
@@ -163,11 +160,28 @@ function notifyUserForPurchasedArticle($personId, $selectedArticleId){
 
 if(isset($_GET['setUserInActive'])){
   $personId=$_GET["personId"];
-  require_once("../php_script.php");
-  $script = new FunctionScript();
+  $script = getPHPScript();
 
   $response = $script->setUserInActive($personId);
   echo json_encode($response);
 }
+if(isset($_GET['setUserInActive'])){
+    $personId=$_GET["personId"];
+    $script = getPHPScript();
+  
+    $response = $script->setUserInActive($personId);
+    echo json_encode($response);
+  }
+  if(isset($_GET['deleteProductRequested'])){
+    $personId=$_GET["productId"];
+    $script = getPHPScript();
+  
+    $response = $script->setUserInActive($personId);
+    echo json_encode($response);
+  }
 
+  function getPHPScript(){
+    require_once("../php_script.php");
+    return new FunctionScript();
+  }
 ?>

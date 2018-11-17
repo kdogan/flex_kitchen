@@ -66,7 +66,8 @@ window.onclick = function(event) {
   var targetId = event.target.id;
   if(targetId == "productConfirmationBtn" || targetId == "productCancelationBtn"){
     document.getElementById('myModal').style.display = "none";
-    window.location.href = "index.php";
+    //window.location.href = "index.php";
+    showUserAccountBalance();
   }
 }
 
@@ -101,7 +102,7 @@ function logout(name) {
 function showUserAccountBalance() {
     $.ajax({
         url: 'php_scripts/dbutility.php?accountBalanceRequested=1',
-        async: false,
+        async: true,
         success: function(html) {
               var obj = JSON.parse(html);
               //show until 3 digit after . e.g. 12.321
