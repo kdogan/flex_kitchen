@@ -119,7 +119,7 @@ class FunctionScript{
         if(strpos($image_path, 'http') !== false){
             return $image_path;
         }else{
-            return 'img/'.$image_path;
+            return 'img/'.str_replace(" ","%20",$image_path);
         }
     }
 
