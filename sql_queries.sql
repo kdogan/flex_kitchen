@@ -1,3 +1,5 @@
+CREATE DATABASE 'flex_kitchen';
+use DATABASE 'flex_kitchen';
 CREATE TABLE `article` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
@@ -15,6 +17,7 @@ INSERT INTO `article` (`name`, `price`, `count`, `category`, `img_path`) VALUES
 ('Tee', 0.35, 18, 2, 'cay.jpg'),
 ('Wasser 1 lt', 1, 18, 1, 'wasser.jpg');
 
+/*CREATE DATABASE USER */
 CREATE USER 'flex_kitchen'@'localhost' IDENTIFIED BY 'root';
 grant all privileges on flex_kitchen.* to flex_kitchen@'%' identified by 'root';
 

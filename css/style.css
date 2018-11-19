@@ -89,7 +89,10 @@ menu li {
   margin-right: 3px;
   margin-top:3px;
 } 
-
+@media screen and (min-width: 1000px) {
+  menu li {width: 10%;float:left}
+  .search_form {width: 30%}
+}
 @media only screen and (max-device-width : 820px) {
   menu li {width: calc(100% / 6);}
 }
@@ -98,6 +101,8 @@ menu li {
 }
 @media only screen and (max-device-width : 350px) and (min-device-width:250px) {
   menu li {width: calc(100% / 4);}
+  .login_modal-content{width: 80%}
+  
 }
 @media only screen and (max-device-width : 200px) {
   menu li {width: 100%;margin-right: 10px;}
@@ -107,10 +112,6 @@ menu li {
   .search_form {width: 100%}
   .notify-badge{right: 0px;width: 200px;height: 50px;}
   .login_modal-content{width: 80%}
-}
-@media screen and (min-width: 1000px) {
-  menu li {width: 10%;float:left}
-  .search_form {width: 30%}
 }
 
 .search_form{
@@ -131,7 +132,6 @@ menu li {
 }
 .header_third_column{
   float: right;
-  border-style: 1px solid;
 }
 
 .search {
@@ -440,12 +440,7 @@ span.psw {
 @keyframes animatezoom {
   .login_from {transform: scale(0)} to {transform: scale(1)}
 }
-@media only screen and (max-device-width : 300px) {
-.login_modal-content{width: 80%}
-}
-@media (max-width : 300px) {
-.login_modal-content{width: 80%}
-}
+
 
 .icon_image{
   width: 50px;

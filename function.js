@@ -22,7 +22,7 @@ $(function() {
 function clickUser(id){
   destroyPHPSession();
   if(setPHPSession(id)){
-    window.location.href = "index.php";
+    reLoadWindow();
     showUserAccountBalance();
   }
 }
@@ -51,7 +51,6 @@ function setPHPSession(userId){
       }
   });
   return sessionCreated;
-
 }
 
 function clickArticle(articleId){
@@ -62,51 +61,21 @@ function clickArticle(articleId){
 }
 
 window.onclick = function(event) {
-
   var targetId = event.target.id;
   if(targetId == "productConfirmationBtn" || targetId == "productCancelationBtn"){
     document.getElementById('myModal').style.display = "none";
-    //window.location.href = "index.php";
+    reLoadWindow();
     showUserAccountBalance();
   }
 }
 
-function setCookie(userId,nDays) {
- var today = new Date();
- var expire = new Date();
- if (nDays==null) nDays=1;
- expire.setTime(today.getTime() + 3600000*24*nDays);
- document.cookie = "userid="+escape(userId)+ ";expires="+expire.toGMTString();
-}
-
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
-function logout(name) {
-  setCookie("userid", "",0);
-  window.location.href = "index.php";
-}
-
 function showUserAccountBalance() {
+    var amound = 0;
     $.ajax({
         url: 'php_scripts/dbutility.php?accountBalanceRequested=1',
         async: true,
         success: function(html) {
               var obj = JSON.parse(html);
-              //show until 3 digit after . e.g. 12.321
-              var amound = obj;
               var afterCommaLength = obj.toString().split(".")[1].length;
               if(afterCommaLength > 3){
                 var indexToCut = obj.indexOf(".") + 3;
@@ -121,13 +90,13 @@ function showUserAccountBalance() {
     });
     showLastBuyOfCurrentUser();
 }
+
 function closeAdminSite(){
   $.ajax({
       url: 'php_scripts/login.php?logoutRequested=1',
       success: function(html) {
             var obj = JSON.parse(html);
-            window.location.reload();
-            //window.location.href = "index.php";
+            reLoadWindow();
       }
   });
 }
@@ -155,18 +124,19 @@ function sendSelectedProductForUser(){
 }
 
 function setSelectedArticleNameInPopupWindow(articleId){
-  var article = "";
   $.ajax({
       url: 'php_scripts/dbArticle.php?id='+articleId,
       success: function(html) {
                 var obj = JSON.parse(html);
-                var selectedArticleName = document.getElementById('selectedProductName');
+                //var selectedArticleName = document.getElementById('selectedProductName');
                 selectedProductName.innerHTML = obj["name"];
                 selectedProductName.style.fontWeight = 'bold';
                }
           });
 }
-
+function reLoadWindow(){
+  window.location.reload();
+}
 
 function readURL(input) {
     if (input.files && input.files[0]) {
