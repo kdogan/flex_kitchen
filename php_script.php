@@ -90,11 +90,10 @@ class FunctionScript{
             while($row = $persons->fetch_assoc()){
                 $id = $row["id"];
                 $imgUrl = $this->createUserImagePath($row["img_path"]);
-                $result = $result.'<li style="width:fil-content">
-                <div class="user_div" id="'.$id.'">
-                    <div class="user_img" style="background-image: url(\''.$imgUrl.'\');" href="#" onclick="clickArticle(\''.$id.'\')">
-                        <span class="notify-badge"><strong>'.$row["price"].' €</strong></span>
-                    </div>
+                $result = $result.'<li class="article_li" style="width:fil-content">
+                <div class="article_li_div" id="'.$id.'">
+                    <div class="notify-badge"><strong>'.$row["price"].' €</strong></div>
+                    <div class="article_li_img" style="background-image: url(\''.$imgUrl.'\');" href="#" onclick="clickArticle(\''.$id.'\')"></div>
                     <span class="name_label_span">'.$row["name"].'</span>
                 </div>
                 </li>';
