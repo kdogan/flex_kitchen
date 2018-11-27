@@ -15,4 +15,4 @@ INSTALLATION
     3.1 With Admin user you will redirected to admin page wehere you can manage product and users
 4. Execute sql_queries.sql on your database (if you want to use customized database name then you can open sql_queries.sql file and change database name)
 5. copy all files from app directory (flex_kitchen) to your domain (on directory where your domain referenced)
-6. open file /php_scripts/dbConnector.php file and adjust your database user if your customized data user in sql_queries.sql file
+6. open file /php_scripts/dbConnector.php and adjust your database user if your customized database user in sql_queries.sql file
