@@ -8,7 +8,6 @@
 </ul>
 
 <h1>INSTALLATION</h1>
-------------
 <li>1. Install MySQL 
 <li>2. Create your database "flex_kitchen" (for customized database name look step 3)
 <li>3. Open file sql_queries.sql and adjust your database name and admin user (email and password). with this admin user you can manage product and Users
