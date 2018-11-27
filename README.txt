@@ -1,6 +1,6 @@
-<h3>This app is implemented for managing of drinks in work. Users and Products should be inserted</h3>
+##This app is implemented for managing of drinks in work. Users and Products should be inserted
 
-<h1>REQUIREMENTS</h1>
+#<h1>REQUIREMENTS</h1>
 ------------
 1. PHP > 5
 2. python > 3
