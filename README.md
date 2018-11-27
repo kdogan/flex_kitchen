@@ -1,13 +1,13 @@
-##This app is implemented for managing of drinks in work. Users and Products should be inserted
+<h2>This app is implemented for managing of drinks in work. Users and Products should be inserted</h2>
 
-#<h1>REQUIREMENTS</h1>
+<h1>REQUIREMENTS</h1>
 ------------
 1. PHP > 5
 2. python > 3
 3. MySQL > 5.5
 
 
-INSTALLATION
+<h1>INSTALLATION</h1>
 ------------
 1. Install MySQL 
 2. Create your database "flex_kitchen" (for customized database name look step 3)
