@@ -65,7 +65,7 @@ function getUserDivsInAdminPage(){
             				<button id="'.$payButtonId.'" class="button"  onclick="updateUserAmound(\''.$id.'\',\''.$inputPayment.'\');">Bezahlen</button>
                         </div>
                         <div class="remove_user_in_grid">
-                            <img class="icon_image" style="margin-top:3px;" id="'.$payButtonId.'" src="img/remove_user_icon.png" onclick="confirmUserDeleting(\''.$user.'\',\''.$id.'\');"/>
+                            <img class="icon_image" id="'.$payButtonId.'" src="img/remove_user_icon.png" onclick="confirmUserDeleting(\''.$user.'\',\''.$id.'\');"/>
                         </div>
                     </div>
             </div>';
