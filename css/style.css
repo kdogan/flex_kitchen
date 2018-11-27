@@ -35,7 +35,8 @@ header {
 
 .content {
   margin-top: 50px;
-  margin-bottom: 62px;
+  margin-bottom: 62px;    
+  overflow: auto;
 }
 
 #adminLoginBtn {
@@ -69,7 +70,7 @@ footer {
 }
 
 .admin-footer {
-  height: 85px;
+  height: 75px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -90,7 +91,7 @@ footer {
 
 .user_img {
   background-color: #616367;
-  background-image: url(../img/profil_image.PNG) !important;
+  /* background-image: url(../img/profil_image.PNG) !important; */
   width: 120px;
   height: 120px;
   background-size: cover;
@@ -474,6 +475,25 @@ menu li {
   font-size: 0.9em;
 }
 
+.box2 {
+  padding-top: 5px;
+}
+
+.box2 div {
+  height: 20px;
+}
+
+.box2 div span {
+  font-weight: bold;
+}
+
+.box1 img {
+  width: 110px;
+  margin-left: 10px;
+  float: left;
+  border-radius: 6px;
+}
+
 .box3{
   display: grid;
   grid-template-columns: 95px 51px 100px;
@@ -721,6 +741,7 @@ span.psw {
   background-color: #83bb26; 
   cursor: pointer;
   display: block;
+  text-align: center;
   margin-top: 30px;
   padding: 10px;
   background-image: url(../img/upload.png);
