@@ -8,7 +8,8 @@ function getUsersInAdminPage(){
       url: 'php_scripts/adminPageContent.php?userRequested=1',
       success: function(html) {
         document.getElementById('admin_home_manu').innerHTML = html;
-        document.getElementById('header_second_column_in_admin').innerHTML = "<div><img class='icon_image' src='img/add_user_icon.png' onclick='add_new_customer()'/></div>";
+        document.getElementById('toggle-button').innerHTML = '<img class="icon_image" src="img/add_user_icon.png" onclick="add_new_customer()"/>';
+        document.getElementById('toggle-button').classList.add('header-btn-container');
       }
    });
 }
@@ -18,7 +19,8 @@ function getProducts(){
       url: 'php_scripts/adminPageContent.php?productsRequested=1',
       success: function(html) {
         document.getElementById('admin_home_manu').innerHTML = html;
-        document.getElementById('header_second_column_in_admin').innerHTML = "<div><img class='icon_image' src='img/add_product_icon.png' onclick='add_new_product()'/></div>";
+        document.getElementById('toggle-button').innerHTML = '<img class="icon_image" src="img/add_product_icon.png" onclick="add_new_product()"/>';
+        document.getElementById('toggle-button').classList.add('header-btn-container');
       }
    });
 }
@@ -28,7 +30,8 @@ function goToAdminHome(){
       url: 'php_scripts/adminPageContent.php?adminHomeRequested=1',
       success: function(html) {
         document.getElementById('admin_home_manu').innerHTML = html;
-        document.getElementById('header_second_column_in_admin').innerHTML = "";
+        document.getElementById('toggle-button').innerHTML = "";
+        document.getElementById('toggle-button').classList.remove('header-btn-container');
       }
    });
 }
@@ -148,3 +151,4 @@ function isInputedAmoundValid(value){
       return true;
     }
 }
+

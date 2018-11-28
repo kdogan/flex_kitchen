@@ -25,24 +25,16 @@ function getUserAccountBalance(){
     
     $amound = $script->getAccountBalanceOfCurrentUser();
     
-    $color= "white";
+    $color= "#616367";
     if( floatval($amound) < 0){
-        $color= "red";
+        $color= "#bf0000";
     }
-    return '<table>
-             <tr>
-                <td style="float:left"> Kontozustand </td>
-                <td style="float:left">:</td>
-                <td style="float:left; font-weight: bold" > 
-                    <div style="background-color: '.$color.';border-radius:50% ;padding:3px 15px 3px 15px; color:black" id="accountBalance">'.$amound.' €</div>
-                </td>
-             </tr>
-             <tr>
-                <td style="float:left"> letzte Kauf </td>
-                <td style="float:left">:</td>
-                <td style="float:left; font-weight: bold" id="lastBuy">'.$articleName.' ('.$date.')</td>
-             </tr>
-            </table>';
+    return '<div class="balance-container">
+             <span>Kontostand: </span><span style="color: '.$color.'">'.$amound.' €</span>
+            </div>
+            <div class="lastbuy-container">
+             <span>Letzter Kauf: </span><span>'.$articleName.' ('.$date.')</span>
+            </div>';
 }
 
 function getHomePageContent(){
@@ -52,22 +44,20 @@ function getHomePageContent(){
             <html>'.getPageScriptBinding().'<head>
             </head>
             <body>
-            <div class="flex-container">
-            <header>
-            <div class="header_first_column">
-                <div style="width: 50px; height: 50px; float: left"> <img class="logo_img" src="img/logo.png" href="#"></img></div>
-                </div>
-                <div class="header_second_column" style="color:#83bb26"> </div>
-                <div class="header_third_column">
-                <form class="search_form">
-                    <div style="float:right" id="adminLoginBtn"><img style="width:45px; float:right;" src="img/adminLogginImg.png" href="#" onclick="login()"></img></div>
-                    <div style="float:right"> <input type="text" class="search" id="search" placeholder="Search for names.." title="Type in a name"></div>
-                </form>
-            </div>
-            </header>
+            <header>Mitarbeiter wählen</header>
             <div class="content">
-            <menu>'. $script->getUserLIs().'</menu>'.getLoginPage().'
-        </div><!--'.getFooter().'-->';
+              <form class="search_form">
+                <div>
+                  <input type="text" class="search" id="search" placeholder="Search for names.." title="Type in a name">
+                </div>
+              </form>
+              <div class="users">'.$script->getUserLIs().'</div>'.getLoginPage().'
+            </div>
+            <footer>
+              <div style="float:right" id="adminLoginBtn"><img style="width:45px; float:right;" src="img/adminLogginImg.png" href="#" onclick="login()"></img></div>
+            </footer>
+            <!--'.getFooter().'-->';
+
 }
 
 function getAdminPage(){
@@ -90,23 +80,21 @@ return '
 </head>
 <body">
 
-<div class="flex-container">
-<header>
-<div class="header_first_column">
-  <div style="width: 50px; height: 50px; float: left"> <img class="logo_img" src="img/logo.png" href="#"></img></div>
-</div>
-<div class="header_second_column" id="header_second_column_in_admin"></div>
-<div class="header_third_column">
-  <form class="search_form">
-	<div style="float:right"><img class="user_logout_img user_logout_in_admin_page" src="img/user_logout.png" href="#" onclick="closeAdminSite()"></img></div>
-	<div style="float:right"><img style=" height:50px;float:right;" src="img/home.png" href="#" onclick="goToAdminHome()"></img></div>
-	<div style="float:right"> <input type="text" class="search" id="searchInAdminPage" onkeyup="searchUserInAdminPage()" placeholder="Search for names.." title="Type in a name"></div>
-  </form>
-</div>
-</header>
+<header>Admin</header>
   
 <div class="content" id="contentInAdminPage">
-<menu id="admin_home_manu" style="padding-left:0px">'.getAdminPageContent().'</menu>'.getWindowToAddNewProduct().getWindowToAddNewPerson().'</div><!--'.getFooter().'-->';
+  <form class="search_form">
+    <div style="float:right"> <input type="text" class="search" id="searchInAdminPage" onkeyup="searchUserInAdminPage()" placeholder="Search for names.." title="Type in a name"></div>
+  </form>
+  <menu id="admin_home_manu" style="padding-left:0px">'.getAdminPageContent().'</menu>'.getWindowToAddNewProduct().getWindowToAddNewPerson().'
+  <!--<div id="header_second_column_in_admin"><div>-->
+</div>
+<footer class="admin-footer" id="admin-footer">
+    <div class="header-btn-container" id="logout-from-admin"><img class="user_logout_img user_logout_in_admin_page" src="img/user_logout.png" href="#" onclick="closeAdminSite()"></img></div>
+    <div class="" id="toggle-button"></div>
+    <div class="header-btn-container" id="admin-home-button"><img class="home-btn" src="img/home.png" href="#" onclick="goToAdminHome()"></img></div>
+  </footer>
+<!--'.getFooter().'-->';
 }
 
 function getArticlePage(){
@@ -118,35 +106,32 @@ function getArticlePage(){
     <html>'.getPageScriptBinding().'<head>     
     </head>
     <body">
-      
-    <div class="flex-container">
+  
     <header> 
-      <div class="header_first_column">
-        <div id="loggedUserImg" class="user_profil_icon" style="background-image:url(\''.$script->createUserImagePath(getCurrentUserImagePath()).'\')"></div>
-        <div style="float:left"> <p id="loggedUserName">'.getCurrentUserName().'</p></div>
-    </div> 
-      <div class="header_second_column">'.getUserAccountBalance().'</div>
-      <div class="header_third_column">
-        <div style="float:right"><img class="user_logout_img user_logout_in_article_page" src="img/user_logout.png" href="#" onclick="closeAdminSite()"></img></div>
-        <div style="float:right"><form class="search_form"><input class="search" type="text" id="search" placeholder="Search for article.." title="Type in a name"></form></div>
-      </div>
+    <div id="loggedUserName">'.getCurrentUserName().'</div></div>
     </header>
     <div class="content">
-      <menu>'.$script->getArticleLIs().'</menu>
-    </div><!--'.getFooter().'--><div id="myModal" class="modal">
+      <div><form class="search_form"><input class="search" type="text" id="search" placeholder="Search for article.." title="Type in a name"></form></div>
+      <div class="articles">'.$script->getArticleLIs().'</div>
+    </div>
+    <footer class="articlepage-footer">
+      <div class="footer-container">
+      <div class="header-btn-container"><img class="user_logout_img user_logout_in_article_page" src="img/user_logout.png" href="#" onclick="closeAdminSite()"></img></div>
+        <div id="loggedUserImg" class="user_profil_icon" style="background-image:url(\''.$script->createUserImagePath(getCurrentUserImagePath()).'\')"></div>
+        <div class="user_info">'.getUserAccountBalance().'</div>
+      </div>
+    </footer>
+    <!--'.getFooter().'--><div id="myModal" class="modal">
       <!-- Modal content -->
       <div class="modal-content">
-        <table style="font-size:3em">
-          <tr><td colspan="2">Sie haben</td></tr>
-          <tr><td colspan="2" id="selectedProductName">Clup Matte</td></tr>
-          <tr><td colspan="2"> ausgewählt</td></tr>
-          <tr>
-            <td><button class="popupButton" id="productConfirmationBtn" style="background-image:url(\'img/ok_btn.png\')" onclick="sendSelectedProductForUser()"></button> </td>
-            <td><button class="popupButton" id="productCancelationBtn" style="background-image:url(\'img/x_btn.png\')"></button></td>
-          </tr>
-        </table>
+        <div>Du hast</div>
+        <div id="selectedProductName">Getränk</div>
+        <div>gewählt!</div>
+        <div class="confirm-container">
+          <button class="popupButton" id="productConfirmationBtn" style="background-image:url(\'img/ok_btn.png\')" onclick="sendSelectedProductForUser()">bestätigen</button>
+          <button class="popupButton" id="productCancelationBtn" style="background-image:url(\'img/x_btn.png\')">abbrechen</button>
+        </div>
       </div>
-    
     </div>';
 }
 function getFooter(){
@@ -159,12 +144,15 @@ function getFooter(){
 }
 
 function getPageScriptBinding(){
-    return '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    return '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
         <script type="text/javascript" src="function.js"></script>
         <script type="text/javascript" src="./js/administration.js"></script>
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans|Baumans" rel="stylesheet" lazyload/>
         <link rel="stylesheet" href="./css/style.css">';
 }
 
@@ -174,7 +162,7 @@ function getLoginPage(){
   <form class="login_modal-content login_animate login_form" action="php_scripts/login.php?admin_login_requested=1" method="POST">
     <div class="imgcontainer">
       <div onclick="document.getElementById(\'admin_login_Window\').style.display=\'none\'" class="login_close" title="Close Modal">&times;</div>
-      <img style="width:110px"src="img/login_avatar.png" alt="Avatar" class="avatar">
+      <img style="width:110px"src="img/adminLogginImg.png" alt="Avatar" class="avatar">
     </div>
 
     <div class="login_container">
@@ -202,20 +190,20 @@ function getLoginPage(){
 
 function getAdminPageContent(){
     return   '<li style="width:fil-content">
- <div class="user_div">
-   <div class="user_img" style="background-image: url(\'img/users.png\');" href="#" onclick="getUsersInAdminPage()"></div>
+ <div class="admin_menu_div">
+   <div class="admin_menu_img" style="background-image: url(\'img/users.png\');" href="#" onclick="getUsersInAdminPage()"></div>
    <p>Employees</p>
  </div>           
 </li>
 <li style="width:fil-content">
- <div class="user_div">
-   <div class="user_img" style="background-image: url(\'img/products.png\');" href="#" onclick="getProducts()"></div>
+ <div class="admin_menu_div">
+   <div class="admin_menu_img" style="background-image: url(\'img/products.png\');" href="#" onclick="getProducts()"></div>
    <p>Products</p>
  </div>    
 </li>
 <li style="width:fil-content">
- <div class="user_div">
-   <div class="user_img" style="background-image: url(\'img/setting.png\');" href="#" onclick="showSetting()"></div>
+ <div class="admin_menu_div">
+   <div class="admin_menu_img" style="background-image: url(\'img/setting.png\');" href="#" onclick="showSetting()"></div>
    <p>Setting</p>
  </div>    
 </li>';
@@ -271,9 +259,10 @@ function getWindowToAddNewPerson(){
       <label><b style="float:left">Telefon</b></label>
       <input class="login_input" type="tel" name="telefon" required>
       <label><b style="float:left">Select picture</b></label>
-      <input type="file" name="photo" id="user_photo" required>
+      <input class="upload-picture-btn" type="file" name="photo" id="user_photo" required>
+      <label for="user_photo"><span>Datei auswählen</span></label>
     </div>
-    <div style="text-align: center; margin-bottom:10px"><button class="button" type="submit">Save</button></div>
+    <div style="text-align: center; margin-bottom:16px"><button class="button" type="submit">Save</button></div>
   </form>
   
 </div>';
