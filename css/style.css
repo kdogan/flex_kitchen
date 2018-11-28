@@ -532,7 +532,8 @@ menu li {
   background-repeat:no-repeat;
   background-size: cover;
   margin-right: 10px;
-  background-image: url(../img/profil_image.PNG);
+  background-color: #616367;
+  /* background-image: url(../img/profil_image.PNG); */
 }
 menu { 
   padding-left: 0px;
