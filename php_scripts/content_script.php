@@ -91,7 +91,6 @@ return '
 </div>
 <footer class="admin-footer" id="admin-footer">
     <div class="header-btn-container" id="logout-from-admin"><img class="user_logout_img user_logout_in_admin_page" src="img/user_logout.png" href="#" onclick="closeAdminSite()"></img></div>
-    <div class="" id="toggle-button"></div>
     <div class="header-btn-container" id="admin-home-button"><img class="home-btn" src="img/home.png" href="#" onclick="goToAdminHome()"></img></div>
   </footer>
 <!--'.getFooter().'-->';
