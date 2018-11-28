@@ -51,7 +51,7 @@ function getHomePageContent(){
                   <input type="text" class="search" id="search" placeholder="Search for names.." title="Type in a name">
                 </div>
               </form>
-              <div class="users">'. $script->getUserLIs().$script->getUserLIs().$script->getUserLIs().$script->getUserLIs().$script->getUserLIs().'</div>'.getLoginPage().'
+              <div class="users">'.$script->getUserLIs().'</div>'.getLoginPage().'
             </div>
             <footer>
               <div style="float:right" id="adminLoginBtn"><img style="width:45px; float:right;" src="img/adminLogginImg.png" href="#" onclick="login()"></img></div>

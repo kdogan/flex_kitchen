@@ -269,14 +269,7 @@ menu li {
   .article_li_div {
     display: block;
   }
-  .article_li_img {
-    display: inline-block;
-    float: left;
-    width: 50px;
-    height: 50px;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
+
 
   .notify-badge {
     display: inline-block;
@@ -318,16 +311,6 @@ menu li {
   font-size: 0.8em;
   color: #616367;
 }
-
-.header_first_column{
-}
-.header_second_column{
-  height: 50px;
-}
-.header_third_column{
-
-}
-
 
 
 .search_form input:focus {
@@ -534,7 +517,6 @@ menu li {
   outline-color: #83bb26;
 }
 
-}
 .add_product_button{
   height:100%; position:relative;width:100%;
 }
@@ -637,13 +619,6 @@ label {
   width: 31px;
   padding: 10px;
   cursor: pointer;
-}
-
-.home-btn {
-}
-
-.user_logout_img {
-  
 }
 
 .admin-footer .header-btn-container:nth-of-type(1) {
@@ -762,14 +737,6 @@ span.psw {
   animation: animatezoom 0.6s
 }
 
-@-webkit-keyframes animatezoom {
-  .login_from {-webkit-transform: scale(0)} 
-  to {-webkit-transform: scale(1)}
-}
-  
-@keyframes animatezoom {
-  .login_from {transform: scale(0)} to {transform: scale(1)}
-}
 
 #header_second_column_in_admin {
   position: fixed;
