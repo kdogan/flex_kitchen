@@ -23,7 +23,7 @@ class fetchDataFromDB {
     			WHERE a.id = pam.article_id AND pam.person_id = '.$personId.' ORDER BY pam.id DESC LIMIT 1';
 
     	$result = $conn->query($sql);
-		$response['name'] = "Noch nix gekauft";
+		$response['name'] = "Noch nichts gekauft";
     	$response['id'] = -1;
 		$response['person_id'] = -1;
 		$response['buy_date'] = "00.00.00.00";
