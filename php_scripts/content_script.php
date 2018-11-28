@@ -117,7 +117,8 @@ function getArticlePage(){
     <footer class="articlepage-footer">
       <div class="footer-container">
       <div class="header-btn-container"><img class="user_logout_img user_logout_in_article_page" src="img/user_logout.png" href="#" onclick="closeAdminSite()"></img></div>
-        <div id="loggedUserImg" class="user_profil_icon" style="background-image:url(\''.$script->createUserImagePath(getCurrentUserImagePath()).'\')"></div>
+        <div id="loggedUserImg" class="user_profil_icon"></div>
+        <!--<div id="loggedUserImg" class="user_profil_icon" style="background-image:url(\''.$script->createUserImagePath(getCurrentUserImagePath()).'\')"></div>-->
         <div class="user_info">'.getUserAccountBalance().'</div>
       </div>
     </footer>
