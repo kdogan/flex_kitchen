@@ -8,8 +8,7 @@ function getUsersInAdminPage(){
       url: 'php_scripts/adminPageContent.php?userRequested=1',
       success: function(html) {
         document.getElementById('admin_home_manu').innerHTML = html;
-        document.getElementById('admin-footer').innerHTML = '<div class="header-btn-container" id="logout-from-admin"><img class="user_logout_img user_logout_in_admin_page" src="img/user_logout.png" href="#" onclick="closeAdminSite()"></img></div><div class="header-btn-container"><img class="icon_image" src="img/add_user_icon.png" onclick="add_new_customer()"/></div><div class="header-btn-container" id="admin-home-button"><img class="home-btn" src="img/home.png" href="#" onclick="goToAdminHome()"></img></div>';
-      
+        document.getElementById('header_second_column_in_admin').innerHTML = "<div><img class='icon_image' src='img/add_user_icon.png' onclick='add_new_customer()'/></div>";
       }
    });
 }
@@ -19,7 +18,7 @@ function getProducts(){
       url: 'php_scripts/adminPageContent.php?productsRequested=1',
       success: function(html) {
         document.getElementById('admin_home_manu').innerHTML = html;
-        document.getElementById('header_second_column_in_admin').innerHTML = "<div><div><img class='icon_image' src='img/add_product_icon.png' onclick='add_new_product()'/></div></div>";
+        document.getElementById('header_second_column_in_admin').innerHTML = "<div><img class='icon_image' src='img/add_product_icon.png' onclick='add_new_product()'/></div>";
       }
    });
 }
@@ -29,7 +28,7 @@ function goToAdminHome(){
       url: 'php_scripts/adminPageContent.php?adminHomeRequested=1',
       success: function(html) {
         document.getElementById('admin_home_manu').innerHTML = html;
-          // document.getElementById('admin-footer').innerHTML = "";
+        document.getElementById('header_second_column_in_admin').innerHTML = "";
       }
    });
 }
@@ -149,4 +148,3 @@ function isInputedAmoundValid(value){
       return true;
     }
 }
-
