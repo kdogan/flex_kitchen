@@ -17,3 +17,16 @@
 <li>4. Execute sql_queries.sql on your database (if you want to use customized database name then you can open sql_queries.sql file and change database name)</li>
 <li>5. copy all files from app directory (flex_kitchen) to your domain (on directory where your domain referenced)</li>
 <li>6. open file /php_scripts/dbConnector.php and adjust your database user if your customized database user in sql_queries.sql file</li>
+
+
+<h1>FEATURES</h1>
+<ul>
+	<li>Users</li>
+	<li>Products</li>
+	<li>Add/remove user and product</li>
+	<li>Admin page</li>
+	<li>Manager user and product in admin page</li>
+	<li>Notify User per email if user a product purchased</li>
+	<li>Notify user every month with account state and purchased product number (for this you shuld make crone job (linux) or windows task (windows)</li>
+	<li>show user history (purchased products and payments)</li>
+</ul>

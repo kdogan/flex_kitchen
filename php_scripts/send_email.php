@@ -4,8 +4,8 @@ function sendMonthlyEmails(){
     $allPersons = json_decode(getAllPersons());
 
     foreach($allPersons as $customer){
-        $lastMonth= getMonthInGermany(date("M", strtotime("last month")));
-        $purchasedArticlesJSON =  getAllPurchasedArticlesForCustomer($customer->id);
+        $lastMonth= getMonthInGerman(date("M", strtotime("last month")));
+        $purchasedArticlesJSON =  getAllPurchasedArticlesForCustomer($customer->id, 1);
         if($purchasedArticlesJSON == "-1") continue;
 
         $purchasedArticles = json_decode($purchasedArticlesJSON);
@@ -62,7 +62,7 @@ function sendMonthlyEmails(){
         </body>
         </html>';
 
-        $lastMonth= getMonthInGermany(date("M", strtotime("last month")));
+        $lastMonth= getMonthInGerman(date("M", strtotime("last month")));
         $subject = 'Die Getränkeabrechnung '.$lastMonth.' '.date('Y');
 
         $email = array();
@@ -98,10 +98,10 @@ function getAllPersons(){
     $result = $fetchDataFromDB->getAllPersonsFromDB();
     return $result;
 }
-function getAllPurchasedArticlesForCustomer($personId){
+function getAllPurchasedArticlesForCustomer($personId, $sinceXMonth){
   require_once("dbFetchDataFromDB.php");
   $fetchDataFromDB = new fetchDataFromDB();
-  $result = $fetchDataFromDB->getAllPurchasedArticlesForPersonFromDB($personId);
+  $result = $fetchDataFromDB->getAllPurchasedArticlesForPersonFromDB($personId,$sinceXMonth);
   return $result;
 }
 function getArticle($articleId){
@@ -110,7 +110,7 @@ function getArticle($articleId){
     $article = $fetchDataFromDB->getArticleFromDB($articleId);
     return $article;
 }
-function getMonthInGermany($month){
+function getMonthInGerman($month){
         $months=array(
         "January"=>"Januar",
         "February"=>"Februar",

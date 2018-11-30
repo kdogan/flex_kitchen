@@ -14,6 +14,11 @@ if(isset($_REQUEST['productsRequested'])){
 	echo getProductDivsInAdminPage();
 }
 
+if(isset($_REQUEST['userHirstoryPageRequested']) && isset($_REQUEST['personId'])){
+    $personId = $_REQUEST['personId'];
+    echo getUserHistoryPage($personId);
+}
+
 function getUserDivsInAdminPage(){
 	require("../php_script.php");
 
@@ -51,6 +56,9 @@ function getUserDivsInAdminPage(){
                 <div class="remove_user_in_grid">
                     <img class="icon_image" id="'.$payButtonId.'" src="img/remove_user_icon.png" onclick="confirmUserDeleting(\''.$user.'\',\''.$id.'\');"/>
                 </div>
+                <div>
+                    <img class="icon_image" style="margin-top:3px;" src="img/remove_product_icon.png" onclick="showUserHistoryPage(\''.$id.'\');"/>
+                </div>
             </div>
             </div>';
         }
@@ -61,14 +69,14 @@ function getUserDivsInAdminPage(){
 function getProductDivsInAdminPage(){
 	require("../php_script.php");
 	$script = new FunctionScript();
-    
+
 	$products = $script->getAllFromTable("article");
     $categories = $script->getCategoriesFromDB();
 
     if($products->num_rows >0){
         $result = "";
         while($row = $products->fetch_assoc()){
-            
+
             $productName = $row["name"];
             $productId = $row["id"];
             $NumOfProducts = $row["count"];
@@ -102,6 +110,41 @@ function getProductDivsInAdminPage(){
             </div>';
         }
     }
+    return $result;
+}
+
+function getUserHistoryPage($personId){
+    require("../php_script.php");
+    $script = new FunctionScript();
+    $person = json_decode($script->getPersonById($personId));
+    $userName = $person->firstname.' '.$person->lastname;
+    $accountBalance = $person->account_balance;
+    $accountBalanceColor = intval($accountBalance) < 0? "red":"black";
+
+    $src = $script->createUserImagePath($person->img_path);
+
+    $result = "";
+    $result = $result.'<div class="column">
+    <div class="box1"><img src='.$src.' alt="user image"></div>
+    <div class="box2">
+        <div>Name: <span id="loggedUserName">'.$userName.'</span></div>
+        <div>Kontostand: <span style="color:'.$accountBalanceColor.'">'.$accountBalance.' €</span></div>
+    </div>
+    <div class="box3">
+        <div class="input_in_grid">
+            <select id = "sinceXMonth">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </div>
+        <div class="payment_button_in_grid">
+            <button class="button"  onclick="showUserHistory(document.getElementById("sinceXMonth").value);">Zeigen</button>
+        </div>
+    </div>
+    </div>';
     return $result;
 }
 

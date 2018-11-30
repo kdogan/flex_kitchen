@@ -41,12 +41,12 @@ class fetchDataFromDB {
 	    return $response;
 	}
 
-	public function getAllPurchasedArticlesForPersonFromDB($personId){
+	public function getAllPurchasedArticlesForPersonFromDB($personId, $sinceXMonth){
 
 		$conn = $this->getDBConnection();
     	$sql = 'SELECT article_id, sum(count) as sum
     			FROM person_article_matrix
-    			WHERE person_id = '.$personId.' && month(buy_date) = month(now())-1 && year(buy_date) = year(now()) GROUP BY article_id';
+    			WHERE person_id = '.$personId.' && month(buy_date) = month(now())-'.intval($sinceXMonth).' && year(buy_date) = year(now()) GROUP BY article_id';
     	$result = $conn->query($sql);
     	$purchasedArticlesByArticleId;
 

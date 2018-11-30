@@ -45,6 +45,16 @@ function add_new_customer(){
   addNewEmployeeWindow.style.display = "block";
 }
 
+function showUserHistoryPage(personId){
+  $.ajax({
+      url: 'php_scripts/adminPageContent.php?userHirstoryPageRequested=1&personId='+personId,
+      success: function(html) {
+        document.getElementById('admin_home_manu').innerHTML = html;
+        document.getElementById('toggle-button').classList.add('header-btn-container');
+      }
+   });
+}
+
 function searchUserInAdminPage(){
   var value = document.getElementById("searchInAdminPage").value;
   $(".column").each(function() {
@@ -60,7 +70,7 @@ function searchUserInAdminPage(){
 function checkInputForNumber(inputPayment,buttonId) {
     var input = document.getElementById(inputPayment);
     var payButton = document.getElementById(buttonId);
-   
+
     var x=input.value;
     if (!isInputedAmoundValid(x) && x !="")
     {

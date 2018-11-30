@@ -31,7 +31,7 @@ class FunctionScript{
         $result = $fetchDataFromDB->getArticleById($articleId);
         return $result;
     }
-    
+
     public function getAllFromTable($tableName){
         $fetchDataFromDB = $this->getDBFacadeScript();
         $result = $fetchDataFromDB->getAllFromTable($tableName);
@@ -102,6 +102,12 @@ class FunctionScript{
         return $result;
     }
 
+    public function getAllPurchasedArticlesForPersonSince($personId, $sinceXMonth){
+        $dbFacadaScript = $this->getDBFacadeScript();
+        $purchasedArticlesByIds = $fetchDataFromDB-> getAllPurchasedArticlesForPersonFromDB($personId, $sinceXMonth);
+        return $purchasedArticlesByIds;
+    }
+
     public function getLastPurchasedArticle($personId){
         $fetchDataFromDB = $this->getDBFacadeScript();
         $purchasedArticle = $fetchDataFromDB-> getLastPurchases($personId);
@@ -112,7 +118,6 @@ class FunctionScript{
         $userInActiveSuccess = $fetchDataFromDB->setUserInActive($personId);
         return $userInActiveSuccess;
     }
-    
 
     public function createUserImagePath($image_path){
         if(strpos($image_path, 'http') !== false){
@@ -125,7 +130,7 @@ class FunctionScript{
     function getDBFacadeScript(){
         require_once("php_scripts/dbFetchDataFromDB.php");
         return new fetchDataFromDB();
-      }
+    }
 }
 
 ?>
