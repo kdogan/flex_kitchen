@@ -36,6 +36,17 @@ function goToAdminHome(){
    });
 }
 
+function goToUserHistoryPage(personId){
+  $.ajax({
+      url: 'php_scripts/adminPageContent.php?userHirstoryPageRequested=1&personId='+personId,
+      success: function(html) {
+        document.getElementById('admin_home_manu').innerHTML = html;
+        document.getElementById('toggle-button').innerHTML = '<img class="icon_image" src="img/go-back-arrow.png" onclick="getUsersInAdminPage()"/>';
+        document.getElementById('toggle-button').classList.add('header-btn-container');
+      }
+   });
+}
+
 function add_new_product(){
   var loginWindow = document.getElementById("add_product_form");
   loginWindow.style.display = "block";
@@ -43,6 +54,17 @@ function add_new_product(){
 function add_new_customer(){
   var addNewEmployeeWindow = document.getElementById("add_customer_form");
   addNewEmployeeWindow.style.display = "block";
+}
+
+function showUserHistory(since, personId){
+  $.ajax({
+    url: 'php_scripts/adminPageContent.php?userHistoryRequested=1&since='+since+"&personId="+personId,
+    success: function(html) {
+      let response = JSON.parse(html);
+      document.getElementById('user_products_history_area').innerHTML = response["productList"];
+      document.getElementById('user_payments_history_area').innerHTML = response["payments"];
+    }
+ });
 }
 
 function searchUserInAdminPage(){
@@ -60,7 +82,7 @@ function searchUserInAdminPage(){
 function checkInputForNumber(inputPayment,buttonId) {
     var input = document.getElementById(inputPayment);
     var payButton = document.getElementById(buttonId);
-   
+
     var x=input.value;
     if (!isInputedAmoundValid(x) && x !="")
     {
@@ -70,13 +92,13 @@ function checkInputForNumber(inputPayment,buttonId) {
     }
 }
 
-function updateUserAmound(userId, inputFieldId){
+function updateUserAmount(userId, inputFieldId){
 
     var input = document.getElementById(inputFieldId);
     var amound = input.value;
     if(isInputedAmoundValid(amound)){
       $.ajax({
-        url: 'php_scripts/dbutility.php?id='+userId+'&amound='+amound,
+        url: 'php_scripts/dbutility.php?paymentRequested=1&id='+userId+'&amount='+amound,
         success: function(html) {
                   var obj = JSON.parse(html);
                   var idOfBalanceToBeUpdated = "accountBalance"+userId;
@@ -84,6 +106,7 @@ function updateUserAmound(userId, inputFieldId){
                   input.value = "";
                 }
       });
+
     }
 }
 

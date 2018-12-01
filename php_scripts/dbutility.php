@@ -1,19 +1,12 @@
 <?php
 
-if(isset($_GET["id"]) && !isset($_GET["amound"])){
+if(isset($_GET["paymentRequested"])){
+    if(!isset($_GET["id"]) || !isset($_GET["amount"])){
+        return;
+    }
 	$script = getPHPScript();
-
 	$id=$_GET["id"];
-	//TODO before execution of sql queries check if current user has right to access
- 	$response = $script->getPersonFromDB($id);
- 	echo json_encode($response);
-}
-
-if(isset($_GET["id"]) && isset($_GET["amound"])){
-	$script = getPHPScript();
-	
-	$id=$_GET["id"];
-	$amound = $_GET["amound"];
+	$amound = $_GET["amount"];
 	$response = $script->updateAccountBalanceOfUser($id, $amound);
  	echo json_encode($response);
 }

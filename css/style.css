@@ -429,7 +429,7 @@ menu li {
 /* Create two equal columns that floats next to each other */
 .column {
   float: left;
-  width: 100%;
+  width: 99%;
   padding: 5px;
   margin-top: 8px;
   height: 120px;
@@ -496,6 +496,12 @@ menu li {
 .remove_user_in_grid{
   grid-column: 2 / 3;
   grid-row: 2 / 3;
+}
+.user_history_in_grid{
+  grid-column: 1 / 2;
+  grid-row: 2 / 2;
+}
+.user_history_in_grid, .remove_user_in_grid{
   background-color: #6163671f;
   border-radius: 50%;
   width: 51px;
@@ -765,4 +771,38 @@ span.psw {
 }
 #header_second_column_in_admin:hover {  
   opacity: 0.8;
+}
+
+#user_products_history_area{
+  float:left;
+  width: 66%;
+  height: 300px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 5px 10px 10px 10px;
+}
+#user_payments_history_area{
+  float:left;
+  width: 30%;
+  height: 300px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 5px 10px 10px 10px;
+  margin-left: 10px;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }

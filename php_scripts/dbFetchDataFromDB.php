@@ -41,12 +41,12 @@ class fetchDataFromDB {
 	    return $response;
 	}
 
-	public function getAllPurchasedArticlesForPersonFromDB($personId){
+	public function getAllPurchasedArticlesForPersonFromDB($personId, $sinceXMonth){
 
 		$conn = $this->getDBConnection();
     	$sql = 'SELECT article_id, sum(count) as sum
     			FROM person_article_matrix
-    			WHERE person_id = '.$personId.' && month(buy_date) = month(now())-1 && year(buy_date) = year(now()) GROUP BY article_id';
+    			WHERE person_id = '.$personId.' && month(buy_date) = month(now())-'.intval($sinceXMonth).' && year(buy_date) = year(now()) GROUP BY article_id ORDER BY buy_date DESC';
     	$result = $conn->query($sql);
     	$purchasedArticlesByArticleId;
 
@@ -64,6 +64,56 @@ class fetchDataFromDB {
 	    return json_encode($purchasedArticlesByArticleId);
 	}
 
+	public function getAllPurchasedArticlesByDate($personId, $sinceXMonth){
+
+		$conn = $this->getDBConnection();
+    	$sql = 'SELECT a.name as article_name, pam.buy_date as buy_date
+    			FROM person_article_matrix pam, article a
+				WHERE pam.person_id = '.$personId.' && 
+					month(pam.buy_date) > month(now())-'.intval($sinceXMonth).' 
+					&& year(pam.buy_date) = year(now()) &&
+					pam.article_id = a.id ORDER BY buy_date DESC';
+    	$result = $conn->query($sql);
+		$purchasedArticlesByArticleId;
+		
+	    if ($result->num_rows > 0) {
+	        while($row = $result->fetch_assoc()) {
+	            $response['article_name'] = $row["article_name"];
+	            $response['buy_date'] = $row["buy_date"];
+	            $purchasedArticlesByArticleId[$row["buy_date"]] = $response;
+	        }
+	    }else{
+	    	error_log("[dbFechDataFromDB -> getAllPurchasedArticlesForPersonFromDB] no purchases articles found");
+	    	return -1;
+	    }
+	    $conn->close();
+	    return $purchasedArticlesByArticleId;
+	}
+	public function getUserPaymentByDate($personId, $sinceXMonth){
+
+		$conn = $this->getDBConnection();
+    	$sql = 'SELECT amount, pay_date
+    			FROM person_payment_matrix
+				WHERE person_id = '.$personId.' && 
+					month(pay_date) > month(now())-'.intval($sinceXMonth).' 
+					&& year(pay_date) = year(now())';
+	
+    	$result = $conn->query($sql);
+		$paymentByDate;
+		
+	    if ($result->num_rows > 0) {
+	        while($row = $result->fetch_assoc()) {
+	            $response['amount'] = $row["amount"];
+	            $response['pay_date'] = $row["pay_date"];
+	            $paymentByDate[$row["pay_date"]] = $response;
+	        }
+	    }else{
+	    	error_log("[dbFechDataFromDB -> getUserPaymentByDate] no payment found for user id ".$personId);
+	    	return -1;
+	    }
+	    $conn->close();
+	    return $paymentByDate;
+	}
 	public function getAllPersonsFromDB(){
 
 		$conn = $this->getDBConnection();
@@ -196,12 +246,12 @@ class fetchDataFromDB {
 		return $oldAccountBalance;
 	}
 
-	public function updateAccountBalanceOfUser ($userId, $amound){
+	public function updateAccountBalanceOfUser ($userId, $amount){
 		$conn = $this->getDBConnection();
 		$person = json_decode($this->getPersonById($userId));
 		$account_balance = 'account_balance';
 		$oldAccountBalance = floatval($person->$account_balance);
-        $newAccountBalance = $oldAccountBalance + floatval($amound);
+        $newAccountBalance = $oldAccountBalance + floatval($amount);
         $response = "";
         $sql = 'UPDATE person SET account_balance = '.$newAccountBalance.' WHERE id ='.$userId;
     
@@ -209,11 +259,20 @@ class fetchDataFromDB {
             $response = "Error updating record: " . $conn->error;
         }else{
             $response = array('newBalance'=>(string)$newAccountBalance);
-        }
+		}
+		$this->userPaid($userId, $amount);
         return $response;
         $conn->close(); 
 	}
-
+	public function userPaid($userId, $amount){
+		$conn = $this->getDBConnection();
+		$sql = 'INSERT INTO person_payment_matrix(person_id, amount, pay_date) VALUES ('.$userId.' , '.$amount.', now())';
+		if ($conn->query($sql) === FALSE) {
+            error_log("Error occoured while payment process :".$conn->error);
+        }
+		
+        $conn->close(); 
+	}
 	public function updateProductNumber($productId, $productNumber){
 		$conn = $this->getDBConnection();
 

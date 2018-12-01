@@ -14,6 +14,17 @@ if(isset($_REQUEST['productsRequested'])){
 	echo getProductDivsInAdminPage();
 }
 
+if(isset($_REQUEST['userHirstoryPageRequested']) && isset($_REQUEST['personId'])){
+    $personId = $_REQUEST['personId'];
+    echo getUserHistoryPage($personId);
+}
+
+if(isset($_REQUEST['userHistoryRequested']) && isset($_REQUEST['personId']) && isset($_REQUEST['since'])){
+    $personId = $_REQUEST['personId'];
+    $since = $_REQUEST['since'];
+    echo getUserHistory($personId, $since);
+}
+
 function getUserDivsInAdminPage(){
 	require("../php_script.php");
 
@@ -46,10 +57,13 @@ function getUserDivsInAdminPage(){
                     <input class="payment_input" id="'.$inputPayment.'" placeholder="e.g. 2.50" onkeyup="checkInputForNumber(\''.$inputPayment.'\',\''.$payButtonId.'\')" type="text">
                 </div>
                 <div class="payment_button_in_grid">
-                    <button id="'.$payButtonId.'" class="button"  onclick="updateUserAmound(\''.$id.'\',\''.$inputPayment.'\');">Bezahlen</button>
+                    <button id="'.$payButtonId.'" class="button"  onclick="updateUserAmount(\''.$id.'\',\''.$inputPayment.'\');">Bezahlen</button>
                 </div>
                 <div class="remove_user_in_grid">
                     <img class="icon_image" id="'.$payButtonId.'" src="img/remove_user_icon.png" onclick="confirmUserDeleting(\''.$user.'\',\''.$id.'\');"/>
+                </div>
+                <div class="user_history_in_grid">
+                    <img class="icon_image" style="margin-top:3px;" src="img/user-history.png" onclick="goToUserHistoryPage(\''.$id.'\');"/>
                 </div>
             </div>
             </div>';
@@ -61,14 +75,14 @@ function getUserDivsInAdminPage(){
 function getProductDivsInAdminPage(){
 	require("../php_script.php");
 	$script = new FunctionScript();
-    
+
 	$products = $script->getAllFromTable("article");
     $categories = $script->getCategoriesFromDB();
 
     if($products->num_rows >0){
         $result = "";
         while($row = $products->fetch_assoc()){
-            
+
             $productName = $row["name"];
             $productId = $row["id"];
             $NumOfProducts = $row["count"];
@@ -103,6 +117,73 @@ function getProductDivsInAdminPage(){
         }
     }
     return $result;
+}
+
+function getUserHistoryPage($personId){
+    require("../php_script.php");
+    $script = new FunctionScript();
+    $person = json_decode($script->getPersonById($personId));
+    $userName = $person->firstname.' '.$person->lastname;
+    $accountBalance = $person->account_balance;
+    $accountBalanceColor = intval($accountBalance) < 0? "red":"black";
+
+    $src = $script->createUserImagePath($person->img_path);
+
+    $result = "";
+    $result = $result.'<div class="column">
+    <div class="box1"><img src='.$src.' alt="user image"></div>
+    <div class="box2">
+        <div>Name: <span id="loggedUserName">'.$userName.'</span></div>
+        <div>Kontostand: <span style="color:'.$accountBalanceColor.'">'.$accountBalance.' €</span></div>
+    </div>
+    <div class="box3">
+        <div class="input_in_grid">
+            <select id = "sinceXMonth">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </div>
+        <div class="payment_button_in_grid">
+            <button class="button"  onclick="showUserHistory(document.getElementById(\'sinceXMonth\').value, '.$personId.');">Zeigen</button>
+        </div>
+    </div>
+    </div>
+    <div class="user_history_area">
+        <div id="user_products_history_area"><table><tr><th>Produktname</th><th>Datum</th></tr></table></div>
+        <div id="user_payments_history_area"><table><tr><th>Zahlungsdatum</th><th>Bezahlte Betrag</th></tr></table></div>
+    </div>';
+    return $result;
+}
+
+function getUserHistory($personId, $since){
+    require("../php_script.php");
+    $script = new FunctionScript();
+
+    $productsByDate = $script->getAllPurchasedArticlesByDate($personId, $since);
+
+    $productAsList = "<table><tr><th>Produktname</th><th>Datum</th></tr>";
+    if($productsByDate != -1){
+        foreach ($productsByDate as $key => $value) {
+            $productAsList = $productAsList."<tr><td>".$value["article_name"]."</td><td>".$value["buy_date"]."</td></tr>";
+        }
+    }
+    $productAsList = $productAsList."</table>";
+    $response["productList"] = $productAsList;
+
+    $paymentByDate = $script->getUserPaymentByDate($personId, $since);
+    $paymentAsList = "<table><tr><th>Zahlungsdatum</th><th>Bezahlte Betrag</th></tr>";
+    if($paymentByDate != -1){
+        foreach ($paymentByDate as $key => $value) {
+            $paymentAsList = $paymentAsList."<tr><td>".$value["amount"]." €</td><td>".$value["pay_date"]."</td></tr>";
+        }
+    }
+    $paymentAsList = $paymentAsList."</table>";
+    $response["payments"] = $paymentAsList;
+
+    return json_encode($response);
 }
 
 ?>
