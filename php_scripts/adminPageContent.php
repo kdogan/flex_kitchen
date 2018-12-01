@@ -19,6 +19,12 @@ if(isset($_REQUEST['userHirstoryPageRequested']) && isset($_REQUEST['personId'])
     echo getUserHistoryPage($personId);
 }
 
+if(isset($_REQUEST['userHistoryRequested']) && isset($_REQUEST['personId']) && isset($_REQUEST['since'])){
+    $personId = $_REQUEST['personId'];
+    $since = $_REQUEST['since'];
+    echo getUserHistory($personId, $since);
+}
+
 function getUserDivsInAdminPage(){
 	require("../php_script.php");
 
@@ -51,13 +57,13 @@ function getUserDivsInAdminPage(){
                     <input class="payment_input" id="'.$inputPayment.'" placeholder="e.g. 2.50" onkeyup="checkInputForNumber(\''.$inputPayment.'\',\''.$payButtonId.'\')" type="text">
                 </div>
                 <div class="payment_button_in_grid">
-                    <button id="'.$payButtonId.'" class="button"  onclick="updateUserAmound(\''.$id.'\',\''.$inputPayment.'\');">Bezahlen</button>
+                    <button id="'.$payButtonId.'" class="button"  onclick="updateUserAmount(\''.$id.'\',\''.$inputPayment.'\');">Bezahlen</button>
                 </div>
                 <div class="remove_user_in_grid">
                     <img class="icon_image" id="'.$payButtonId.'" src="img/remove_user_icon.png" onclick="confirmUserDeleting(\''.$user.'\',\''.$id.'\');"/>
                 </div>
-                <div>
-                    <img class="icon_image" style="margin-top:3px;" src="img/remove_product_icon.png" onclick="showUserHistoryPage(\''.$id.'\');"/>
+                <div class="user_history_in_grid">
+                    <img class="icon_image" style="margin-top:3px;" src="img/user-history.png" onclick="goToUserHistoryPage(\''.$id.'\');"/>
                 </div>
             </div>
             </div>';
@@ -141,11 +147,43 @@ function getUserHistoryPage($personId){
             </select>
         </div>
         <div class="payment_button_in_grid">
-            <button class="button"  onclick="showUserHistory(document.getElementById("sinceXMonth").value);">Zeigen</button>
+            <button class="button"  onclick="showUserHistory(document.getElementById(\'sinceXMonth\').value, '.$personId.');">Zeigen</button>
         </div>
     </div>
+    </div>
+    <div class="user_history_area">
+        <div id="user_products_history_area"><table><tr><th>Produktname</th><th>Datum</th></tr></table></div>
+        <div id="user_payments_history_area"><table><tr><th>Zahlungsdatum</th><th>Bezahlte Betrag</th></tr></table></div>
     </div>';
     return $result;
+}
+
+function getUserHistory($personId, $since){
+    require("../php_script.php");
+    $script = new FunctionScript();
+
+    $productsByDate = $script->getAllPurchasedArticlesByDate($personId, $since);
+
+    $productAsList = "<table><tr><th>Produktname</th><th>Datum</th></tr>";
+    if($productsByDate != -1){
+        foreach ($productsByDate as $key => $value) {
+            $productAsList = $productAsList."<tr><td>".$value["article_name"]."</td><td>".$value["buy_date"]."</td></tr>";
+        }
+    }
+    $productAsList = $productAsList."</table>";
+    $response["productList"] = $productAsList;
+
+    $paymentByDate = $script->getUserPaymentByDate($personId, $since);
+    $paymentAsList = "<table><tr><th>Zahlungsdatum</th><th>Bezahlte Betrag</th></tr>";
+    if($paymentByDate != -1){
+        foreach ($paymentByDate as $key => $value) {
+            $paymentAsList = $paymentAsList."<tr><td>".$value["amount"]." €</td><td>".$value["pay_date"]."</td></tr>";
+        }
+    }
+    $paymentAsList = $paymentAsList."</table>";
+    $response["payments"] = $paymentAsList;
+
+    return json_encode($response);
 }
 
 ?>

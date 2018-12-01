@@ -9,12 +9,12 @@ class FunctionScript{
         $result = $fetchDataFromDB->getAccountBalanceOfCurrentUser($currentUserId);
         return $result;
     }
-    public function updateAccountBalanceOfUser($userId, $amound){
+    public function updateAccountBalanceOfUser($userId, $amount){
         $fetchDataFromDB = $this->getDBFacadeScript();
-        $result = $fetchDataFromDB->updateAccountBalanceOfUser($userId, $amound);
+        $result = $fetchDataFromDB->updateAccountBalanceOfUser($userId, $amount);
         return $result;
     }
-
+    
     function updateProductNumber($productId, $productNumber){
         $fetchDataFromDB = $this->getDBFacadeScript();
         $result = $fetchDataFromDB->updateProductNumber($productId, $productNumber);
@@ -106,6 +106,17 @@ class FunctionScript{
         $dbFacadaScript = $this->getDBFacadeScript();
         $purchasedArticlesByIds = $fetchDataFromDB-> getAllPurchasedArticlesForPersonFromDB($personId, $sinceXMonth);
         return $purchasedArticlesByIds;
+    }
+
+    public function getAllPurchasedArticlesByDate($personId, $sinceXMonth){
+        $dbFacadaScript = $this->getDBFacadeScript();
+        $purchasedArticlesByDate = $dbFacadaScript->getAllPurchasedArticlesByDate($personId, $sinceXMonth);
+        return $purchasedArticlesByDate;
+    }
+    public function getUserPaymentByDate($personId, $sinceXMonth){
+        $dbFacadaScript = $this->getDBFacadeScript();
+        $userPaymentByDate = $dbFacadaScript->getUserPaymentByDate($personId, $sinceXMonth);
+        return $userPaymentByDate;
     }
 
     public function getLastPurchasedArticle($personId){
