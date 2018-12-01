@@ -152,8 +152,8 @@ function getUserHistoryPage($personId){
     </div>
     </div>
     <div class="user_history_area">
-        <div id="user_products_history_area"><table><tr><th>Produktname</th><th>Datum</th></tr></table></div>
-        <div id="user_payments_history_area"><table><tr><th>Zahlungsdatum</th><th>Bezahlte Betrag</th></tr></table></div>
+        <div id="user_products_history_area"><table><tr><th>Produktname</th><th>Kaufdatum</th></tr></table></div>
+        <div id="user_payments_history_area"><table><tr><th>Bezahlte Betrag</th><th>Zahlungsdatum</th></tr></table></div>
     </div>';
     return $result;
 }
@@ -164,7 +164,7 @@ function getUserHistory($personId, $since){
 
     $productsByDate = $script->getAllPurchasedArticlesByDate($personId, $since);
 
-    $productAsList = "<table><tr><th>Produktname</th><th>Datum</th></tr>";
+    $productAsList = "<table><tr><th>Produktname</th><th>Kaufdatum</th></tr>";
     if($productsByDate != -1){
         foreach ($productsByDate as $key => $value) {
             $productAsList = $productAsList."<tr><td>".$value["article_name"]."</td><td>".$value["buy_date"]."</td></tr>";
@@ -174,7 +174,7 @@ function getUserHistory($personId, $since){
     $response["productList"] = $productAsList;
 
     $paymentByDate = $script->getUserPaymentByDate($personId, $since);
-    $paymentAsList = "<table><tr><th>Zahlungsdatum</th><th>Bezahlte Betrag</th></tr>";
+    $paymentAsList = "<table><tr><th>Bezahlte Betrag</th><th>Zahlungsdatum</th></tr>";
     if($paymentByDate != -1){
         foreach ($paymentByDate as $key => $value) {
             $paymentAsList = $paymentAsList."<tr><td>".$value["amount"]." €</td><td>".$value["pay_date"]."</td></tr>";

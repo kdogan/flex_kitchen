@@ -776,7 +776,6 @@ span.psw {
 #user_products_history_area{
   float:left;
   width: 66%;
-  height: 300px;
   border: 1px solid #ccc;
   border-radius: 20px;
   padding: 5px 10px 10px 10px;
@@ -784,7 +783,6 @@ span.psw {
 #user_payments_history_area{
   float:left;
   width: 30%;
-  height: 300px;
   border: 1px solid #ccc;
   border-radius: 20px;
   padding: 5px 10px 10px 10px;
