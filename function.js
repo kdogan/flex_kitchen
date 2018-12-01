@@ -88,7 +88,6 @@ function showUserAccountBalance() {
               }
         }
     });
-    showLastBuyOfCurrentUser();
 }
 
 function closeAdminSite(){
@@ -99,18 +98,6 @@ function closeAdminSite(){
             reLoadWindow();
       }
   });
-}
-function showLastBuyOfCurrentUser(){
-  $.ajax({
-    url: 'php_scripts/dbPersonArticleMatrix.php?lastEntryRequested=1',
-    success: function(html) {
-          var obj = JSON.parse(html);
-
-          if(obj.name !="" || obj.price !=""){
-            document.getElementById('lastBuy').innerHTML = obj.name;
-          }
-    }
-});
 }
 
 function sendSelectedProductForUser(){

@@ -4,9 +4,9 @@ class FunctionScript{
     public function getAccountBalanceOfCurrentUser(){
         require_once("login.php");
 
-        $currentUserId = getSessionUserId();
+        //$currentUserId = $this->getSessionUserId();
         $fetchDataFromDB = $this->getDBFacadeScript();
-        $result = $fetchDataFromDB->getAccountBalanceOfCurrentUser($currentUserId);
+        $result = $fetchDataFromDB->getAccountBalanceOfCurrentUser();
         return $result;
     }
     public function updateAccountBalanceOfUser($userId, $amount){
@@ -14,7 +14,7 @@ class FunctionScript{
         $result = $fetchDataFromDB->updateAccountBalanceOfUser($userId, $amount);
         return $result;
     }
-    
+
     function updateProductNumber($productId, $productNumber){
         $fetchDataFromDB = $this->getDBFacadeScript();
         $result = $fetchDataFromDB->updateProductNumber($productId, $productNumber);
