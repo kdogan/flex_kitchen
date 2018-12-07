@@ -57,6 +57,15 @@ function add_new_customer(){
 }
 
 function showUserHistory(since, personId){
+
+  var slider = document.getElementById("myRange");
+  var output = document.getElementById("sinceXMonth");
+  output.innerHTML = slider.value;
+
+  slider.oninput = function() {
+    output.innerHTML = this.value;
+  }
+
   $.ajax({
     url: 'php_scripts/adminPageContent.php?userHistoryRequested=1&since='+since+"&personId="+personId,
     success: function(html) {

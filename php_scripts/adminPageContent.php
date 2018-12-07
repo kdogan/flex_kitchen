@@ -131,29 +131,24 @@ function getUserHistoryPage($personId){
 
     $result = "";
     $result = $result.'<div class="column">
-    <div class="box1"><img src='.$src.' alt="user image"></div>
+    <div class="box1"><img src='.$src.'></div>
     <div class="box2">
         <div>Name: <span id="loggedUserName">'.$userName.'</span></div>
         <div>Kontostand: <span style="color:'.$accountBalanceColor.'">'.$accountBalance.' €</span></div>
     </div>
     <div class="box3">
         <div class="input_in_grid">
-            <select id = "sinceXMonth">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
+            <input type="range" min="1" max="11" value="1" class="slider" id="myRange" onchange="showUserHistory(this.value, '.$personId.');">
+            <p><b><span id="sinceXMonth">1</span></b> Monat(e)</p>
         </div>
         <div class="payment_button_in_grid">
-            <button class="button"  onclick="showUserHistory(document.getElementById(\'sinceXMonth\').value, '.$personId.');">Zeigen</button>
+            
         </div>
     </div>
     </div>
     <div class="user_history_area">
-        <div id="user_products_history_area"><table><tr><th>Produktname</th><th>Kaufdatum</th></tr></table></div>
-        <div id="user_payments_history_area"><table><tr><th>Bezahlte Betrag</th><th>Zahlungsdatum</th></tr></table></div>
+        <div id="user_products_history_area" class="purchased_history history_area"><table><tr><th>Produktname</th><th>Kaufdatum</th></tr></table></div>
+        <div id="user_payments_history_area" class="payment_history history_area"><table><tr><th>Bezahlte Betrag</th><th>Zahlungsdatum</th></tr></table></div>
     </div>';
     return $result;
 }
