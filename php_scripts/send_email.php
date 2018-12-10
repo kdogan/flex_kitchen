@@ -77,7 +77,7 @@ function sendMonthlyEmails(){
 }
 
 function sendEmail($fileName, $emails){
-    $fp = fopen('temp_emails_to_send.json', 'w');
+    $fp = fopen($fileName, 'w');
     fwrite($fp, json_encode($emails));
     fclose($fp);
     echo shell_exec("python send_email.py ".$fileName." 2>&1");
