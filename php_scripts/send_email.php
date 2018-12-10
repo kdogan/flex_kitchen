@@ -73,23 +73,27 @@ function sendMonthlyEmails(){
         $all_emails["kamuran1905@yahoo.de"] = $email;
     }
     // open tem file to write email
-    sendEmail("temp_emails_to_send.json", $all_emails);
+    sendEmail($all_emails);
 }
 
-function sendEmail($fileName, $emails){
+function sendEmail($emails){
+    $fileName = "temp_email_file.json";
     $fp = fopen($fileName, 'w');
     fwrite($fp, json_encode($emails));
     fclose($fp);
+    if(empty($emails)){
+        error_log("No Emails to send");
+        return;
+    }    
     echo shell_exec("python send_email.py ".$fileName." 2>&1");
 }
 function sendEmailToCustomer($to, $htmlContent, $subject){
-
     $all_emails = array();
     $email = array();
     $email["subject"] = $subject;
     $email["content"] = $htmlContent;
     $all_emails[$to] = $email;
-    sendEmail("one_email_to_send.json", $all_emails);
+    sendEmail($all_emails);
 }
 
 function getAllPersons(){
