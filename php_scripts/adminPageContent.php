@@ -63,7 +63,7 @@ function getUserDivsInAdminPage(){
                     <img class="icon_image" id="'.$payButtonId.'" src="img/remove_user_icon.png" onclick="confirmUserDeleting(\''.$user.'\',\''.$id.'\');"/>
                 </div>
                 <div class="user_history_in_grid">
-                    <img class="icon_image" style="margin-top:3px;" src="img/user-history.png" onclick="goToUserHistoryPage(\''.$id.'\');"/>
+                    <img class="icon_image" src="img/user-history.png" onclick="goToUserHistoryPage(\''.$id.'\');"/>
                 </div>
             </div>
             </div>';

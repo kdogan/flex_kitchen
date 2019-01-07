@@ -1,3 +1,8 @@
+* {
+  font-family: Calibri, Verdana, Geneva, sans-serif;
+  font-size: 12pt;
+}
+
 
 .flex-container {
     display: -webkit-flex;
@@ -14,7 +19,6 @@
 body {
   height: 100%;
   margin: 0;
-  font-family: Verdana, Geneva, sans-serif;
 }
 
 header {
@@ -31,12 +35,18 @@ header {
   text-align: center;
   padding-top: 10px;
   font-weight: bold;
+  font-size: 1.2em;
 }
 
 .content {
   margin-top: 50px;
   margin-bottom: 62px;    
   overflow: auto;
+}
+
+#contentInAdminPage {
+  padding: 0 20px;
+  margin-top: 30px;
 }
 
 #adminLoginBtn {
@@ -489,7 +499,7 @@ menu li {
 }
 
 .input_in_grid{
-  grid-column:1 / 3;
+  grid-column:1 / 4;
   grid-row: 1 / 2;
 }
 .payment_button_in_grid{
@@ -516,10 +526,9 @@ menu li {
 
 .payment_input{
   width: 100px;
-  height: 40px;
+  height: 41px;
   padding-left: 7px;
   border: none;
-  font-weight: bold;
   border: none;
   background-color: #eaeaea;
 }
@@ -594,7 +603,7 @@ menu {
 button {
   background-color: #83bb26;
   color: white;
-  padding: 14px 20px;
+  padding: 12px 20px;
   border: none;
   cursor: pointer;
   width: 100%;
@@ -790,27 +799,30 @@ span.psw {
   grid-row: 1;
 }
 .history_area{
-  float:left;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  padding: 5px 10px 10px 10px;
+  padding: 10px 25px;
 }
 
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
+  max-width: 450px;
 }
 
 td, th {
-  border: 1px solid #dddddd;
+  
   text-align: left;
   padding: 8px;
 }
 
-tr:nth-child(even) {
-  background-color: #dddddd;
+tr {
+  border-bottom: 1px solid #dddddd;
+  height: 2.5em;
 }
+
+/* tr:nth-child(even) {
+  background-color: #dddddd;
+} */
 
 .slidecontainer {
   width: 100%;
@@ -819,12 +831,13 @@ tr:nth-child(even) {
 .slider {
   -webkit-appearance: none;
   width: 100%;
-  height: 25px;
+  height: 12px;
   background: #d3d3d3;
   outline: none;
   opacity: 0.7;
   -webkit-transition: .2s;
   transition: opacity .2s;
+  border-radius: 8px;
 }
 
 .slider:hover {
@@ -838,6 +851,7 @@ tr:nth-child(even) {
   height: 25px;
   background:#83bb26;
   cursor: pointer;
+  border-radius: 50%;
 }
 
 .slider::-moz-range-thumb {
@@ -845,4 +859,5 @@ tr:nth-child(even) {
   height: 25px;
   background: #83bb26;
   cursor: pointer;
+  border-radius: 50%;
 }
