@@ -67,6 +67,7 @@ INSERT INTO `person_article_matrix` (`person_id`, `article_id`, `count`, `buy_da
 (1, 1, 1, '2017-12-30 13:54:21'),
 (1, 3, 1, '2018-01-07 00:00:00');
 
+CREATE TABLE person_payment_matrix (id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY, person_id INT (10) NOT NULL, amount FLOAT default NULL, pay_date DATETIME NOT NULL);
 
 DELIMITER $$
 CREATE TRIGGER `update_person_balance` AFTER INSERT ON `person_article_matrix` FOR EACH ROW begin
