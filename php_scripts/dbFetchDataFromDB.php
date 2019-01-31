@@ -46,7 +46,7 @@ class fetchDataFromDB {
 		$conn = $this->getDBConnection();
     	$sql = 'SELECT article_id, sum(count) as sum
     			FROM person_article_matrix
-    			WHERE person_id = '.$personId.' && month(buy_date) = month(now())-'.intval($sinceXMonth).' && year(buy_date) = year(now()) GROUP BY article_id ORDER BY buy_date DESC';
+    			WHERE person_id = '.$personId.' && buy_date > DATE_ADD(CURDATE(), INTERVAL -'.$sinceXMonth.' MONTH) GROUP BY article_id ORDER BY buy_date DESC';
     	$result = $conn->query($sql);
     	$purchasedArticlesByArticleId;
 
@@ -69,9 +69,7 @@ class fetchDataFromDB {
 		$conn = $this->getDBConnection();
     	$sql = 'SELECT a.name as article_name, pam.buy_date as buy_date
     			FROM person_article_matrix pam, article a
-				WHERE pam.person_id = '.$personId.' && 
-					month(pam.buy_date) > month(now())-'.intval($sinceXMonth).' 
-					&& year(pam.buy_date) = year(now()) &&
+				WHERE pam.person_id = '.$personId.' && pam.buy_date > DATE_ADD(CURDATE(), INTERVAL -'.$sinceXMonth.' MONTH) &&
 					pam.article_id = a.id ORDER BY buy_date DESC';
     	$result = $conn->query($sql);
 		$purchasedArticlesByArticleId;
