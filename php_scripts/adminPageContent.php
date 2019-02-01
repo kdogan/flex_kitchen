@@ -159,14 +159,19 @@ function getUserHistory($personId, $since){
 
     $productsByDate = $script->getAllPurchasedArticlesByDate($personId, $since);
 
-    $productAsList = "<table><tr><th>Produktname</th><th>Kaufdatum</th></tr>";
+    $actionRows = "<table><tr><th>Dataum</th><th>Beschreibung</th><th>Betrag</th><th>Kontostand</th></tr>";
     if($productsByDate != -1){
         foreach ($productsByDate as $key => $value) {
-            $productAsList = $productAsList."<tr><td>".$value["article_name"]."</td><td>".$value["buy_date"]."</td></tr>";
+            $actionDate = "<td>".$value["action_date"]."</td>";
+            $actionDesc = "<td>".$value["action_desc"]."</td>";
+            $actionAmount = "<td>".$value["action_amount"]."</td>";
+            $actionAccountBalance = "<td>".$value["action_account_balance"]."</td>";
+
+            $actionRows = $actionRows."<tr>".$actionDate.$actionDesc.$actionAmount.$actionAccountBalance."</tr>";
         }
     }
-    $productAsList = $productAsList."</table>";
-    $response["productList"] = $productAsList;
+    $actionRows = $actionRows."</table>";
+    $response["productList"] = $actionRows;
 
     $paymentByDate = $script->getUserPaymentByDate($personId, $since);
     $paymentAsList = "<table><tr><th>Bezahlte Betrag</th><th>Zahlungsdatum</th></tr>";
