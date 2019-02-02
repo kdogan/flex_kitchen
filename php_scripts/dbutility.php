@@ -41,18 +41,30 @@ if(isset($_REQUEST["first_name"]) && isset($_REQUEST["last_name"]) &&isset($_REQ
 
 if(isset($_REQUEST["articleBoughtRequsted"])){
 	require_once("login.php");
-	include("dbConnector.php");
-	$db = new dbConnector();
-	$conn = $db->getDBConnection();
+    include("dbConnector.php");
+    $script = getPHPScript();
+    $personId =  getSessionUserId();
 
-	if(!isset($_REQUEST["selectedArticleId"])){
+    if(!isset($_REQUEST["selectedArticleId"])){
 		echo json_encode("No article selected to buy");
 		exit;
 	}
 
-	$selectedArticleId = $_REQUEST["selectedArticleId"];
-    $personId =  getSessionUserId();
-	$sql = 'INSERT INTO person_article_matrix (person_id, article_id, count, buy_date) VALUES ('.$personId.','.$selectedArticleId.',1,now())';
+    $person = json_decode($script->getPersonById($personId));
+	$account_balance = 'account_balance';
+	$currentAccountBalance = floatval($person->$account_balance);
+
+    $selectedArticleId = $_REQUEST["selectedArticleId"];
+    $article = json_decode($script->getArticleById($selectedArticleId));
+	$price = 'price';
+    $articlePrice = floatval($article->$price);
+    $currentAccountBalance = $currentAccountBalance - $articlePrice;
+
+	$db = new dbConnector();
+	$conn = $db->getDBConnection();
+	
+	$sql = 'INSERT INTO person_article_matrix (person_id, article_id, count, buy_date,price,account_balance) 
+            VALUES ('.$personId.','.$selectedArticleId.',1,now(),'.$articlePrice.','.$currentAccountBalance.')';
 	$result = mysqli_query($conn, $sql);
 
 	if ($result === TRUE) {
@@ -60,7 +72,9 @@ if(isset($_REQUEST["articleBoughtRequsted"])){
     //Send email on user
     notifyUserForPurchasedArticle($personId, $selectedArticleId);
 	} else {
-		echo "Error: ". $sql . "<br>" . $conn->error;
+        $error_msg = "Error: ". $sql . "<br>" . $conn->error;
+        echo $error_msg;
+        error_log($error_msg);
 	}
 	$conn->close(); 
 }

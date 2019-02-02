@@ -157,15 +157,15 @@ function getUserHistory($personId, $since){
     require("../php_script.php");
     $script = new FunctionScript();
 
-    $productsByDate = $script->getAllPurchasedArticlesByDate($personId, $since);
+    $paymentByDate = $script->getUserPaymentByDate($personId, $since);
 
     $actionRows = "<table><tr><th>Dataum</th><th>Beschreibung</th><th>Betrag</th><th>Kontostand</th></tr>";
-    if($productsByDate != -1){
-        foreach ($productsByDate as $key => $value) {
+    if($paymentByDate != -1){
+        foreach ($paymentByDate as $key => $value) {
             $actionDate = "<td>".$value["action_date"]."</td>";
             $actionDesc = "<td>".$value["action_desc"]."</td>";
-            $actionAmount = "<td>".$value["action_amount"]."</td>";
-            $actionAccountBalance = "<td>".$value["action_account_balance"]."</td>";
+            $actionAmount = "<td>".$value["amount"]."</td>";
+            $actionAccountBalance = "<td>".$value["account_balance"]."</td>";
 
             $actionRows = $actionRows."<tr>".$actionDate.$actionDesc.$actionAmount.$actionAccountBalance."</tr>";
         }
@@ -173,15 +173,6 @@ function getUserHistory($personId, $since){
     $actionRows = $actionRows."</table>";
     $response["productList"] = $actionRows;
 
-    $paymentByDate = $script->getUserPaymentByDate($personId, $since);
-    $paymentAsList = "<table><tr><th>Bezahlte Betrag</th><th>Zahlungsdatum</th></tr>";
-    if($paymentByDate != -1){
-        foreach ($paymentByDate as $key => $value) {
-            $paymentAsList = $paymentAsList."<tr><td>".$value["amount"]." €</td><td>".$value["pay_date"]."</td></tr>";
-        }
-    }
-    $paymentAsList = $paymentAsList."</table>";
-    $response["payments"] = $paymentAsList;
 
     return json_encode($response);
 }
