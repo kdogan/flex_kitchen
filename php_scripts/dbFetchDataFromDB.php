@@ -123,7 +123,7 @@ class fetchDataFromDB {
 				WHERE person_id = '.$personId.' && pay_date > DATE_ADD(CURDATE(), INTERVAL -'.$sinceXMonth.' MONTH)';
 	
     	$result = $conn->query($sql);
-		$paymentByDate;
+		$paymentByDate = [];
 		
 	    if ($result->num_rows > 0) {
 	        while($row = $result->fetch_assoc()) {
@@ -135,7 +135,6 @@ class fetchDataFromDB {
 	        }
 	    }else{
 	    	error_log("[dbFechDataFromDB -> getUserPaymentByDate] no payment found for user id ".$personId);
-	    	return -1;
 	    }
 		$conn->close();
 		$personHistory = $this->getAllPurchasedArticlesHistoryByPerson($personId, $sinceXMonth);

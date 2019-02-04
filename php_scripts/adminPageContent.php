@@ -125,7 +125,7 @@ function getUserHistoryPage($personId){
     $person = json_decode($script->getPersonById($personId));
     $userName = $person->firstname.' '.$person->lastname;
     $accountBalance = $person->account_balance;
-    $accountBalanceColor = intval($accountBalance) < 0? "red":"black";
+    $accountBalanceColor = getAccountBalanceStateColor($accountBalance);
 
     $src = $script->createUserImagePath($person->img_path);
 
@@ -142,15 +142,24 @@ function getUserHistoryPage($personId){
             <p><b><span id="sinceXMonth">1</span></b> Monat(e)</p>
         </div>
         <div class="payment_button_in_grid">
-            
+            <div id="editor"></div>
+            <button onclick="downloadPageAsPDF()">Download als PDF</button>
         </div>
     </div>
     </div>
     <div class="user_history_area">
-        <div id="user_products_history_area" class="purchased_history history_area"><table><tr><th>Produktname</th><th>Kaufdatum</th></tr></table></div>
-        <div id="user_payments_history_area" class="payment_history history_area"><table><tr><th>Bezahlte Betrag</th><th>Zahlungsdatum</th></tr></table></div>
+        <div id="user_products_history_area" class="purchased_history history_area">
+            <table id="historyTable">
+                <tr><th>Dataum</th><th>Beschreibung</th><th>Betrag</th><th>Kontostand</th></tr>
+            </table>
+        </div>
     </div>';
     return $result;
+}
+
+function getAccountBalanceStateColor($accountBalance){
+    $color = intval($accountBalance) < 0? "red":"black";
+    return $color;
 }
 
 function getUserHistory($personId, $since){
@@ -164,8 +173,9 @@ function getUserHistory($personId, $since){
         foreach ($paymentByDate as $key => $value) {
             $actionDate = "<td>".$value["action_date"]."</td>";
             $actionDesc = "<td>".$value["action_desc"]."</td>";
-            $actionAmount = "<td>".$value["amount"]."</td>";
-            $actionAccountBalance = "<td>".$value["account_balance"]."</td>";
+            $actionAmount = "<td><strong>".$value["amount"]." €</strong></td>";
+            $accountBalanceColor = getAccountBalanceStateColor($value["account_balance"]);
+            $actionAccountBalance = '<td style="color:'.$accountBalanceColor.'"><strong>'.$value["account_balance"].' €</strong></td>';
 
             $actionRows = $actionRows."<tr>".$actionDate.$actionDesc.$actionAmount.$actionAccountBalance."</tr>";
         }
