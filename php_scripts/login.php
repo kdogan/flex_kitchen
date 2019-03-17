@@ -64,10 +64,10 @@ function setSession($attributeName, $attributeValue){
     		}
     		$errorMessage =  "session is created";
 
-        	$_SESSION['userid'] = $row["id"];
-        	$_SESSION['isAdmin'] = $row['is_admin'];
-			$_SESSION['userName'] = $row['firstname'].' '.$row['lastname'];
-        	$_SESSION['imagePath'] = $row['img_path'];
+				$_SESSION['userid'] = $row["id"];
+				$_SESSION['isAdmin'] = $row['is_admin'];
+				$_SESSION['userName'] = $row['firstname'].' '.$row['lastname'];
+        $_SESSION['imagePath'] = $row['img_path'];
 		}
     	return 1;
 	} else {

@@ -71,7 +71,7 @@ function showUserHistory(since, personId){
     success: function(html) {
       let response = JSON.parse(html);
       document.getElementById('user_products_history_area').innerHTML = response["productList"];
-      document.getElementById('user_payments_history_area').innerHTML = response["payments"];
+      //document.getElementById('user_payments_history_area').innerHTML = response["payments"];
     }
  });
 }
@@ -85,6 +85,24 @@ function searchUserInAdminPage(){
       else {
           $(this).hide();
       }
+  });
+}
+
+
+function downloadPageAsPDF(){
+  $.getScript('js/jspdf.min.js', function() {
+    var doc =new jsPDF('landscape','pt');
+    var specialElementHandlers = {
+      '#editor': function (element, renderer) {
+          return true;
+      }
+    };
+    doc.fromHTML($('#user_products_history_area').html(), 15, 15, {
+      'width': 170,
+      'elementHandlers': specialElementHandlers
+    });
+    doc.setFontSize(22);
+    doc.save('sample-file.pdf');
   });
 }
 

@@ -777,7 +777,7 @@ span.psw {
 }
 .user_history_area{
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 99% 0%;
   float: left;
   width: 100%;
 }
