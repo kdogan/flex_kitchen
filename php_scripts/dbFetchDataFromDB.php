@@ -87,31 +87,65 @@ class fetchDataFromDB {
 	    $conn->close();
 	    return $purchasedArticlesByArticleId;
 	}
-	public function getUserPaymentByDate($personId, $sinceXMonth){
+
+	public function getAllPurchasedArticlesHistoryByPerson($personId, $sinceXMonth){
 
 		$conn = $this->getDBConnection();
-    	$sql = 'SELECT amount, pay_date
-    			FROM person_payment_matrix
-				WHERE person_id = '.$personId.' && 
-					month(pay_date) > month(now())-'.intval($sinceXMonth).' 
-					&& year(pay_date) = year(now())';
-	
+    	$sql = 'SELECT a.name as action_desc, pam.buy_date as action_date, pam.price as amount, pam.account_balance
+    			FROM person_article_matrix pam, article a
+				WHERE pam.person_id = '.$personId.' && pam.buy_date > DATE_ADD(CURDATE(), INTERVAL -'.$sinceXMonth.' MONTH) &&
+					pam.article_id = a.id ORDER BY buy_date DESC';
+					error_log($sql);
     	$result = $conn->query($sql);
-		$paymentByDate;
+		$personHistory;
 		
 	    if ($result->num_rows > 0) {
 	        while($row = $result->fetch_assoc()) {
+	            $response['action_desc'] = $row["action_desc"];
+	            $response['action_date'] = $row["action_date"];
 	            $response['amount'] = $row["amount"];
-	            $response['pay_date'] = $row["pay_date"];
-	            $paymentByDate[$row["pay_date"]] = $response;
+	            $response['account_balance'] = $row["account_balance"];
+	            $personHistory[$row["action_date"]] = $response;
 	        }
 	    }else{
-	    	error_log("[dbFechDataFromDB -> getUserPaymentByDate] no payment found for user id ".$personId);
+	    	error_log("[dbFechDataFromDB -> getAllPurchasedArticlesForPersonFromDB] no purchases articles found");
 	    	return -1;
 	    }
 	    $conn->close();
-	    return $paymentByDate;
+	    return $personHistory;
 	}
+
+	public function getUserPaymentByDate($personId, $sinceXMonth){
+
+		$conn = $this->getDBConnection();
+    	$sql = 'SELECT amount, pay_date as action_date, account_balance_state as account_balance
+    			FROM person_payment_matrix
+				WHERE person_id = '.$personId.' && pay_date > DATE_ADD(CURDATE(), INTERVAL -'.$sinceXMonth.' MONTH)';
+	
+    	$result = $conn->query($sql);
+		$paymentByDate = [];
+		
+	    if ($result->num_rows > 0) {
+	        while($row = $result->fetch_assoc()) {
+				$response['action_date'] = $row["action_date"];
+				$response['action_desc'] = "EINZAHLUNG";
+	            $response['amount'] = $row["amount"];
+				$response['account_balance'] = $row["account_balance"];
+	            $paymentByDate[$row["action_date"]] = $response;
+	        }
+	    }else{
+	    	error_log("[dbFechDataFromDB -> getUserPaymentByDate] no payment found for user id ".$personId);
+	    }
+		$conn->close();
+		$personHistory = $this->getAllPurchasedArticlesHistoryByPerson($personId, $sinceXMonth);
+		//$dateTime = strtotime($row["action_date"])
+
+		$result = array_merge($paymentByDate,$personHistory);
+		//ksort($result);
+		krsort($result);
+	    return $result;
+	}
+
 	public function getAllPersonsFromDB(){
 
 		$conn = $this->getDBConnection();
@@ -258,13 +292,17 @@ class fetchDataFromDB {
         }else{
             $response = array('newBalance'=>(string)$newAccountBalance);
 		}
+		$conn->close();
 		$this->userPaid($userId, $amount);
         return $response;
-        $conn->close(); 
+         
 	}
-	public function userPaid($userId, $amount){
+	public function userPaid($personId, $amount){
+		$person = json_decode($this->getPersonById($personId));
+		$account_balance = 'account_balance';
+		$personAccountState = floatval($person->$account_balance);
 		$conn = $this->getDBConnection();
-		$sql = 'INSERT INTO person_payment_matrix(person_id, amount, pay_date) VALUES ('.$userId.' , '.$amount.', now())';
+		$sql = 'INSERT INTO person_payment_matrix(person_id, amount, pay_date,account_balance_state) VALUES ('.$personId.' , '.$amount.', now(),'.$personAccountState.')';
 		if ($conn->query($sql) === FALSE) {
             error_log("Error occoured while payment process :".$conn->error);
         }
