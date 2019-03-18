@@ -56,10 +56,11 @@ def getCreationQueryForPPMTable():
           person_id int(11) UNSIGNED NOT NULL,
           amount float NOT NULL,
           pay_date date NOT NULL,
+          account_balance_state double NOT NULL,
           PRIMARY KEY (id),
-          FOREIGN KEY (person_id) REFERENCES person(id)
-          )"""
+          FOREIGN KEY (person_id) REFERENCES person(id))"""
   return query
+
 
 def getTrieger():
   query = """
