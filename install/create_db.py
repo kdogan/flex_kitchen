@@ -52,10 +52,10 @@ def getCreationQueryForPAMTable():
 
 def getCreationQueryForPPMTable():
   query = """CREATE TABLE person_payment_matrix (
-          id int(11) NOT NULL,
+          id int(11) NOT NULL UNSIGNED AUTO_INCREMENT,
           person_id int(11) UNSIGNED NOT NULL,
           amount float NOT NULL,
-          pay_date date NOT NULL,
+          pay_date datetime NOT NULL,
           account_balance_state double NOT NULL,
           PRIMARY KEY (id),
           FOREIGN KEY (person_id) REFERENCES person(id))"""
@@ -90,7 +90,7 @@ DELIMITER ;"""
 
 
 if __name__ == "__main__":
-   dbName ="bar"
+   dbName ="db_drinks"
    dbConnection = mysql.connector.connect(
     host= "localhost",
     user="root",

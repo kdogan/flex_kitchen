@@ -292,9 +292,10 @@ class fetchDataFromDB {
         }else{
             $response = array('newBalance'=>(string)$newAccountBalance);
 		}
+		$conn->close();
 		$this->userPaid($userId, $amount);
         return $response;
-        $conn->close(); 
+         
 	}
 	public function userPaid($personId, $amount){
 		$person = json_decode($this->getPersonById($personId));
