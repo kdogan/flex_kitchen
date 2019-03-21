@@ -85,7 +85,7 @@ function sendEmail($emails){
         error_log("No Emails to send");
         return;
     }    
-    echo shell_exec("python send_email.py ".$fileName." 2>&1");
+    echo shell_exec("python3 send_email.py ".$fileName." 2>&1");
 }
 function sendEmailToCustomer($to, $htmlContent, $subject){
     $all_emails = array();
