@@ -192,6 +192,7 @@ menu li {
   margin: 10px;
   position: relative;
   cursor: pointer;
+  min-height: 230px;
 }
 
 .users li {
